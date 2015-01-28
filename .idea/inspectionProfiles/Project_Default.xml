@@ -1,0 +1,43 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0" is_locked="false">
+    <option name="myName" value="Project Default" />
+    <option name="myLocal" value="false" />
+    <inspection_tool class="BadExpressionStatementJS" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="BlockStatementJS" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="BreakStatementJS" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="CssMissingSemicolon" enabled="true" level="ERROR" enabled_by_default="true">
+      <scope name="Tests" level="ERROR" enabled="true" />
+      <scope name="Problems" level="ERROR" enabled="true" />
+      <scope name="Project Files" level="ERROR" enabled="true" />
+    </inspection_tool>
+    <inspection_tool class="CssNegativeValue" enabled="false" level="ERROR" enabled_by_default="false" />
+    <inspection_tool class="DivideByZeroJS" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="myValues">
+        <value>
+          <list size="0" />
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="JSUnnecessarySemicolon" enabled="true" level="WEAK WARNING" enabled_by_default="true" />
+    <inspection_tool class="JscsInspection" enabled="false" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="NonBlockStatementBodyJS" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PhpDivisionByZeroInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpExpressionResultUnusedInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PhpIllegalPsrClassPathInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpNonCompoundUseInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PhpRedundantClosingTagInspection" enabled="false" level="WEAK WARNING" enabled_by_default="false" />
+    <inspection_tool class="PhpSillyAssignmentInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="PhpUndefinedCallbackInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PhpUndefinedFieldInspection" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="SpellCheckingInspection" enabled="false" level="TYPO" enabled_by_default="false">
+      <option name="processCode" value="true" />
+      <option name="processLiterals" value="true" />
+      <option name="processComments" value="true" />
+    </inspection_tool>
+    <inspection_tool class="UnterminatedStatementJS" enabled="true" level="ERROR" enabled_by_default="true">
+      <option name="ignoreSemicolonAtEndOfBlock" value="false" />
+    </inspection_tool>
+  </profile>
+</component>
