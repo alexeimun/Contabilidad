@@ -14,7 +14,7 @@
 
         $Usuarios->CantidadUsuarios($_SESSION['login'][0]["ID_EMPRESA"]);
         if ($Usuarios->_CantUsuarios >= $_SESSION['login'][0]["CANT_USUARIOS"])
-            echo '<script language = javascript> alert("No se puede crear más usuarios.");self.location = "Usuarios.php" </script>';
+            echo '<script> alert("No se puede crear más usuarios.");self.location = "Usuarios.php" </script>';
 
 
         if (!empty($_POST)) {
@@ -34,9 +34,7 @@
 
         }
     } else {
-        echo '<script language = javascript>
-        self.location = "../Otros/Login.php";
-	</script>';
+        echo '<script >self.location = "../Otros/Login.php";</script>';
     }
 ?>
 <html>
@@ -119,8 +117,19 @@
                         <tr>
                             <td><br>Correo</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><input type="email" id="txtEmail" name="txtEmail" onkeyup="ValidaUsuario();"
-                                           value="" placeholder="Ingrese el correo" required>
+                                <br><input type="email"  name="txtEmail" onkeyup="ValidaUsuario();" placeholder="Ingrese el correo" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><br>Clave</td>
+                            <td style="padding-left: 10px;text-align: right;">
+                                <br><input type="password"  name="txtClave" onkeyup="ValidaUsuario();"  placeholder="Ingrese su clave" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><br>Confirme Clave</td>
+                            <td style="padding-left: 10px;text-align: right;">
+                                <br><input type="password"  onkeyup="ValidaUsuario();"  placeholder="Confirme su clave" required>
                             </td>
                         </tr>
                     </table>
@@ -129,13 +138,28 @@
                     <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
                                                 value="GUARDAR" style="width:200px;"/>
                     </ul>
+
+                    <div id="val"></div>
                 </center>
 
             </form>
+
         </div>
     </div>
 
 </div>
+<script>
+$('form').submit(function () {
 
+    if($('input:password:first').val()!=$('input:password:last').val())
+    {
+        event.preventDefault();
+        $('#val').html('<br><br><span class="Error">LAS CLAVES NO COINSIDEN</span><br><br>');
+    }
+    else $('#val').html('');
+});
+
+</script>
 </body>
+
 </html>

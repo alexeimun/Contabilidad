@@ -8,7 +8,7 @@
     include '../../../Clases/cls_CajaMenor.php';
 
     session_start();
-    if (isset($_SESSION['login']) == '' || $_SESSION['permisos'][0][1] == 0)
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
         echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
     $cmbTercero = '<option value ="0">-- Seleccione Un Tercero --</option>';
 

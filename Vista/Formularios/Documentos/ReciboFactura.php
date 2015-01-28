@@ -9,7 +9,7 @@
 
     session_start();
 
-    if (isset($_SESSION['login']) == '' || $_SESSION['permisos'][1][1] == 0)
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
         echo '<script> self.location = "../Otros/Login.php"</script>';
     $Parametros = new cls_Parametros();
     $Documentos = new cls_Documentos();
@@ -56,7 +56,7 @@
                 $valor['ID_ENTIDAD'], $valor['NUMERO']);
         }
 
-        $Documentos->InsertaMovimiento($_POST['txtTercero'], $_POST['ConsecutivoFactura'], 0, 'R', $ConsecutivoRecibo, $_POST['cmbfPago'], 0, '', 'D', 1, $_SESSION['valor'],
+        $Documentos->InsertaMovimiento($_POST['txtTercero'], $_POST['ConsecutivoFactura'], 0, 'R', $ConsecutivoRecibo, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
             0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'R', '', 0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
 
         $_SESSION['ConsecutivoRECIBO'] = $ConsecutivoRecibo;

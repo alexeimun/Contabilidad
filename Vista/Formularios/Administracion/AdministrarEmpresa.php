@@ -6,7 +6,8 @@
     include '../../../Clases/cls_Empresas.php';
     include '../../../Clases/cls_Usuarios.php';
     session_start();
-    if (isset($_SESSION['login']) != '' && $_SESSION['login'][0]["NIVEL"] == 1) {
+    if (isset($_SESSION['login']) != '' && $_SESSION['login'][0]["NIVEL"] == 1)
+        echo '<script> self.location = "../Otros/Login.php"</script>';
 
         if ($_GET['id'] == "")
             echo '<script language = javascript>  self.location = "Empresas.php"</script>';
@@ -70,11 +71,6 @@
 
         $tablaUsuarios .= '</tbody></table>';
 
-    } else {
-        echo '<script language = javascript>
-        self.location = "../Otros/Login.php";
-	</script>';
-    }
 ?>
 <html>
 <head>

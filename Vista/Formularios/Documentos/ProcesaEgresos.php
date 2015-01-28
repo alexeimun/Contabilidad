@@ -21,7 +21,11 @@
 
     if ($_GET['action'] == 'validaegreso') {
 
-        if ($_SESSION['valor'] < $_SESSION['TOTAL2'] + $_SESSION['Abonado'])
+        if ($_SESSION['valor'] == $_SESSION['Abonado'])
+            echo '<span class="Error">EL GASTO SE HA PAGADO</span><br><br><br>
+       <input type="submit" class="btnAzul"  id="btnFinalizar" name="btnFinalizar" value="FINALIZAR" style="width:200px; background-color: #A9A9A9;cursor: auto;" disabled/> ';
+
+        else if ($_SESSION['valor'] < $_SESSION['TOTAL2'] + $_SESSION['Abonado'])
             echo '<span class="Error">EL VALOR  ES MAYOR QUE EL TOTAL A PAGAR</span><br><br><br>
        <input type="submit" class="btnAzul"  id="btnFinalizar" name="btnFinalizar" value="FINALIZAR" style="width:200px; background-color: #A9A9A9;cursor: auto;" disabled/> ';
         else
@@ -85,7 +89,6 @@
                 $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO_EGRESOS'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
             $tabla .= '</tr>';
         }
-        // $tabla.='<tr></td><td></td><td></td><td><td style="text-align:right;">Total:</td><td></td></tr>';
 
         $tabla .= ' </tbody></table>';
 

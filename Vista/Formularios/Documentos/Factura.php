@@ -8,7 +8,7 @@
     include '../../../Clases/cls_Factura.php';
     session_start();
 
-    if (isset($_SESSION['login']) == '' || $_SESSION['permisos'][0][1] == 0)
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
         echo '<script> self.location = "../Otros/Login.php"</script>';
 
     $Master = new Master();
@@ -85,14 +85,14 @@
 
             //TOTAL PAGOS
 
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, 0, ++ $Secuencia, "TOTAL", 'D', 0, $Total, 0
+            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, 0, ++ $Secuencia, "TOTAL", '', 0, $Total, 0
                 , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $_POST['cmbTipoPago'], 0, '', 0, '', '', $TotalPagos);
 
             //Si es a crédito se genera Recibo
             if ($_POST['cmbTipoPago'] == 'CR') {
                 $Factura->TraeParametrosRecibo($_SESSION['login'][0]["ID_EMPRESA"]);
                 //Inserto el Total del recibo
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $Consecutivo, 0, 'R', $Factura->_ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', 'C',
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $Consecutivo, 0, 'R', $Factura->_ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', '',
                     1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', '', 0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
                 $Documentos->ActualizaConsecutivo($Factura->_ConsecutivoRecibo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO');
             }

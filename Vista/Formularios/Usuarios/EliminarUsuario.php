@@ -13,7 +13,7 @@
 
     if ($Usuarios->EliminarUsuario($ID) > 0) echo '<script >window.location.href = "Usuarios.php"</script>';
 
-     else {
+    else {
         echo '<script>alert("Error al eliminar" )</script>';
         header('location:Usuarios.php');
     }

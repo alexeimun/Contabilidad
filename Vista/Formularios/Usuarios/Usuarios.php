@@ -4,7 +4,7 @@
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
     session_start();
-    if (isset($_SESSION['login']) == '' || $_SESSION['permisos'][30][1] == 0)
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
         echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
     $Master = new Master();
     $menu = $Master->Menu();
@@ -15,7 +15,6 @@
            <th style="text-align:left;">NOMBRE</th>
             <th style="text-align:left;">DOCUMENTO</th>
             <th style="text-align:left;">E-MAIL</th>
-            <th style="text-align:left;">CLAVE</th>
             <th style="text-align:right;">ACCIÓN</th>
 					</tr> </thead><tbody>';
     $cont = 0;
@@ -23,7 +22,6 @@
         $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['DOCUMENTO'] . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
-        $tabla .= '<td style="text-align:left;">' . $valor['PASSWORD'] . '</td>';
         $tabla .= '<td style="text-align:right;">
           <a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
           <a href="ModificarUsuario.php?id=' . $valor['ID_USUARIO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
@@ -93,8 +91,7 @@
         if (root == 1) {
             alert("No se puede eliminar un usuario principal");
         }
-        else if (<?= $_SESSION['login'][0]['ID_USUARIO']; ?>==id
-    )
+        else if (<?= $_SESSION['login'][0]['ID_USUARIO']; ?>==id)
 
         alert("Acción inválida.");
     else

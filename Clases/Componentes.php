@@ -168,4 +168,33 @@
 
             if ($this->_DB->Exec($query) > 0) return true; else return false;
         }
+
+        #ASIGNACIÓN DE PERMISOS
+
+
+        /**
+         * Genera los permsos del sistema
+         * @return array
+         */
+        public function Permisos()
+        {
+            return [['url' => '../Documentos/Factura.php', 'nombre' => 'Factura'],
+                ['url' => '../Documentos/ReciboFactura.php', 'nombre' => 'Recibo (Factura)'],
+                ['url' => '../Documentos/ReciboCajaMenor.php', 'nombre' => 'Recibo Caja Menor'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],
+                ['url' => 'url', 'nombre' => 'nombre'],];
+        }
+
+
     }

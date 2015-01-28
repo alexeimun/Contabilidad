@@ -7,7 +7,7 @@
     include '../../../Clases/cls_Contabilidad.php';
 
     session_start();
-    if (isset($_SESSION['login']) == '' || $_SESSION['permisos'][10][1] == 0)
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
         echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
 
     $Master = new Master();

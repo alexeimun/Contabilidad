@@ -10,8 +10,8 @@
 
     session_start();
 
-    if (isset($_SESSION['login']) == '' || $_SESSION['permisos'][3][1] == 0)
-        echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
+        echo '<script> self.location = "../Otros/Login.php"</script>';
 
     $Parametros = new cls_Parametros();
     $Documentos = new cls_Documentos();
@@ -40,10 +40,8 @@
 
 
     if (!empty($_POST)) {
-        if ($_POST['cmbTercero'] == '0')
-            echo '<script>alert("Debe elecccionar un tercero.")	 </script>';
-        else if ($_POST['cmbConcepto'] == '0')
-            echo '<script>alert("Debe seleccionar un concepto.")	 </script>';
+        if ($_POST['cmbTercero'] == '0') echo '<script>alert("Debe elecccionar un tercero.")	 </script>';
+        else if ($_POST['cmbConcepto'] == '0') echo '<script>alert("Debe seleccionar un concepto.")	 </script>';
 
         else {
             $Secuencia = 0;
@@ -72,7 +70,6 @@
             if ($_POST['cmbTipoPago'] == 'CR') {
                 $Egresos->TraeConsecutivoEgresos($_SESSION['login'][0]["ID_EMPRESA"]);
                 $_SESSION['ConsecutivoEgresos'] = $Egresos->_ConsecutivoEgresos;
-                $_SESSION['Tipo'] = 'EGRESOS';
                 $_SESSION['Tipo'] = 'CR';
                 $_SESSION['ReciboEgresos'] = 'ok';
 
@@ -82,10 +79,9 @@
                         'D', 0, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
                 }
 
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $Egresos->_ConsecutivoEgresos, $_POST['cmbConcepto'], 'E', $Egresos->_ConsecutivoGastos, $_POST['cmbfPago'], ++ $Secuencia,
-                    'TOTAL', 'C', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $Egresos->_ConsecutivoEgresos, $_POST['cmbConcepto'], 'E', $Egresos->_ConsecutivoGastos, '', ++ $Secuencia,
+                    'TOTAL', '', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
 
-                //  echo var_dump($_SESSION['TOTAL2'])."// ".var_dump($TotalValores);
                 $Documentos->ActualizaConsecutivo($Egresos->_ConsecutivoEgresos + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'EGRESOS');
             } else //De Contado
             {
@@ -97,7 +93,7 @@
                 }
                 $_SESSION['Tipo'] = 'CO';
                 $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $_POST['cmbConcepto'], 'E', $Egresos->_ConsecutivoGastos, $_POST['cmbfPago'], ++ $Secuencia,
-                    'TOTAL', 'D', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
+                    'TOTAL', '', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
             }
 
             $Documentos->EliminaPagosFinal($_SESSION['login'][0]["ID_USUARIO"]);

@@ -200,6 +200,7 @@
       <column name="TIPO_PAGO" sqlType="VARCHAR" precision="2" scale="0" nullable="false" jdbcType="12"/>
       <column name="ABONADO" sqlType="DECIMAL" precision="18" scale="0" nullable="true" jdbcType="3"/>
       <column name="TIPO" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
+      <column name="DOC_CRUCE" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <primary-key name="PRIMARY" columns="ID_MOVIMIENTO"/>
     </table>
     <table name="t_pagos_t" schema="" catalog="contasistin" type="TABLE">

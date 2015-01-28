@@ -378,7 +378,7 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
         }
 
         //trae los permisos del usuario para modificar
-        public function traeModulosXUsuario($identi, $IdMod)
+        public function traeModulosXUsuario($Id, $IdMod)
         {
 
             $query = "SELECT
@@ -392,7 +392,7 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
                 FROM
                 t_permisos
                 INNER JOIN t_modulo ON t_modulo.ID_MODULO = t_permisos.ID_MODULO
-                WHERE t_permisos.ID_USUARIO='" . $identi . "' AND  t_modulo.PADRE=" . $IdMod . " AND VISIBLE=1 ORDER BY ORDEN";
+                WHERE t_permisos.ID_USUARIO='" . $Id . "' AND  t_modulo.PADRE=" . $IdMod . " AND VISIBLE=1 ORDER BY ORDEN";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -461,6 +461,40 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
                 return false;
             }
         }
-    }
 
-?>
+        public function TienePermiso($nombre, $idUser)
+        {
+            $mod = $this->TraeModulo($nombre);
+            if ($mod != null)
+                return !$this->Permiso($mod, $idUser);
+            else return false;
+        }
+
+        private function Retocar(&$nombre)
+        {
+            $nombre = str_replace('.php', '', basename($nombre));
+            $link = $nombre[0];
+            for ($i = 1; $i < strlen($nombre); $i ++) {
+                if (ctype_upper($nombre[$i])) $link .= ' ' . $nombre[$i];
+                else $link .= $nombre[$i];
+            }
+            $nombre=$link;
+        }
+
+        public function TraeModulo($nombre)
+        {
+            $this->Retocar($nombre);
+            $query= "SELECT ID_MODULO  FROM t_modulo WHERE t_modulo.NOMBRE='" . $nombre . "'";
+            $resulset = $this->_DB->Query($query);
+            $Campos = $resulset->fetchAll();
+            return $Campos[0][0];
+        }
+
+        public function Permiso($idmodulo, $iduser)
+        {
+            $query = "SELECT  SI_O_NO FROM t_permisos WHERE t_permisos.ID_USUARIO=$iduser AND ID_MODULO=$idmodulo";
+            $resulset = $this->_DB->Query($query);
+            $Campos = $resulset->fetchAll();
+            return $Campos[0][0] == 1;
+        }
+    }

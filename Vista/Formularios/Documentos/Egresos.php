@@ -9,7 +9,7 @@
     include '../../../Clases/cls_Egresos.php';
     session_start();
 
-    if (isset($_SESSION['login']) == '')
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
         echo '<script> self.location = "../Otros/Login.php"</script>';
 
     $Parametros = new cls_Parametros();
@@ -59,7 +59,7 @@
         //Consultar que ID_CUENTA_MOV le paso
         // echo var_dump($_POST['ConsecutivoEgreso'])."TOTAL= ".$_SESSION['TOTAL2']." ABonado= ".$_POST['Abonado'];
         //Debito
-        $Documentos->InsertaMovimiento($_POST['txtTercero'], $_POST['ConsecutivoGastos'], 0, 'E', $Egresos->_ConsecutivoEgresos, $_POST['cmbfPago'], 0, '', 'D', 1, $_SESSION['valor'],
+        $Documentos->InsertaMovimiento($_POST['txtTercero'], $_POST['ConsecutivoGastos'], 0, 'E', $Egresos->_ConsecutivoEgresos, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
             1, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'E', '', 0, '', 0, '', 'EGRESOS', $_SESSION['TOTAL2']);
 
 

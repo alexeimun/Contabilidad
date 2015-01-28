@@ -8,7 +8,10 @@ body {
     width: 100%;
 
 }
-
+#header h3 span
+{
+    letter-spacing: 1px;
+}
 html {
     height: 100%;
 }
@@ -32,7 +35,7 @@ div ul.menu li ul {
 #header {
     position: relative;
     height: 80px;
-    background: #5E83A3 url(header-bg.jpg) repeat-x 0% 100%;
+    background: #5E83A3 ;
     border-bottom: 5px solid #444;
 }
 
@@ -178,8 +181,6 @@ ul ul {
 
 .menu > li > a:before {
     content: '';
-    background-image: url(../images/sprite.png);
-    background-repeat: no-repeat;
     font-size: 36px;
     height: 1em;
     width: 1em;

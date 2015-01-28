@@ -8,7 +8,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "")
-            echo '<script language = javascript>self.location = "Usuarios.php"	</script>';
+            echo '<script>self.location = "Usuarios.php"	</script>';
 
         $Master = new Master();
         $menu = $Master->Menu();
@@ -48,8 +48,7 @@
 				&nbsp;&nbsp;&nbsp;&nbsp;';
                 }
             }
-            $checks .= '</td>';
-            $checks .= '</tr>';
+            $checks .= '</td></tr>';
         }
         $checks .= '</table><br>';
 
@@ -61,15 +60,13 @@
                 foreach ($Usuarios->traeModulosPadres() as $llave => $valor) {
 
                     $idMod = $valor['ID_MODULO'];
-                    foreach ($Usuarios->traeModulosXUsuario($_GET['id'], $idMod) as $llave => $valor) {
-
+                    foreach ($Usuarios->traeModulosXUsuario($_GET['id'], $idMod) as $llave => $valor)
                         $Usuarios->actualizaPermisos($_GET['id'], $valor['ID_MODULO'], $_POST['txt' . $valor['ID_MODULO']], $_SESSION['login'][0]['ID_USUARIO']);
-                    }
                 }
             }
-            echo '<script language = javascript>alert("Se modificó el usuario correctamente.");self.location = "Usuarios.php"</script>';
+            echo '<script>alert("Se modificó el usuario correctamente.");self.location = "Usuarios.php"</script>';
         }
-    } else echo '<script language = javascript>self.location = "../Otros/Login.php"</script>';
+    } else echo '<script>self.location = "../Otros/Login.php"</script>';
 
 ?>
 <html>
@@ -158,15 +155,21 @@
                         <tr>
                             <td><br>Correo</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br> <input type="email" id="txtEmail" onkeyup="ValidaUsuario();" name="txtEmail"
+                                <br> <input type="email" onkeyup="ValidaUsuario();" name="txtEmail"
                                             value="<?= $txtEmail; ?>" placeholder="Ingrese el correo" required>
                             </td>
                         </tr>
                         <tr>
-                            <td><br>Contraseña</td>
+                            <td><br>Clave</td>
                             <td style="padding-left: 10px;text-align: right;">
                                 <br> <input type="password" id="txtPass" name="txtPass" value="<?= $txtPass; ?>"
                                             required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><br>Confirme Clave</td>
+                            <td style="padding-left: 10px;text-align: right;">
+                                <br> <input type="password" value="<?= $txtPass; ?>" required>
                             </td>
                         </tr>
                     </table>
@@ -180,11 +183,33 @@
                     <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
                                                 value="GUARDAR" style="width:200px;"/>
                     </ul>
+
+                    <div id="val"></div>
                 </center>
 
             </form>
         </div>
     </div>
 </div>
+<script>
+    $('form').submit(function () {
+
+        if (<?= $modraiz?> == 1 && <?=$_SESSION['login'][0]['RAIZ']?> == 0)
+        {
+            event.preventDefault();
+            return false;
+        }
+
+        else
+        if ($('input:password:first').val() != $('input:password:last').val()) {
+            console.log('dele');
+            event.preventDefault();
+            $('#val').html('<br><br><span class="Error">LAS CLAVES NO COINSIDEN</span><br><br>');
+        }
+        else $('#val').html('');
+
+    });
+
+</script>
 </body>
 </html>

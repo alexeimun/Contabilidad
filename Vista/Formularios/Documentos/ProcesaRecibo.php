@@ -20,7 +20,11 @@
 
     if ($_GET['action'] == 'validarecibo') {
 
-        if ($_SESSION['valor'] < $_SESSION['TOTAL2'] + $_SESSION['Abonado'])
+        if ($_SESSION['valor'] == $_SESSION['Abonado'])
+            echo '<span class="Error">LA FACTURA SE HA PAGADO</span><br><br><br>
+       <input type="submit" class="btnAzul"  id="btnFinalizar" name="btnFinalizar" value="FINALIZAR" style="width:200px; background-color: #A9A9A9;cursor: auto;" disabled/> ';
+
+        else if ($_SESSION['valor'] < $_SESSION['TOTAL2'] + $_SESSION['Abonado'])
             echo '<span class="Error">EL VALOR  ES MAYOR QUE EL TOTAL A PAGAR</span><br><br><br>
        <input type="submit" class="btnAzul"  id="btnFinalizar" name="btnFinalizar" value="FINALIZAR" style="width:200px; background-color: #A9A9A9;cursor: auto;" disabled/> ';
         else

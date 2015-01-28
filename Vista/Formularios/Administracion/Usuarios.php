@@ -6,8 +6,6 @@
     include '../../../Clases/cls_Usuarios.php';
     session_start();
     if (isset($_SESSION['login']) != '') {
-
-
         $Master = new Master();
         $menu = $Master->Menu();
         $Usuarios = new cls_Usuarios();
@@ -15,7 +13,7 @@
         $tabla = '<table id="table" class="table" style="width:90%;">
            	<thead>
 					<tr>
-<th style="text-align:left;">NOMBRE</th>
+            <th style="text-align:left;">NOMBRE</th>
             <th style="text-align:left;">DOCUMENTO</th>
             <th style="text-align:left;">E-MAIL</th>
             <th style="text-align:left;">CLAVE</th>
@@ -31,20 +29,19 @@
             $tabla .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['PASSWORD'] . '</td>';
             $tabla .= '<td style="text-align:right;">
-          <a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> 
-          <a href="ModificarUsuario.php?id=' . $valor['ID_USUARIO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></img></a>
-          <a onclick="EliminarUsuario(' . $valor['ID_USUARIO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+          <a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarUsuario.php?id=' . $valor['ID_USUARIO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarUsuario(' . $valor['ID_USUARIO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
             $cont ++;
         }
 
-        if ($cont == 0) {
-            $tabla .= '<tr><td colspan=5 style="text-align:center;"><a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
-        }
+        if ($cont == 0)
+            $tabla .= '<tr><td colspan=5 style="text-align:center;"><a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
+
         $tabla .= '</tbody></table>';
-    } else {
-        echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
-    }
+    } else echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+
 ?>
 <html>
 <head>
@@ -96,9 +93,8 @@
     });
 
     function EliminarUsuario(id) {
-        if (confirm("Seguro que quieres eliminar este usuario?")) {
-            window.location.href = 'EliminarUsuario.php?id=' + id;
-        }
+        if (confirm("Seguro que quieres eliminar este usuario?")) window.location.href = 'EliminarUsuario.php?id=' + id;
+
     }
 
 
@@ -112,7 +108,7 @@
     <a href=""><img src="../../Imagenes/logo.png"></img></a>
 
     <h1 id="logo"><span class="gray">Administración&nbsp&nbsp; <span
-                style="font-size: 28px"><?= $_SESSION['login'][0]['NOMBRE'] ?></span></span></h1>
+                style="font-size: 28px;"><?= $_SESSION['login'][0]['NOMBRE'] ?></span></span></h1>
 
 </div>
 
@@ -132,16 +128,12 @@
 <script type="text/javascript">
     function dev() {
         var ele = document.getElementById("idel").value;
-        if (ele.length == 0 || isNaN(ele)) {
-            return false;
-        }
+        if (ele.length == 0 || isNaN(ele))return false;
         else return true;
     }
     function devl() {
         var el = document.getElementById("idid").value;
-        if (el.length == 0 || isNaN(el)) {
-            return false;
-        }
+        if (el.length == 0 || isNaN(el))  return false;
         else return false;
     }
 </script>
