@@ -287,6 +287,7 @@
 		t_movimiento.ANULADO,
 		t_movimiento.ABONADO,
 		t_movimiento.TIPO_PAGO,
+		t_movimiento.TIPO_DOC,
 		t_movimiento.FECHA_REGISTRO,
 		t_terceros.NOMBRE1,
 		t_terceros.NOMBRE2,
@@ -298,7 +299,7 @@
 
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 
-		WHERE TIPO_DOC='E' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+		WHERE TIPO_DOC='E' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -342,7 +343,7 @@
 
         public function TraeDetalleCM($Consecutivo, $idEmpresa)
         {
-            $query = "SELECT
+            echo "SELECT
 		t_terceros.NOMBRE1,
 		t_terceros.NOMBRE2,
 		t_terceros.APELLIDO1,
@@ -354,12 +355,12 @@
         t_movimiento.ANULADO,
         t_movimiento.CONSECUTIVO,
         t_movimiento.ID_TERCERO,
-        IF((SELECT CONCEPTO FROM t_conceptos WHERE ID_CONCEPTO=
-        (SELECT ID_PRODUCTO FROM t_movimiento WHERE CONSECUTIVO=" . $Consecutivo . ")) =1,'Ingresos','Gastos') AS 'CONCEPTO'
+       IF (t_conceptos.CONCEPTO= 1,'Ingresos','Gastos') AS CONCEPTO
 		
 		 FROM t_movimiento
 		 INNER JOIN t_ciudades ON t_ciudades.ID_CIUDAD= t_movimiento.ID_CIUDAD
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
+		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_PRODUCTO
 
 		 WHERE TIPO_DOC='C' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
 
@@ -385,7 +386,7 @@
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CUENTA_MOV
 
-		 WHERE TIPO_DOC='E' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
+		 WHERE TIPO_DOC='E' and TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -442,9 +443,12 @@
         public function InsertaMovimiento($IdTercero, $IdProducto, $IdCuentaMov, $TipoDoc, $Consecutivo, $IdFormaPago, $Secuencia, $Descripcion, $TipoMov
             , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '',$DocCruce=0, $Tipopago = '', $IdEntidad = 0, $Numero = '', $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0)
         {
+            $sub=$IdCuentaMov;
             if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")";
             else if ($Tipo == 'Pa') $sub = "(SELECT ID_CUENTA FROM t_formas_pago WHERE ID_F_PAGO=" . $IdFormaPago . ")";
-            else $sub = $TipoInterno == '' ? $IdCuentaMov : "(select ID_CUENTA from t_documentos WHERE TIPO_INTERNO='" . $TipoInterno . "' AND ID_EMPRESA=" . $IdEmpresa . ")";
+//            else $sub = $TipoInterno == ''  ? $IdCuentaMov : "(select ID_CUENTA from t_documentos WHERE TIPO_INTERNO='" . $TipoInterno . "' AND ID_EMPRESA=" . $IdEmpresa . ")";
+
+
 
             $query = "INSERT INTO  t_movimiento
        (`ID_TERCERO`, `ID_PRODUCTO`, `ID_CUENTA_MOV`, `TIPO_DOC`, `CONSECUTIVO`, `ID_F_PAGO`, `SECUENCIA`,`DESCRIPCION`, 
@@ -538,7 +542,7 @@
 
         public function TraePagosFinal($idEmpresa, $Consecutivo, $Tipo, $SegConsecutivo = 0)
         {
-            $query = "SELECT
+            echo "SELECT
             t_movimiento.VALOR,
             t_formas_pago.NOMBRE_F_PAGO,
             t_entidades.NOMBRE_ENTIDAD,

@@ -40,6 +40,7 @@
 		<td style="font-weight: bold;"> Abonado: ' . number_format($_GET['abonado'], 0, '', ',') . ' $</td>
 		<td style="font-weight: bold;"> Total a pagar: ' . number_format($_GET['valor'], 0, '', ',') . ' $</td></tr>
          <input type="hidden" value="' . $_GET['id'] . ' " name="ConsecutivoGastos">
+         <input type="hidden" value="' . $_GET['concepto'] . ' " name="Concepto">
 
                   <tr> <td  colspan="3" style="text-align: center;">
                  <br>  <select style="width: 220px;"  id="cmbfPago" name="cmbfPago" class="chosen-select" onchange="Change();" >

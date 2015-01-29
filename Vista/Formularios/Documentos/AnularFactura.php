@@ -22,6 +22,11 @@
             echo '<script>  window.location.href = "ReimpresionDocumentos.php?id=2"</script>';
             break;
 
+        case 'G':
+        case 'E':
+            echo '<script>  window.location.href = "ReimpresionDocumentos.php?id=3"</script>';
+            break;
+
     }
 
 

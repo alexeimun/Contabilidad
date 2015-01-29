@@ -59,7 +59,7 @@
         //Consultar que ID_CUENTA_MOV le paso
         // echo var_dump($_POST['ConsecutivoEgreso'])."TOTAL= ".$_SESSION['TOTAL2']." ABonado= ".$_POST['Abonado'];
         //Debito
-        $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'E', $Egresos->_ConsecutivoEgresos, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
+        $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, $_POST['Concepto'], 'E', $Egresos->_ConsecutivoEgresos, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
             1, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'E',$_POST['ConsecutivoGastos'], '', 0, '', 0, '', 'EGRESOS', $_SESSION['TOTAL2']);
 
 
@@ -196,8 +196,8 @@
     function Change() {
         $("#botones").load("procesaProductosFactura.php?action=consultafpago&id=" + document.getElementById('cmbfPago').value);
     }
-    function GeneraEgreso(consecutivo, valor, abonado, tercero) {
-        $("#formas").load("ProcesaEgresos.php?action=EgresoPago&id=" + consecutivo + "&valor=" + valor + "&Tercero=" + tercero + "&abonado=" + abonado,
+    function GeneraEgreso(consecutivo, valor, abonado, tercero,concepto) {
+        $("#formas").load("ProcesaEgresos.php?action=EgresoPago&id=" + consecutivo + "&valor=" + valor + "&Tercero=" + tercero + "&abonado=" + abonado+ "&concepto=" + concepto,
             function () {
                 $("#pagos").load("procesaProductosFactura.php?action=listarpagos");
                 $("#validaciones").load("ProcesaEgresos.php?action=validaegreso");

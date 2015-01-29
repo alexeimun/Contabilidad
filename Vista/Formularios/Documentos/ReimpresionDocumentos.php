@@ -73,6 +73,10 @@
         if (confirm("Seguro que quieres anular esta factura?"))
             window.location.href = 'AnularFactura.php?tipodoc=F&id=' + id;
     }
+    function AnularEgreso(id,doc) {
+        if (confirm("Seguro que quieres anular esta factura?"))
+            window.location.href = 'AnularFactura.php?tipodoc='+(doc==0?'E':'G')+'&id=' + id;
+    }
     function AnularRecibo(id) {
         if (confirm("Seguro que quieres anular este recibo?"))
             window.location.href = 'AnularFactura.php?tipodoc=R&id=' + id;

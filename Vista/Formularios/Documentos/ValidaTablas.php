@@ -127,8 +127,9 @@
                     $tabla .= '<a href="ReImprime.php?id=3&consecutivog=' . $valor['CONSECUTIVO_GASTOS'] . '&consecutivoe=' . $valor['CONSECUTIVO_EGRESOS'] . '
                     &tipo=' . $valor['TIPO_PAGO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></img></a>';
 
+                    $doc=$valor['TIPO_DOC']=='E'?0:1;
                     if ($valor['ANULADO'] == 0)
-                        $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO_GASTOS'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
+                        $tabla .= '<a href="" onclick="AnularEgreso(' . $valor['CONSECUTIVO_GASTOS'] .','.$doc.');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
 
                     $tabla .= '</tr>';
                 }
