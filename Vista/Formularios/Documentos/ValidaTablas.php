@@ -25,7 +25,6 @@
             <th style="text-align:right;">VALOR</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
 
-
                 foreach ($Documentos->TraeFacturasReimpresion($_SESSION['login'][0]["ID_EMPRESA"], 'CO') as $llave => $valor) {
                     $tabla .= '<tr><td style="text-align:left;">' . $valor['CONSECUTIVO'] . '</td>';
                     $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE1'] . ' ' . $valor['NOMBRE2'] . ' ' . $valor['APELLIDO1'] . ' ' . $valor['APELLIDO2'] . '</td>';

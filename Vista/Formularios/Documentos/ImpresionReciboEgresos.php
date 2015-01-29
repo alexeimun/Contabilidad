@@ -63,7 +63,7 @@
 
     //Salto de línea
 
-    $pdf->TraePagos($_SESSION['ConsecutivoGastos'], 'EGRESOS', 'G', isset($_SESSION['ConsecutivoEgresos']) ? $_SESSION['ConsecutivoEgresos'] : 0);
+    $pdf->TraePagos($_SESSION['ConsecutivoGastos'], 'ABONO GASTOS', 'G', isset($_SESSION['ConsecutivoEgresos']) ? $_SESSION['ConsecutivoEgresos'] : 0);
 
     $pdf->Ln();
     $pdf->Ln();

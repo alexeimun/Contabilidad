@@ -51,13 +51,12 @@
         $Secuencia = 0;
         foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Secuencia ++;
-            $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'F', $_POST['ConsecutivoFactura'], $valor['ID_F_PAGO'], $Secuencia, "ABONO REC" . $ConsecutivoRecibo, 'D',
-                1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', '',
-                $valor['ID_ENTIDAD'], $valor['NUMERO']);
+            $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'R', $_POST['ConsecutivoFactura'], $valor['ID_F_PAGO'], $Secuencia, "ABONO FACT" . $ConsecutivoRecibo, 'D',
+                1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa',0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
         }
 
-        $Documentos->InsertaMovimiento($_POST['txtTercero'], $_POST['ConsecutivoFactura'], 0, 'R', $ConsecutivoRecibo, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
-            0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'R', '', 0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
+        $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'R', $ConsecutivoRecibo, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
+            0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'R',$_POST['ConsecutivoFactura'], '', 0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
 
         $_SESSION['ConsecutivoRECIBO'] = $ConsecutivoRecibo;
         $_SESSION['Pagos'] = $_POST['ConsecutivoFactura'];

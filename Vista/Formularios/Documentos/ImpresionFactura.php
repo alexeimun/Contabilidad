@@ -180,7 +180,7 @@
     $pdf->TablaFactura($Datos);
     $pdf->SetX(20);
     $pdf->Cell(165, 6, "FORMAS DE PAGO", 0, 1, 'C', FALSE);
-    $pdf->TraePagos($Consecutivo, 'FACT', 'F');
+    $pdf->TraePagos($Consecutivo, 'CXC FACT', 'F');
 
 
     $pdf->Ln(1);

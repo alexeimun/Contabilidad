@@ -77,23 +77,23 @@
             $TotalPagos = 0;
             //FORMAS DE PAGO
             foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "ABONO FACT" . $Consecutivo, 'D',
-                    1, $valor['VALOR'], 0, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', '', $valor['ID_ENTIDAD']
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT" . $Consecutivo, 'D',
+                    1, $valor['VALOR'], 0, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa',0, '', $valor['ID_ENTIDAD']
                     , $valor['NUMERO']);
                 $TotalPagos += $valor['VALOR'];
             }
 
             //TOTAL PAGOS
 
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, 0, ++ $Secuencia, "TOTAL", '', 0, $Total, 0
-                , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $_POST['cmbTipoPago'], 0, '', 0, '', '', $TotalPagos);
+            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0,0, 'F', $Consecutivo, 0, ++ $Secuencia, "TOTAL", '', 0, $Total, 0
+                , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',0, $_POST['cmbTipoPago'], 0, '', 0, '', '', $TotalPagos);
 
             //Si es a crédito se genera Recibo
             if ($_POST['cmbTipoPago'] == 'CR') {
                 $Factura->TraeParametrosRecibo($_SESSION['login'][0]["ID_EMPRESA"]);
                 //Inserto el Total del recibo
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $Consecutivo, 0, 'R', $Factura->_ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', '',
-                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', '', 0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'R', $Factura->_ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', '',
+                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',$Consecutivo, '', 0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
                 $Documentos->ActualizaConsecutivo($Factura->_ConsecutivoRecibo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO');
             }
 

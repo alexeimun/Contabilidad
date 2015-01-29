@@ -174,7 +174,7 @@
         $total += ($valor['VALOR'] * $valor['CANTIDAD']);
         $descuento += $valor['DESCUENTO'];
     }
-    $pdf->TraePagos($_SESSION['Pagos'], 'REC', 'F', $_SESSION['ConsecutivoRECIBO']);
+    $pdf->TraePagos($_SESSION['Pagos'], 'ABONO FACT', 'F', $_SESSION['ConsecutivoRECIBO']);
 
     $pdf->Ln(1);
     $yyy = $pdf->GetY();

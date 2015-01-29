@@ -63,14 +63,10 @@
             $pdf->SetFont('Arial', '', 12);
             $pdf->Cell(60, 6, 'ANULADO', 1, 0, 'L') . $pdf->Ln();
         }
-
     }
 
     $pdf->Output();
 
     $pdf->Cell($pdf->PageNo());
 
-    include '../../View/Formularios/Informes/vw_Informes.php'
-
-?>
-
+    include '../../View/Formularios/Informes/vw_Informes.php';
