@@ -84,8 +84,7 @@
             $tabla .= '<a href="Imprime.php?id=0&consecutivo=' . $valor['CONSECUTIVO_RECIBO'] . '&
                 pagos=' . $valor['CONSECUTIVO_FACTURA'] . ' "><img src="../../Imagenes/print.png" title="Imprimir"></img></a>';
 
-            if ($valor['ANULADO'] == 0)
-                $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO_RECIBO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
+
             $tabla .= '</tr>';
         }
         // $tabla.='<tr></td><td></td><td></td><td><td style="text-align:right;">Total:</td><td></td></tr>';

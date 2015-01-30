@@ -86,8 +86,6 @@
             $tabla .= '<a href="Imprime.php?id=1&consecutivoE=' . $valor['CONSECUTIVO_EGRESOS'] . '&
                 consecutivoG=' . $valor['CONSECUTIVO_GASTOS'] . ' "><img src="../../Imagenes/print.png" title="Imprimir"></img></a>';
 
-            if ($valor['ANULADO'] == 0)
-                $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO_EGRESOS'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
             $tabla .= '</tr>';
         }
 

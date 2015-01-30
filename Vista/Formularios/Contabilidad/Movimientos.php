@@ -52,7 +52,6 @@
            <th style="text-align:left;">D/C</th>
             <th style="text-align:left;">VALOR</th>
             <th style="text-align:left;">PRODUCTO</th>
-            <th style="text-align:left;">DESCRIPCION</th>
              </tr></thead><tbody>';
 
             $Saldo = 0;
@@ -66,7 +65,6 @@
                 $tabla .= '<td style="text-align:left;">' . $valor['TIPO_MOV'] . '</td>';
                 $tabla .= '<td style="text-align:left;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
                 $tabla .= '<td style="text-align:left;">' . $valor['PRODUCTO'] . '</td>';
-                $tabla .= '<td style="text-align:left;">' . $valor['OBS'] . '</td>';
             }
 
             $tabla .= '</tbody></table>';

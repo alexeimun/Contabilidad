@@ -22,7 +22,7 @@
             $_SESSION['ReciboEgresos'] = 'no';
             $_SESSION['ConsecutivoGastos'] = $_GET['consecutivog'];
             $_SESSION['ConsecutivoEgresos'] = $_GET['consecutivoe'];
-            $_SESSION['Total'] = 'ok';
+            $_SESSION['Total'] = 'no';
             $_SESSION['Tipo'] = $_GET['tipo'];
             echo '<script > window.open("ImpresionReciboEgresos.php");self.location = "ReimpresionDocumentos.php?id=3" </script>';
             break;

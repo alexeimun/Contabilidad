@@ -46,11 +46,10 @@
         $cont = 1;
         $valor = [];
 
-        for ($i = 0; $i < $date; $i ++) {
-
+        for ($i = 0; $i < $date; $i ++)
             $valor = $Documentos->TraeLibroFiscal($_POST['ano'], $_POST['mes'], $_SESSION['login'][0]["ID_EMPRESA"], $cont);
 
-        }
+
     }
 
 ?>
@@ -273,10 +272,10 @@
         function Fila(i) {
             return '<tr>'
             + '<td><input readonly value="' + (i + 1) + '"></td>'
-            + '<td><input></td>'
-            + '<td><input></td>'
-            + '<td><input></td>'
-            + '<td><input></td>'
+            + '<td><input onkeypress="return validarNro(event)"></td>'
+            + '<td><input onkeypress="return validarNro(event)"></td>'
+            + '<td><input onkeypress="return validarNro(event)"></td>'
+            + '<td><input onkeypress="return validarNro(event)"></td>'
             + '<td><input readonly></td>'
             + '</tr>';
         }

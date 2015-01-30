@@ -1776,7 +1776,7 @@
             $Total = 0;
             $Documento = new cls_Documentos();
             // Datos
-echo var_dump($_SESSION['Total']);
+
             $Pagos = $_SESSION['Total'] == 'ok' ? $Documento->TraePagosTotal($_SESSION['login'][0]["ID_EMPRESA"], $Consecutivo, $Tipodoc) :
                 $Documento->TraePagosFinal($_SESSION['login'][0]["ID_EMPRESA"], $Consecutivo, $Tipo, $SegConsecutivo);
 

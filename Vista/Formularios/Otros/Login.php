@@ -35,7 +35,11 @@
 
     if (isset($_POST['btnIngresar']) != '') {
 
-        if ($Usuarios->validarCredenciales(LimpiarSql($_POST['txtLogin']), LimpiarSql($_POST['txtPass']))) {
+        #Sí algún usuario malintencionado esta tratando de aplicar una INYECCIÓN SQL a nuestro sitio, se imprime un mensaje que consiga amedrentarlo
+        if (preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/",$_POST['txtLogin'] )
+        || preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/",$_POST['txtPass'] )) {
+            echo '<script>alert("Me estás tratando de joder el sitio. Pero te hemos captura la ip y se ha enviado tu ubicación a la base de datos. Estar atento a próximas denuncias") </script>';
+        } else if ($Usuarios->validarCredenciales(LimpiarSql($_POST['txtLogin']), LimpiarSql($_POST['txtPass']))) {
 
             switch ($_SESSION['login'][0]["NIVEL"]) {
                 case 0 :
@@ -49,16 +53,15 @@
                     break;
             }
 
-            // echo '<script language = javascript>alert('.$_SESSION['login'][0]["NIVEL"].' ) </script>';
+
         } else {
-            echo '<script language = javascript>alert("Credenciales Incorrectas." ) </script>';
+            echo '<script>alert("Credenciales Incorrectas." ) </script>';
 
             $txtLogin = $_POST['txtLogin'];
             $txtPass = $_POST['txtPass'];
-
         }
-
     }
+
 ?>
 <html>
 <head>

@@ -343,7 +343,7 @@
 
         public function TraeDetalleCM($Consecutivo, $idEmpresa)
         {
-            echo "SELECT
+            $query= "SELECT
 		t_terceros.NOMBRE1,
 		t_terceros.NOMBRE2,
 		t_terceros.APELLIDO1,
@@ -463,7 +463,7 @@
             else   return false;
         }
 
-        public function TraeLibroFiscal($Ano, $Mes, $IdEmpresa, $Dia)
+        public function TraeLibroFiscal($Ano, $Mes,$Dia, $IdEmpresa)
         {
             $query = "SELECT
 
@@ -542,7 +542,7 @@
 
         public function TraePagosFinal($idEmpresa, $Consecutivo, $Tipo, $SegConsecutivo = 0)
         {
-            echo "SELECT
+            $query = "SELECT
             t_movimiento.VALOR,
             t_formas_pago.NOMBRE_F_PAGO,
             t_entidades.NOMBRE_ENTIDAD,

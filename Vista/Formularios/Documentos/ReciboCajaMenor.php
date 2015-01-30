@@ -45,7 +45,7 @@
 
         else {
             $Consecutivo = $CajaMenor->_Consecutivo;
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], $_POST['cmbConcepto'], 0, 'C', $Consecutivo, 0, 0, '', 'D',
+            $Documentos->InsertaMovimiento($_POST['cmbTercero'], $_POST['cmbConcepto'], 0, 'C', $Consecutivo, 0, 0, 'TOTAL', 'D',
                 1, $_POST['txtValor'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Con',0, '', 0, '',
                 $_POST['cmbCiudad'], $_POST['Codigo'], 'RECIBO_CAJA_MENOR');
 

@@ -30,6 +30,11 @@
         $pdf->SetX(20);
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(60, 6, 'COMPROBANTE DE EGRESO No. ' . $valor['CONSECUTIVO'], 0, 0, 'L', FALSE) . $pdf->Ln();
+        if($valor['ANULADO']==1) {
+            $pdf->SetFont('Arial', '', 8);
+            $pdf->SetX(20);
+            $pdf->Cell(60, 6, 'ANULADO', 0, 0, 'L', FALSE) . $pdf->Ln();
+        }
         $pdf->Ln();
         $pdf->SetX(20);
         $pdf->SetFont('Arial', '', 8);
