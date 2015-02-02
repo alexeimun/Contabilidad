@@ -4,14 +4,13 @@
     include '../../../Clases/cls_Documentos.php';
 
     session_start();
-
+    $Documentos = new cls_Documentos();
     /*
      * Se enumeran todas las posibles acciones
      * de la sección de documentos
      */
     if (isset($_POST['saldos'])) {
         try {
-            $Documentos = new cls_Documentos();
 
             $Documentos->TraeParametrosSaldosIniciales($_SESSION['login'][0]["ID_EMPRESA"]);
 
@@ -25,7 +24,6 @@
         exit;
     } else if (isset($_POST['nota'])) {
         try {
-            $Documentos = new cls_Documentos();
 
             $Documentos->TraeParametrosNotaContable($_SESSION['login'][0]["ID_EMPRESA"]);
 
@@ -37,4 +35,7 @@
             echo 'Ha ocurrido un error...';
         }
         exit;
+    } else if (isset($_POST['validar'])) {
+
+        echo $Documentos->RequiereTercero($_POST['id'], $_SESSION['login'][0]["ID_EMPRESA"]);
     }

@@ -112,7 +112,7 @@
 
         public function TraeInformacionFactura($Consecutivo, $idEmpresa)
         {
-            $query= "SELECT DISTINCT
+            $query = "SELECT DISTINCT
 		t_terceros.NOMBRE1,
 		t_terceros.NOMBRE2,
 		t_terceros.APELLIDO1,
@@ -139,7 +139,7 @@
 		INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 		INNER JOIN t_usuarios ON t_movimiento.USR_REGISTRO = t_usuarios.ID_USUARIO
 		
-		WHERE t_movimiento.TIPO_DOC='F' and t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.CONSECUTIVO=" . $Consecutivo . " AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+		WHERE t_movimiento.TIPO_DOC='F' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.CONSECUTIVO=" . $Consecutivo . " AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -343,7 +343,7 @@
 
         public function TraeDetalleCM($Consecutivo, $idEmpresa)
         {
-            $query= "SELECT
+            $query = "SELECT
 		t_terceros.NOMBRE1,
 		t_terceros.NOMBRE2,
 		t_terceros.APELLIDO1,
@@ -386,7 +386,7 @@
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CUENTA_MOV
 
-		 WHERE TIPO_DOC='E' and TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
+		 WHERE TIPO_DOC='E' AND TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -418,7 +418,7 @@
 
         public function TraeDetalleReciboEgresos($ConsecutivoE, $ConsecutivoG, $idEmpresa)
         {
-           $query= "SELECT
+            $query = "SELECT
 		t_terceros.NOMBRE1,
 		t_terceros.NOMBRE2,
 		t_terceros.APELLIDO1,
@@ -441,13 +441,12 @@
         }
 
         public function InsertaMovimiento($IdTercero, $IdProducto, $IdCuentaMov, $TipoDoc, $Consecutivo, $IdFormaPago, $Secuencia, $Descripcion, $TipoMov
-            , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '',$DocCruce=0, $Tipopago = '', $IdEntidad = 0, $Numero = '', $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0)
+            , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '', $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '', $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0)
         {
-            $sub=$IdCuentaMov;
+            $sub = $IdCuentaMov;
             if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")";
             else if ($Tipo == 'Pa') $sub = "(SELECT ID_CUENTA FROM t_formas_pago WHERE ID_F_PAGO=" . $IdFormaPago . ")";
 //            else $sub = $TipoInterno == ''  ? $IdCuentaMov : "(select ID_CUENTA from t_documentos WHERE TIPO_INTERNO='" . $TipoInterno . "' AND ID_EMPRESA=" . $IdEmpresa . ")";
-
 
 
             $query = "INSERT INTO  t_movimiento
@@ -462,7 +461,6 @@
             if ($this->_DB->Exec($query) > 0) return true;
             else   return false;
         }
-
 
 
         public function InsertaDocumento($doc, $nit)
@@ -625,4 +623,71 @@
             $this->_ConsecutivoNotaContable = $Campos[0][0];
         }
 
+        public function TraeProductosServicios($Ano, $Mes, $Dia, $IdEmpresa)
+        {
+            $query = "SELECT SUM(t_movimiento.VALOR)
+
+        from t_movimiento
+
+            INNER JOIN t_grupos ON t_movimiento.ID_CUENTA_MOV=t_grupos.CTA_VENTAS
+          INNER JOIN t_productos on t_productos.ID_PRODUCTO=t_movimiento.ID_PRODUCTO
+          AND t_grupos.ID_GRUPO=t_productos.ID_GRUPO
+
+        WHERE t_movimiento.TIPO='P' AND YEAR(t_movimiento.FECHA_REGISTRO)=$Ano AND MONTH(t_movimiento.FECHA_REGISTRO)=$Mes
+        AND DAY(t_movimiento.FECHA_REGISTRO)=$Dia AND t_movimiento.ID_EMPRESA=$IdEmpresa";
+
+            $resulset = $this->_DB->Query($query);
+            $Esaclar = $resulset->fetchAll();
+            return $Esaclar[0][0];
+        }
+
+        public function TraeCompraBienes($Ano, $Mes, $Dia, $IdEmpresa)
+        {
+            $query = "SELECT SUM(t_movimiento.VALOR)
+
+             from t_movimiento
+
+             WHERE t_movimiento.TIPO='BN' AND YEAR(t_movimiento.FECHA_REGISTRO)=$Ano AND MONTH(t_movimiento.FECHA_REGISTRO)=$Mes
+             AND DAY(t_movimiento.FECHA_REGISTRO)=$Dia AND t_movimiento.ID_EMPRESA=$IdEmpresa";
+
+            $resulset = $this->_DB->Query($query);
+            $Esaclar = $resulset->fetchAll();
+            return $Esaclar[0][0];
+        }
+
+        public function TraePagoServicios($Ano, $Mes, $Dia, $IdEmpresa)
+        {
+            $query = "SELECT SUM(t_movimiento.VALOR)
+
+             from t_movimiento
+
+             WHERE t_movimiento.TIPO='SV' AND YEAR(t_movimiento.FECHA_REGISTRO)=$Ano AND MONTH(t_movimiento.FECHA_REGISTRO)=$Mes
+             AND DAY(t_movimiento.FECHA_REGISTRO)=$Dia AND t_movimiento.ID_EMPRESA=$IdEmpresa";
+
+            $resulset = $this->_DB->Query($query);
+            $Esaclar = $resulset->fetchAll();
+            return $Esaclar[0][0];
+        }
+
+        public function TraeIVA($Ano, $Mes, $Dia, $IdEmpresa)
+        {
+            $query = "SELECT SUM(t_movimiento.VALOR)
+
+             from t_movimiento
+
+                 WHERE (t_movimiento.TIPO='I' OR t_movimiento.TIPO='Com') AND YEAR(t_movimiento.FECHA_REGISTRO)=$Ano AND MONTH(t_movimiento.FECHA_REGISTRO)=$Mes
+             AND DAY(t_movimiento.FECHA_REGISTRO)=$Dia AND t_movimiento.ID_EMPRESA=$IdEmpresa";
+
+            $resulset = $this->_DB->Query($query);
+            $Esaclar = $resulset->fetchAll();
+            return $Esaclar[0][0];
+        }
+
+        public function RequiereTercero($IdCuenta, $IdEmpresa)
+        {
+            $query = "SELECT MANEJA_TERCERO from t_cuentas where ID_CUENTA=$IdCuenta and ID_EMPRESA=$IdEmpresa";
+            $resulset = $this->_DB->Query($query);
+            $Esaclar = $resulset->fetchAll();
+            return $Esaclar[0][0];
+        }
     }

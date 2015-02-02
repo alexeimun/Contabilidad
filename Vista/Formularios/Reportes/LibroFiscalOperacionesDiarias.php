@@ -7,7 +7,7 @@
     include '../../../Clases/cls_Documentos.php';
     session_start();
 
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
 
     $Master = new Master();
@@ -191,7 +191,7 @@
                         <div id="tabs-1">
 
                             <input type="button" class="btnAzul" name="generar" value="Generar">
-                            <input type="button" class="btnAzul" name="exportar" value="Exportar">
+                            <input type="button" class="btnAzul" name="exportarauto" value="Exportar">
                             <input type="button" class="btnAzul" name="imprimirauto" value="Imprimir">
                             <br><br>
                             <table id="automatico" cellpadding="1" cellspacing="1">
@@ -217,7 +217,7 @@
                         </div>
                         <div id="tabs-2">
                             <input type="button" class="btnAzul" value="Evaluar">
-                            <input type="button" class="btnAzul" name="exportar" value="Exportar">
+                            <input type="button" class="btnAzul" name="exportarmanual" value="Exportar">
                             <input type="button" class="btnAzul" name="imprimirmanual" value="Imprimir">
                             <br><br>
                             <?= $manual ?>
@@ -258,16 +258,14 @@
                 url: 'Actions.php',
                 type: 'post',
                 data: {'generar': 'generar', 'ano': $('[name=ano]').val(), 'mes': $('[name=mes]').val()},
-                success: function (data) {$('#automatico').append(data);},
+                success: function (data) {$('#automatico tbody').html(data);},
                 error: function () {alert('Ha ocurrido un error en el sistema');}
             });
         });
 
         var dias = Days(new Date().getMonth(), new Date().getYear());
 
-        function Days(Month, Year) {
-            return new Date(Year || new Date().getFullYear(), Month, 0).getDate();
-        }
+        function Days(Month, Year) {return new Date(Year || new Date().getFullYear(), Month, 0).getDate();}
 
         function Fila(i) {
             return '<tr>'
@@ -326,8 +324,17 @@
             );
         }
 
-        $('input[name=exportar]').on('click', function () {
+        //EXPORTACIONES A EXCEL
+
+        $('input[name=exportarmanual]').on('click', function () {
             ArmarTabla('manual');
+            $("#temp").battatech_excelexport({
+                containerid: "temp", datatype: 'table'
+            });
+        });
+
+        $('input[name=exportarauto]').on('click', function () {
+            ArmarTabla('automatico');
             $("#temp").battatech_excelexport({
                 containerid: "temp", datatype: 'table'
             });

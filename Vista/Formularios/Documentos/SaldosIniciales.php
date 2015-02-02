@@ -79,6 +79,21 @@
 </div>
 
 <script>
+function Inspeccionara (obj) {
+    $.ajax({
+        url: 'Actions.php', type: 'post', data:{'validar':'validar','id':obj.options[obj.selectedIndex].value},
+
+        success: function (data)
+        {
+            if(data==0)
+            {
+                $('');
+            }
+        },
+        error: function () {alert('Ha ocurrido un error en el sistema');}
+    });
+}
+
     $(document).ready(function () {
 
         var MaxInputs = 1000; //Número Maximo de Campos
@@ -88,6 +103,10 @@
         //var x = número de campos existentes en el contenedor
         var x = $("#contenedor div").length;
         var FieldCount = x - 1; //para el seguimiento de los campos
+
+        $('select').on('change',function () {
+           console.log('s');
+        });
 
         //Campo Inicial
         {
@@ -99,14 +118,13 @@
                 //# Filas
             + ' <div><div  id="fila"   class="btnAzul" style="height: 13px;width: 24px;padding: 6px">' + (FieldCount + 1) + '</div></div>'
 
-            + '<div> <select id="cmbCuenta" name="cmbCuenta[]" style="width:200px;" class="chosen-select" >'
+            + '<div> <select id="cmbCuenta" name="cmbCuenta[]"  style="width:200px;" class="chosen-select" >'
             + ' <?=$Cuenta ?> '
             + ' </select></div>'
 
-            + '<div> <select  name="cmbTercero[]" id="cmbTercero" class="chosen-select" style="width:200px;">'
+            + '<div> <select  name="cmbTercero[]" id="cmbTercero" class="chosen-select" style="width:200px;" >'
             + ' <?=$Tercero ?> '
-            + ' </select></div>'
-
+            + '</select></div>'
 
             + '<div> <select  name="cmbTipoMov[]" class="chosen-select" id="cmbTipoMov" style="width:100px;">'
             + ' <option value="D" selected>DEBITO</option>'
@@ -116,7 +134,7 @@
             + '<div> <input type="text" name="Valor[]" style="width: 100px;" placeholder="Valor" class="Valor" onkeypress="return validarNro(event)" required/></div>'
 
 
-            + ' <div><input type="button" class="eliminar btnAzul"  title="Eliminar campo" value="X" '
+            + ' <div><input type="button" class="eliminar btnAzul"  title="Eliminar campo" value="X"'
             + ' style="width:40px;" style="width: 30px;" >'
             + '</div></div>');
             x++; //text box increment
@@ -133,7 +151,7 @@
 
                 + ' <div><div id="fila"  class="btnAzul" style="height: 13px;width: 24px;padding: 6px">' + (FieldCount + 1) + '</div></div>'
 
-                + '<div> <select id="cmbCuenta"  name="cmbCuenta[]" class="chosen-select" style="width:200px;">'
+                + '<div> <select id="cmbCuenta"  onchange="Inspeccionar(this)" name="cmbCuenta[]"  class="chosen-select" style="width:200px;">'
                 + ' <?=$Cuenta ?> '
                 + ' </select></div>'
 
@@ -272,14 +290,11 @@
             $(selector).chosen(config[selector]);
         }
     });
-
-
 </script>
 <style>
     #contenedor {
         margin-left: 220px;
         width: 940px;
-
     }
 
     #contenedor div {

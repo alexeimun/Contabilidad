@@ -687,10 +687,4 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             return $resulset->fetchAll();
         }
 
-
-        public  function TraeProductosServicios($Ano, $Mes,$Dia, $IdEmpresa)
-        {
-            $resulset = $this->_DB->Query("CALL TraeValorProdServ($IdEmpresa,$Dia,$Ano,$Mes)");
-            return $resulset->fetchAll();
-        }
     }

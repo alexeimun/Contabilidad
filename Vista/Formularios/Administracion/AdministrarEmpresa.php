@@ -4,53 +4,54 @@
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
     include '../../../Clases/cls_Empresas.php';
-    include '../../../Clases/cls_Usuarios.php';
     session_start();
-    if (isset($_SESSION['login']) != '' && $_SESSION['login'][0]["NIVEL"] == 1)
+
+    if (isset($_SESSION['login']) !== '' && $_SESSION['login'][0]["NIVEL"] === 1)
         echo '<script> self.location = "../Otros/Login.php"</script>';
 
-        if ($_GET['id'] == "")
-            echo '<script language = javascript>  self.location = "Empresas.php"</script>';
 
-        $Master = new Master();
-        $menu = $Master->Menu();
-        $Empresa = new cls_Empresas();
-        $Usuarios = new cls_Usuarios();
+    if ($_GET['id'] == "")
+        echo '<script>  self.location = "Empresas.php"</script>';
 
-        $txtNombre = '';
-        $txtNit = '';
-        $CantidadUsuarios = 0;
-        $txtTelefono = '';
-        $txtEmail = '';
-        $Logo = '';
-        $Estado = '';
+    $Master = new Master();
+    $menu = $Master->Menu();
+    $Empresa = new cls_Empresas();
+    $Usuarios = new cls_Usuarios();
 
-        foreach ($Empresa->TraeInfoEmpresa($_GET['id']) as $llave => $valor) {
-            $txtNombre = $valor['NOMBRE'];
-            $txtNit = $valor['NIT'];
-            $txtEmail = $valor['EMAIL'];
-            $txtDireccion = $valor['DIRECCION'];
-            $txtTelefono = $valor['TELEFONO'];
-            $Logo = $valor['LOGO'];
-            $Estado = $valor['ESTADO'];
+    $txtNombre = '';
+    $txtNit = '';
+    $CantidadUsuarios = 0;
+    $txtTelefono = '';
+    $txtEmail = '';
+    $Logo = '';
+    $Estado = '';
+
+    foreach ($Empresa->TraeInfoEmpresa($_GET['id']) as $llave => $valor) {
+        $txtNombre = $valor['NOMBRE'];
+        $txtNit = $valor['NIT'];
+        $txtEmail = $valor['EMAIL'];
+        $txtDireccion = $valor['DIRECCION'];
+        $txtTelefono = $valor['TELEFONO'];
+        $Logo = $valor['LOGO'];
+        $Estado = $valor['ESTADO'];
+        $CantidadUsuarios = $valor['CANT_USUARIOS'];
+    }
+
+    if ($Estado == 1) {
+        $a = "'d'";
+        $Boton = ' <input type="button" class="btnRojo" onclick="ActivaOdesactiva(' . $a . ',' . $_GET['id'] . ')" id="btnDesactivar" name="btnDesactivar" value="DESACTIVAR"  style="width:200px;"/>';
+    } else {
+        $a = "'a'";
+        $Boton = ' <input type="button" class="btnVerde" onclick="ActivaOdesactiva(' . $a . ',' . $_GET['id'] . ')"  id="btnActivar" name="btnActivar" value="ACTIVAR"  style="width:200px;"/>';
+    }
+
+    if (isset($_POST['btnGuardar']) != '' && isset($_POST['cantidad']) != '') {
+        $Empresa->ActualizarCantUsuarios($_POST['cantidad'], $_GET['id']);
+
+        foreach ($Empresa->TraeInfoEmpresa($_GET['id']) as $llave => $valor)
             $CantidadUsuarios = $valor['CANT_USUARIOS'];
-        }
-
-        if ($Estado == 1) {
-            $a = "'d'";
-            $Boton = ' <input type="button" class="btnRojo" onclick="ActivaOdesactiva(' . $a . ',' . $_GET['id'] . ')" id="btnDesactivar" name="btnDesactivar" value="DESACTIVAR"  style="width:200px;"/>';
-        } else {
-            $a = "'a'";
-            $Boton = ' <input type="button" class="btnVerde" onclick="ActivaOdesactiva(' . $a . ',' . $_GET['id'] . ')"  id="btnActivar" name="btnActivar" value="ACTIVAR"  style="width:200px;"/>';
-        }
-
-        if (isset($_POST['btnGuardar']) != '' && isset($_POST['cantidad']) != '') {
-            $Empresa->ActualizarCantUsuarios($_POST['cantidad'], $_GET['id']);
-
-            foreach ($Empresa->TraeInfoEmpresa($_GET['id']) as $llave => $valor)
-                $CantidadUsuarios = $valor['CANT_USUARIOS'];
-        }
-        $tablaUsuarios = '<table id="table" class="table" style="width:60%;">
+    }
+    $tablaUsuarios = '<table id="table" class="table" style="width:60%;">
            	<thead>
 					<tr>
 <th style="text-align:left;">NOMBRE</th>
@@ -58,18 +59,18 @@
             <th style="text-align:left;">E-MAIL</th>
             <th style="text-align:left;">CLAVE</th><th style="text-align:left;">FECHA REGISTRO</th></tr></thead><tbody>
 ';
-        $cont = 0;
-        foreach ($Usuarios->TraeUsuariosEmpresa($_GET['id']) as $llave => $valor) {
-            $idEmpresa = $valor['ID_EMPRESA'];
-            $tablaUsuarios .= '<tr><td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
-            $tablaUsuarios .= '<td style="text-align:left;">' . $valor['DOCUMENTO'] . '</td>';
-            $tablaUsuarios .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
-            $tablaUsuarios .= '<td style="text-align:left;">' . $valor['PASSWORD'] . '</td>';
-            $tablaUsuarios .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td></tr>';
-            $cont ++;
-        }
+    $cont = 0;
+    foreach ($Usuarios->TraeUsuariosEmpresa($_GET['id']) as $llave => $valor) {
+        $idEmpresa = $valor['ID_EMPRESA'];
+        $tablaUsuarios .= '<tr><td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
+        $tablaUsuarios .= '<td style="text-align:left;">' . $valor['DOCUMENTO'] . '</td>';
+        $tablaUsuarios .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
+        $tablaUsuarios .= '<td style="text-align:left;">' . $valor['PASSWORD'] . '</td>';
+        $tablaUsuarios .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td></tr>';
+        $cont ++;
+    }
 
-        $tablaUsuarios .= '</tbody></table>';
+    $tablaUsuarios .= '</tbody></table>';
 
 ?>
 <html>

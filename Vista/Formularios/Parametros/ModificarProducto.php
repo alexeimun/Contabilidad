@@ -74,6 +74,7 @@
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
+    <?php include '../../Css/css.php' ?>
 </head>
 <style type="text/css">
     select {
@@ -94,7 +95,7 @@
 
     input[type='checkbox'] {
         width: 20px;
-        height: 20px
+        height: 20px;
     }
 </style>
 

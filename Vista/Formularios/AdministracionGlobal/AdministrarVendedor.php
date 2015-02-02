@@ -1,10 +1,8 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
     include '../../../Clases/cls_Vendedores.php';
-    include '../../../Clases/cls_Usuarios.php';
     include '../../../Clases/cls_Empresas.php';
     session_start();
     if (isset($_SESSION['login']) != '' && $_SESSION['login'][0]["NIVEL"] == 2) {

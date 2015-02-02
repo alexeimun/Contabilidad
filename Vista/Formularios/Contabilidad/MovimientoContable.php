@@ -32,6 +32,7 @@
     <script src="../../Js/menu.js"></script>
     <script src="../../Js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
+    <script type="text/javascript" src="../../Js/Excel/jquery.battatech.excelexport.js"></script>
     <?php include '../../Css/css.php' ?>
 </head>
 
@@ -39,7 +40,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 
@@ -77,6 +78,7 @@
                 </form>
                 <br>
                 <input type="button" value="Generar" class="btnAzul"/>
+                <input type="button" value="Exportar" class="btnAzul"/>
                 <br><br>
 
                 <div id="busqueda"></div>
@@ -89,20 +91,37 @@
 <script>
     $(document).on('ready', function () {
         $('input[value=Generar]').on('click', function () {
-            $.ajax(
-                {
-                    url: 'Movimientos.php',
-                    type: 'post',
-                    data: $('form').serialize(),
-                    success: function (data) {
-                        $('#busqueda').html(data);
-                    }
-                });
+                $.ajax(
+                    {
+                        url: 'Movimientos.php',
+                        type: 'post',
+                        data: $('form').serialize(),
+                        success: function (data) {
+                            $('#busqueda').html(data);
+                        }
+                    });
+        });
+
+        $('input[value=Exportar]').on('click', function () {
+                $.ajax(
+                    {
+                        url: 'Movimientos.php',
+                        type: 'post',
+                        data: $('form').serialize(),
+                        success: function (data) {
+                            $('#busqueda').html(data);
+                        }
+                    });
+        });
+
+        $('input[name=exportarmanual]').on('click', function () {
+
+            $("#temp").battatech_excelexport({
+                containerid: "temp", datatype: 'table'
+            });
         });
     });
 </script>
-<style>
 
-</style>
 </body>
 </html>
