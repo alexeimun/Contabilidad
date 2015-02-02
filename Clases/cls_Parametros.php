@@ -474,7 +474,6 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             }
             // var_dump($datos);
             return $datos;
-            return $resulset->fetchAll();
         }
 
         public function ValidaDocVendedor($Cod)
@@ -492,7 +491,6 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             }
             // var_dump($datos);
             return $datos;
-            return $resulset->fetchAll();
         }
 
         public function ValidaCodigoProductoEditar($Cod, $id)
@@ -510,7 +508,6 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             }
             // var_dump($datos);
             return $datos;
-            return $resulset->fetchAll();
         }
 
         public function InsertaProducto($Codigo, $Nombre, $Tipo, $Precio, $Grupo, $UsrReg, $IdEmpresa)
@@ -581,7 +578,6 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             }
             // var_dump($datos);
             return $datos;
-            return $resulset->fetchAll();
         }
 
         public function ValidaDocumentoTerceroEditar($Cod, $Id)
@@ -599,7 +595,6 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             }
             // var_dump($datos);
             return $datos;
-            return $resulset->fetchAll();
         }
 
 
@@ -689,6 +684,13 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
         public function TraeMovTerceroporDoc($idEmpresa, $Doc, $inicio, $fin)
         {
             $resulset = $this->_DB->Query("CALL TraeMovTerceroporDoc(" . $idEmpresa . "," . $Doc . ", '" . $inicio . "', '" . $fin . "')");
+            return $resulset->fetchAll();
+        }
+
+
+        public  function TraeProductosServicios($Ano, $Mes,$Dia, $IdEmpresa)
+        {
+            $resulset = $this->_DB->Query("CALL TraeValorProdServ($IdEmpresa,$Dia,$Ano,$Mes)");
             return $resulset->fetchAll();
         }
     }

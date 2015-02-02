@@ -463,22 +463,7 @@
             else   return false;
         }
 
-        public function TraeLibroFiscal($Ano, $Mes,$Dia, $IdEmpresa)
-        {
-            $query = "SELECT
 
-		(SELECT sum(VALOR) FROM t_movimiento WHERE DAY(FECHA_REGISTRO)='" . $Dia . "' AND MONTH(FECHA_REGISTRO)='" . $Mes . "'
-		AND YEAR(FECHA_REGISTRO) ='" . $Ano . "') AS DIA,
-		if(Month(t_movimiento.FECHA_REGISTRO)= '" . $Mes . "' AND YEAR(t_movimiento.FECHA_REGISTRO)='" . $Ano . "',SUM(t_movimiento.VALOR),0) AS TOTAL
-		
-		FROM t_movimiento
-		
-		INNER JOIN t_empresas ON t_empresas.ID_EMPRESA=t_movimiento.ID_EMPRESA
-		WHERE  t_empresas.ID_EMPRESA=" . $IdEmpresa;
-
-            $resulset = $this->_DB->Query($query);
-            return $resulset->fetchAll();
-        }
 
         public function InsertaDocumento($doc, $nit)
         {

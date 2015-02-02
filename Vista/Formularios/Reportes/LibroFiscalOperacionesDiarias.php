@@ -64,7 +64,7 @@
     <script src="../../Js/menu.js"></script>
 
     <script type="text/javascript" language="javascript" src="../../Js/jquery.js"></script>
-    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script src="../../Js/jquery-ui.js"></script>
     <script type="text/javascript" language="javascript" src="../../Js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
     <link rel="stylesheet" type="text/css" href="../../Css/tabs.css"/>

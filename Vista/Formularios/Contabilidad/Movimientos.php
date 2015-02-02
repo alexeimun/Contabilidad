@@ -17,7 +17,7 @@
            <th style="text-align:left;">FECHA</th>
            <th style="text-align:left;">D/C</th>
             <th style="text-align:left;">VALOR</th>
-            <th style="text-align:left;">PRODUCTO</th>
+            <th style="text-align:left;">PRODUCTO/SERVICIO</th>
             <th style="text-align:left;">DESCRIPCION</th>
             <th style="text-align:left;">SALDO</th>
              </tr></thead><tbody>';
@@ -51,7 +51,7 @@
            <th style="text-align:left;">FECHA</th>
            <th style="text-align:left;">D/C</th>
             <th style="text-align:left;">VALOR</th>
-            <th style="text-align:left;">PRODUCTO</th>
+            <th style="text-align:left;">PRODUCTO/SERVICIO</th>
              </tr></thead><tbody>';
 
             $Saldo = 0;
