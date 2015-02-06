@@ -31,7 +31,7 @@
         $TipoInterno = '';
 
         if ($_GET['id'] == "")
-            echo '<script language = javascript> self.location = "Documentos.php";</script>';
+            echo '<script > self.location = "Documentos.php";</script>';
 
         foreach ($Parametros->TraeDatosDocumento($_GET['id']) as $llave => $valor) {
             $TipoInterno = $valor['TIPO_INTERNO'];

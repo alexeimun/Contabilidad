@@ -45,7 +45,7 @@
         $tabla .= '</tbody></table>';
 
     } else {
-        echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "../Otros/Login.php"</script>';
     }
 ?>
 <html>

@@ -6,7 +6,7 @@
 
 
     if ($_GET['id'] == "") {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "FormasDePago.php"
 	</script>';
     }
@@ -15,12 +15,12 @@
 
     if ($Param->EliminarFormaPago($_GET['id']) > 0) {
 
-        echo '<script language = javascript>
+        echo '<script >
                       window.location.href = "FormasDePago.php"
                      </script>';
 //             
     } else {
-        echo '<script language = javascript>
+        echo '<script >
 	alert("Error al eliminar" )
 	</script>';
         header('location:FormasDePago.php');

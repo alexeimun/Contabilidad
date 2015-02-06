@@ -201,6 +201,7 @@
       <column name="ABONADO" sqlType="DECIMAL" precision="18" scale="0" nullable="true" jdbcType="3"/>
       <column name="TIPO" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="DOC_CRUCE" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="ID_CONCEPTO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <primary-key name="PRIMARY" columns="ID_MOVIMIENTO"/>
     </table>
     <table name="t_pagos_t" schema="" catalog="contasistin" type="TABLE">
@@ -304,6 +305,14 @@
         <parameter name="Fin" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="4"/>
       </prototype>
     </procedure>
+    <procedure name="TraeMovContableTodo" schema="" catalog="contasistin" type="1">
+      <prototype>
+        <parameter name="idEmpresa" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" type="1" index="1"/>
+        <parameter name="CuentaMov" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" type="1" index="2"/>
+        <parameter name="Inicio" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="3"/>
+        <parameter name="Fin" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="4"/>
+      </prototype>
+    </procedure>
     <procedure name="TraeMovTerceroporDoc" schema="" catalog="contasistin" type="1">
       <prototype>
         <parameter name="idEmpresa" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" type="1" index="1"/>
@@ -318,6 +327,23 @@
         <parameter name="IdTercero" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" type="1" index="2"/>
         <parameter name="Inicio" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="3"/>
         <parameter name="Fin" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="4"/>
+      </prototype>
+    </procedure>
+    <procedure name="TraeProdServ" schema="" catalog="contasistin" type="1">
+      <prototype>
+        <parameter name="IdEmpresa" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" type="1" index="1"/>
+        <parameter name="Dia" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" type="1" index="2"/>
+        <parameter name="Mes" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" type="1" index="3"/>
+        <parameter name="Ano" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="4"/>
+      </prototype>
+    </procedure>
+    <procedure name="TraeValorProdServ" schema="" catalog="contasistin" type="2">
+      <prototype>
+        <parameter name="IdEmpresa" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" type="1" index="1"/>
+        <parameter name="Dia" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" type="1" index="2"/>
+        <parameter name="Mes" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6" type="1" index="3"/>
+        <parameter name="Ano" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="4"/>
+        <parameter name="" sqlType="DECIMAL" precision="15" scale="0" nullable="true" jdbcType="3" type="5" index="0"/>
       </prototype>
     </procedure>
     <procedure name="TraerGastos" schema="" catalog="contasistin" type="1">

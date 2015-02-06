@@ -53,15 +53,15 @@
 
             //Ingreso del valor base
             $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $_POST['cmbConcepto'], 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                1, $_POST['txtValorBase'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['bienSer'], 0, $_POST['cmbTipoPago']);
+                1, $_POST['txtValorBase'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['bienSer'],0, 0, $_POST['cmbTipoPago']);
 
             //Ingreso del IVA
             $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $Egresos->_IdCuentaGastos, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                1, $_POST['txtIVA'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'I',0, $_POST['cmbTipoPago']);
+                1, $_POST['txtIVA'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'I',0,0, $_POST['cmbTipoPago']);
 
             //Ingreso del Consumo
             $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $Egresos->_IdCuentaConsumo, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                1, $_POST['txtConsumo'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Com', 0, $_POST['cmbTipoPago']);
+                1, $_POST['txtConsumo'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Com', 0,0, $_POST['cmbTipoPago']);
 
 
             $TotalValores = $_POST['txtValorBase'] + $_POST['txtIVA'] + $_POST['txtConsumo'];
@@ -76,11 +76,11 @@
                 //FORMAS DE PAGO
                 foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
                     $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'G', $Egresos->_ConsecutivoGastos, $valor['ID_F_PAGO'], ++ $Secuencia, "ABONO GASTOS" . $Egresos->_ConsecutivoEgresos,
-                        'D', 0, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
+                        'D', 0, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0,0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
                 }
 
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $_POST['cmbConcepto'], 'E',  $Egresos->_ConsecutivoEgresos, '', ++ $Secuencia,
-                    'TOTAL', '', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',$Egresos->_ConsecutivoGastos, $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'E',  $Egresos->_ConsecutivoEgresos, '', ++ $Secuencia,
+                    'TOTAL', '', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',$_POST['cmbConcepto'],$Egresos->_ConsecutivoGastos, $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
 
                 $Documentos->ActualizaConsecutivo($Egresos->_ConsecutivoEgresos + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'EGRESOS');
             } else //De Contado
@@ -89,11 +89,11 @@
                 //FORMAS DE PAGO
                 foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
                     $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'G', $Egresos->_ConsecutivoGastos, $valor['ID_F_PAGO'], ++ $Secuencia, "ABONO GASTOS" . $Egresos->_ConsecutivoGastos,
-                        'D', 0, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
+                        'D', 0, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, 0,'', $valor['ID_ENTIDAD'], $valor['NUMERO']);
                 }
                 $_SESSION['Tipo'] = 'CO';
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $_POST['cmbConcepto'], 'E', $Egresos->_ConsecutivoGastos, $_POST['cmbfPago'], ++ $Secuencia,
-                    'TOTAL', '', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', 0, $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'E', $Egresos->_ConsecutivoGastos, $_POST['cmbfPago'], ++ $Secuencia,
+                    'TOTAL', '', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',$_POST['cmbConcepto'], 0, $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
             }
 
             $Documentos->EliminaPagosFinal($_SESSION['login'][0]["ID_USUARIO"]);

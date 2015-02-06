@@ -6,7 +6,7 @@
 
 
     if ($_GET['id'] == "") {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "ProductosServiciosGrupos.php?me=2"
 	</script>';
     }
@@ -17,12 +17,12 @@
 
     if ($Ter->EliminarGrupo($ID) > 0) {
 
-        echo '<script language = javascript>
+        echo '<script >
                       window.location.href = "ProductosServicosGrupos.php?me=2"
                      </script>';
 //             
     } else {
-        echo '<script language = javascript>
+        echo '<script >
 	alert("Error al eliminar" )
 	</script>';
         header('location:ProductosServicosGrupos.php?me=2');

@@ -29,7 +29,7 @@
                 }
             }
 
-            echo '<script language = javascript> alert("Se creó el usuario correctamente.");self.location = "Usuarios.php" </script>';
+            echo '<script > alert("Se creó el usuario correctamente.");self.location = "Usuarios.php" </script>';
 
 
         }

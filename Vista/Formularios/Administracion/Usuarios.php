@@ -40,7 +40,7 @@
             $tabla .= '<tr><td colspan=5 style="text-align:center;"><a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
 
         $tabla .= '</tbody></table>';
-    } else echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+    } else echo '<script > self.location = "../Otros/Login.php"</script>';
 
 ?>
 <html>

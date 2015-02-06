@@ -3,20 +3,17 @@
 
     class Master
     {
-
         public function Menu()
         {
-
-
             if ($_SESSION['login'][0]["NIVEL"] == 0) {
 
                 $Usuario = new cls_Usuarios();
                 $_SESSION['permisos'] = $valor = $Usuario->traePermisos($_SESSION['login'][0]["ID_USUARIO"]);
 
                 $menu = '<div id="wrapper">
-    <ul class="menu">
-        <li class="item1"><a href="#">Documentos</a>
-            <ul>';
+            <ul class="menu">
+                <li class="item1"><a href="#">Documentos</a>
+                    <ul>';
                 if ($valor[0][1] == 1)
                     $menu .= '  <li ><a href="../Documentos/Factura.php">Factura</a></li>';
 
@@ -33,13 +30,10 @@
                 if ($valor[6][1] == 1)
                     $menu .= '<li ><a href="../Documentos/SaldosIniciales.php">Saldos Iniciales</a></li>';
                 $menu .= ' <li ><a href="../Documentos/ReimpresionDocumentos.php?id=0">Reimpresión Documentos</a></li>
-
-
             </ul>
         </li>
         <li class="item2"><a href="#">Contabilidad</a>
             <ul>';
-
                 if ($valor[9][1] == 1)
                     $menu .= '<li ><a href="../Contabilidad/PUC.php">PUC</a></li>';
                 if ($valor[10][1] == 1)
@@ -99,66 +93,55 @@
                     $menu .= '<li ><a href="../Reportes/CxP.php">CxP</a></li>';
                 if ($valor[28][1] == 1)
                     $menu .= ' <li ><a href="../Reportes/LibroFiscalOperacionesDiarias.php">Libro Fiscal Operaciones Diarias</a></li>';
-
-
                 $menu .= '
             </ul>
         </li>
           
         <li class="item5"><a href="#">Parametros</a>  
             <ul>';
-
                 $menu .= ' <li ><a href="../Parametros/Terceros.php">Terceros</a></li>';
                 if ($valor[29][1] == 1)
                     $menu .= '<li ><a href="../Empresas/InformacionEmpresa.php">Información de Empresa</a></li>';
-
                 if ($valor[30][1] == 1)
                     $menu .= '<li ><a href="../Usuarios/Usuarios.php">Usuarios</a></li>';
                 if ($valor[31][1] == 1)
-                    $menu .= '<li ><a href="../Documentos/Documentos.php">Documentos</a></li>';
+                    $menu .= '<li ><a href="../Documentos/Documento.php">Documentos</a></li>';
                 if ($valor[32][1] == 1)
                     $menu .= '<li ><a href="../Parametros/ProductosServiciosGrupos.php?me=1">Poductos y Servicios</a></li>
                      <li ><a href="../Parametros/FormasDePago.php">Formas de Pago</a></li>';
-
-                    $menu .= '<li ><a href="../Parametros/Entidades.php">Entidades</a></li>';
-
-                    $menu .= '<li ><a href="../Parametros/Conceptos.php">Conceptos</a></li>';
+                $menu .= '<li ><a href="../Parametros/Entidades.php">Entidades</a></li>';
+                $menu .= '<li ><a href="../Parametros/Conceptos.php">Conceptos</a></li>';
                 $menu .= '
             </ul>
         </li>
-        <a style="font-family:Helvetica, Arial, sans-serif;color: #fff;font-weight:600;padding-left:35px;" href="../Otros/Logout.php">Salir</a> 
+        <a style="font-family:Helvetica, Arial, sans-serif;color: #fff;font-weight:600;padding-left:35px;" href="../Otros/Logout.php">Salir</a>
     </ul>
 </div>';
                 return $menu;
             } else if ($_SESSION['login'][0]["NIVEL"] == 1) {
                 return '<div id="wrapper">
- 
-    <ul class="menu">
-        <li class="item5"><a href="#">Administración</a>  
-            <ul style="text-align:left;">
-                 <li ><a href="../Administracion/Empresas.php">Empresas</a></li>
-                  <li ><a href="../Vendedores/InformacionVendedor.php">Modificar Datos</a></li>
-            </ul>
-        </li>
+                <ul class="menu">
+                    <li class="item5"><a href="#">Administración</a>
+                        <ul style="text-align:left;">
+                             <li ><a href="../Administracion/Empresas.php">Empresas</a></li>
+                              <li ><a href="../Vendedores/InformacionVendedor.php">Modificar Datos</a></li>
+                    </ul>
+                </li>
         <a style="font-family:Helvetica, Arial, sans-serif;color: #fff;font-weight:600;padding-left:35px;" href="../Otros/Logout.php">Salir</a> 
     </ul>
  
 </div>';
             } else {
                 return '<div id="wrapper">
-    <ul class="menu">
-        <li class="item5"><a href="#">Administración</a>  
-            <ul>
-                 <li ><a href="../AdministracionGlobal/Vendedores.php">Vendedores</a></li>
-               <!---  <li ><a href="../AdministracionGlobal/">Administradores</a></li>-->
-            </ul>
-        </li>
-        <a style="font-family:Helvetica, Arial, sans-serif;color: #fff;font-weight:600;padding-left:35px;" href="../Otros/Logout.php">Salir</a> 
-    </ul>
- 
-</div>';
+                <ul class="menu">
+                    <li class="item5"><a href="#">Administración</a>
+                        <ul>
+                             <li ><a href="../AdministracionGlobal/Vendedores.php">Vendedores</a></li>
+                           <!---  <li ><a href="../AdministracionGlobal/">Administradores</a></li>-->
+                        </ul>
+                    </li>
+                    <a style="font-family:Helvetica, Arial, sans-serif;color: #fff;font-weight:600;padding-left:35px;" href="../Otros/Logout.php">Salir</a>
+                </ul></div>';
             }
         }
     }
-
-?>

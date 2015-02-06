@@ -36,7 +36,7 @@
                     $Usuarios->registraPermisos($identi, $valor['ID_MODULO'], 1, $_SESSION['login'][0]['ID_VENDEDOR']);
 
             }
-            echo '<script language = javascript>alert("Se creó la empresa correctamente."); self.location = "Empresas.php"; </script>';
+            echo '<script >alert("Se creó la empresa correctamente."); self.location = "Empresas.php"; </script>';
         }
     } else echo '<script> self.location = "../Otros/Login.php";</script>';
 

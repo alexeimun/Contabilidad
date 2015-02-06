@@ -8,7 +8,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "") {
-            echo '<script language = javascript>
+            echo '<script >
         self.location = "Usuarios.php"
 	</script>';
         }
@@ -48,7 +48,7 @@
                 $Usuarios->actualizaPermisos($_GET['id'], $valor['ID_MODULO'], $_POST['txt' . $valor['ID_MODULO']]);
             }
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se modificó el usuario correctamente.")
                     self.location = "Usuarios.php"
                     </script>';
@@ -56,7 +56,7 @@
         }
 
     } else {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "../Otros/Login.php"
 	</script>';
     }

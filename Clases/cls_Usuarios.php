@@ -210,11 +210,10 @@
      VALUES ('Usuario 1', '" . $identi . "',(SELECT ID_EMPRESA FROM t_empresas WHERE NIT='" . $nitEmpresa . "'),1, now(),
      (SELECT ID_CREDENCIAL FROM t_credenciales WHERE EMAIL='" . $user . "'),1)";
 
-            if ($this->_DB->Exec($query) > 0) {
+            if ($this->_DB->Exec($query) > 0)
                 return true;
-            } else {
+            else
                 return false;
-            }
         }
 
 
@@ -259,7 +258,6 @@
             foreach ($Campos as $key => $datos) {
                 $this->_ExisteCorreo = ($datos[0]);
             }
-            // var_dump($datos);
             return $datos;
         }
 
@@ -277,7 +275,6 @@
             foreach ($Campos as $key => $datos) {
                 $this->_CantUsuarios = ($datos[0]);
             }
-            // var_dump($datos);
             return $datos;
         }
 
@@ -298,7 +295,6 @@
             foreach ($Campos as $key => $datos) {
                 $this->_ExisteCorreo = ($datos[0]);
             }
-            // var_dump($datos);
             return $datos;
         }
 
@@ -315,7 +311,6 @@
             foreach ($Campos as $key => $datos) {
                 $this->_ExisteDocumento = ($datos[0]);
             }
-            // var_dump($datos);
             return $datos;
         }
 
@@ -323,7 +318,7 @@
         {
 
             $query = "SELECT CASE WHEN(SELECT DOCUMENTO
-FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario . ")IS NULL THEN ('0') ELSE ('1') END";
+            FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario . ")IS NULL THEN ('0') ELSE ('1') END";
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
@@ -339,7 +334,6 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
         //para cuando insertamos un usuario nuevo
         public function traeModulosPadres()
         {
-
             $query = "SELECT
                 t_modulo.ID_MODULO,
                 t_modulo.NOMBRE
@@ -366,7 +360,6 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
 
         public function traeModulosHijos($idPadre)
         {
-
             $query = "SELECT
                 t_modulo.ID_MODULO,
                 t_modulo.NOMBRE
@@ -380,7 +373,6 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
         //trae los permisos del usuario para modificar
         public function traeModulosXUsuario($Id, $IdMod)
         {
-
             $query = "SELECT
                 t_permisos.ID_PERMISO,
                 t_permisos.ID_USUARIO,
@@ -400,7 +392,6 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
 
         public function traePermisos($identi)
         {
-
             $query = "SELECT
           
                 t_permisos.ID_MODULO,
@@ -417,7 +408,6 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
 
         public function traeModulosXUsuarioAdmin($identi)
         {
-
             $query = "SELECT
                 t_permisos.ID_PERMISO,
                 t_permisos.ID_USUARIO,
@@ -478,13 +468,13 @@ FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "'  AND ID_USUARIO <>" . $idUsuario 
                 if (ctype_upper($nombre[$i])) $link .= ' ' . $nombre[$i];
                 else $link .= $nombre[$i];
             }
-            $nombre=$link;
+            $nombre = $link;
         }
 
         public function TraeModulo($nombre)
         {
             $this->Retocar($nombre);
-            $query= "SELECT ID_MODULO  FROM t_modulo WHERE t_modulo.NOMBRE='" . $nombre . "'";
+            $query = "SELECT ID_MODULO  FROM t_modulo WHERE t_modulo.NOMBRE='" . $nombre . "'";
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
             return $Campos[0][0];

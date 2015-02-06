@@ -30,7 +30,7 @@
 
             $Parametros->InsertaFormaPago($_POST['txtCodigo'], $_POST['txtNombre'], $_POST['cmbCuenta'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se creó la forma de pago correctamente.")
                     self.location = "FormasDePago.php"
                     </script>';
@@ -39,7 +39,7 @@
 
 
     } else {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "../Otros/Login.php"
 	</script>';
     }

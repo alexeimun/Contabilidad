@@ -6,6 +6,6 @@
     session_destroy();
 
 
-    echo '<script language = javascript>self.location = "Login.php";</script> ';
+    echo '<script >self.location = "Login.php";</script> ';
     exit();
 ?>

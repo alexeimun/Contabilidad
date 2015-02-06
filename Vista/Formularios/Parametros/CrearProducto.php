@@ -24,7 +24,7 @@
 
             $Parametros->InsertaProducto($_POST['txtCodigo'], $_POST['txtNombre'], $_POST['rbTipo'], str_replace(".", "", $_POST['txtPrecio']), $_POST['cmbGrupo'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se creó el producto correctamente.")
                     self.location = "ProductosServiciosGrupos.php?me=1"
                     </script>';
@@ -33,7 +33,7 @@
 
 
     } else {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "../Otros/Login.php"
 	</script>';
     }

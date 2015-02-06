@@ -10,7 +10,7 @@
         $menu = $Master->Menu();
         $Parametros = new cls_Parametros();
 
-        $tabla = '<table id="table" class="table" style="width:98%;">
+        $tabla = '<table id="table" class="table" style="width:90%;">
         <thead><tr>
             <th style="text-align:left;">NOMBRE</th>
             <th style="text-align:left;">TIPO DOC.</th>
@@ -35,7 +35,7 @@
             $tabla .= '<td style="text-align:center;">
            <a href="CrearTercero.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> 
           <a href="ModificarTercero.php?id=' . $valor['ID_TERCERO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></img></a>
-          <a onclick="EliminarTercero(' . $valor['ID_TERCERO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+          <a onclick="EliminarTercero(' . $valor['ID_TERCERO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
                 </td></tr>';
         }
 
@@ -46,7 +46,7 @@
         $tabla .= '</tbody></table>';
 
     } else {
-        echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "../Otros/Login.php"</script>';
     }
 ?>
 <html>
@@ -69,9 +69,7 @@
 <script>
 
     $(document).ready(function () {
-        if (<?php  echo $cont; ?> >
-        0
-        )
+
         $('#table').dataTable({
             "language": {
                 "sProcessing": "Procesando...",

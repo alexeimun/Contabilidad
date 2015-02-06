@@ -10,7 +10,7 @@
         $menu = $Master->Menu();
 
     } else {
-        echo '<script language = javascript> self.location = "Login.php"</script>';
+        echo '<script > self.location = "Login.php"</script>';
     }
 ?>
 <html>

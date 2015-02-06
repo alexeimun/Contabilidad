@@ -34,13 +34,13 @@
 
             move_uploaded_file($_FILES["file"]["tmp_name"], $img);
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se modificaron los datos de la empresa correctamente");
                     self.location = "InformacionVendedor.php";
                     </script>';
         }
 
-    } else echo '<script language = javascript>self.location = "../Otros/Login.php";</script>';
+    } else echo '<script >self.location = "../Otros/Login.php";</script>';
 
 ?>
 <html>

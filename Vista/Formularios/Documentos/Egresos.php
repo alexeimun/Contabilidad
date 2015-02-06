@@ -54,13 +54,13 @@
         foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Secuencia ++;
             $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'G', $_POST['ConsecutivoGastos'], $valor['ID_F_PAGO'], $Secuencia, "ABONO GASTOS" . $Egresos->_ConsecutivoEgresos,
-                'D', 1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa',0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
+                'D', 1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa',0,0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
         }
         //Consultar que ID_CUENTA_MOV le paso
         // echo var_dump($_POST['ConsecutivoEgreso'])."TOTAL= ".$_SESSION['TOTAL2']." ABonado= ".$_POST['Abonado'];
         //Debito
         $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, $_POST['Concepto'], 'E', $Egresos->_ConsecutivoEgresos, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
-            1, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'E',$_POST['ConsecutivoGastos'], '', 0, '', 0, '', 'EGRESOS', $_SESSION['TOTAL2']);
+            1, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'E',$_POST['ConsecutivoGastos'], '', 0,0, '', 0, '', 'EGRESOS', $_SESSION['TOTAL2']);
 
 
         $Documentos->ActualizaEgresosAbono($_POST['ConsecutivoGastos'], $_SESSION['login'][0]["ID_EMPRESA"], $_SESSION['TOTAL2'] + $_SESSION['Abonado']);

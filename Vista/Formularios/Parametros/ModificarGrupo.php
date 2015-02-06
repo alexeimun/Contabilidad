@@ -10,7 +10,7 @@
 
 
         if ($_GET['id'] == "") {
-            echo '<script language = javascript>
+            echo '<script >
             self.location = "ProductosServiciosGrupos.php?me=2"
             </script>';
         }
@@ -67,7 +67,7 @@
         if (isset($_POST['btnGuardar']) != '') {
 
             $Parametros->ActualizaGrupo($_GET['id'], $_POST['txtNombre'], $_POST['cmbCtaInventario'], $_POST['cmbCtaVentas'], $_POST['cmbCtaCosto'], $_POST['cmbCtaDevoluciones']);
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se modificó el grupo correctamente.")
                     self.location = "ProductosServiciosGrupos.php?me=2"
                     </script>';
@@ -76,7 +76,7 @@
 
 
     } else {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "../Otros/Login.php"
 	</script>';
     }

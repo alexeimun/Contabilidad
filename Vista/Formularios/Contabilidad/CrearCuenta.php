@@ -14,21 +14,13 @@
 
 
         if (isset($_POST['btnGuardar']) != '') {
-
-
-            $Contabilidad->InsertaCuenta($_POST['txtCodigo'], $_POST['txtNombre'], $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'], $_POST['rbNaturaleza'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
-
-            echo '<script language = javascript>
-                    alert("Se creó la cuenta correctamente.");
-                    self.location = "PUC.php";
-                    </script>';
+            $Contabilidad->InsertaCuenta($_POST['txtCodigo'],ucfirst($_POST['txtNombre']), $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'],
+                $_POST['rbNaturaleza'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
+            echo '<script >alert("Se creó la cuenta correctamente.");self.location = "PUC.php";</script>';
         }
 
-    } else {
-        echo '<script language = javascript>
-        self.location = "../Otros/Login.php";
-	</script>';
-    }
+    } else echo '<script >self.location = "../Otros/Login.php";</script>';
+
 ?>
 <html>
 <head>
@@ -60,7 +52,7 @@
 
     input[type='checkbox'] {
         width: 20px;
-        height: 20px
+        height: 20px;
     }
 </style>
 

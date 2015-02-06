@@ -15,14 +15,14 @@
             $Usuarios->InsertaUsuarioAdmin($_POST['txtNombre'], $_POST['txtDocumento'], $_POST['txtEmail'], $_POST['txtPass'], $_SESSION['login'][0]["ID_EMPRESA"]);
 
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se creó el usuario correctamente.")
                     self.location = "Usuarios.php"
                     </script>';
         }
 
     } else {
-        echo '<script language = javascript> self.location = "../Otros/Login.php" 	</script>';
+        echo '<script > self.location = "../Otros/Login.php" 	</script>';
     }
 ?>
 <html>

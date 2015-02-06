@@ -9,7 +9,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "") {
-            echo '<script language = javascript>
+            echo '<script >
             self.location = "FormasDePago.php";
             </script>';
         }
@@ -65,7 +65,7 @@
 
             $Parametros->ActualizaFormaPago($_GET['id'], $_POST['txtCodigo'], $_POST['txtNombre'], $_POST['cmbCuenta'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero']);
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se modificó la forma de pago correctamente.");
                     self.location = "FormasDePago.php";
                     </script>';
@@ -74,7 +74,7 @@
 
 
     } else {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "../Otros/Login.php";
 	</script>';
     }

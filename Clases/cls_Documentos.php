@@ -360,7 +360,7 @@
 		 FROM t_movimiento
 		 INNER JOIN t_ciudades ON t_ciudades.ID_CIUDAD= t_movimiento.ID_CIUDAD
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_PRODUCTO
+		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
 
 		 WHERE TIPO_DOC='C' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
 
@@ -384,7 +384,7 @@
 
 		 FROM t_movimiento
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CUENTA_MOV
+		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
 
 		 WHERE TIPO_DOC='E' AND TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
 
@@ -408,7 +408,7 @@
 
 		 FROM t_movimiento
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CUENTA_MOV
+		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
 
 		 WHERE TIPO_DOC='E' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $ConsecutivoG . " AND t_movimiento.DOC_CRUCE = " . $ConsecutivoE;
 
@@ -432,7 +432,7 @@
 
 		 FROM t_movimiento
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CUENTA_MOV
+		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
 
 		 WHERE TIPO_DOC='E' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $ConsecutivoE . " AND t_movimiento.DOC_CRUCE = " . $ConsecutivoG;
 
@@ -441,22 +441,22 @@
         }
 
         public function InsertaMovimiento($IdTercero, $IdProducto, $IdCuentaMov, $TipoDoc, $Consecutivo, $IdFormaPago, $Secuencia, $Descripcion, $TipoMov
-            , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '', $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '', $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0)
+            , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '',$IdConcepto=0, $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '', $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0)
         {
             $sub = $IdCuentaMov;
-            if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")";
-            else if ($Tipo == 'Pa') $sub = "(SELECT ID_CUENTA FROM t_formas_pago WHERE ID_F_PAGO=" . $IdFormaPago . ")";
+            if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")"; else
+                if ($Tipo == 'Pa') $sub = "(SELECT ID_CUENTA FROM t_formas_pago WHERE ID_F_PAGO=" . $IdFormaPago . ")";
 //            else $sub = $TipoInterno == ''  ? $IdCuentaMov : "(select ID_CUENTA from t_documentos WHERE TIPO_INTERNO='" . $TipoInterno . "' AND ID_EMPRESA=" . $IdEmpresa . ")";
 
 
             $query = "INSERT INTO  t_movimiento
        (`ID_TERCERO`, `ID_PRODUCTO`, `ID_CUENTA_MOV`, `TIPO_DOC`, `CONSECUTIVO`, `ID_F_PAGO`, `SECUENCIA`,`DESCRIPCION`, 
-       `TIPO_MOV`, `CANTIDAD`, `VALOR`,`DESCUENTO`, `ANULADO`, `OBS`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`,`TIPO`,`DOC_CRUCE`, `TIPO_PAGO`,
-        `ID_CIUDAD`, `CODIGO`,`ID_ENTIDAD`,`NUMERO`,`ABONADO`)
+       `TIPO_MOV`, `CANTIDAD`, `VALOR`,`DESCUENTO`, `ANULADO`, `OBS`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`,`TIPO`,`ID_CONCEPTO`
+       ,`DOC_CRUCE`, `TIPO_PAGO`, `ID_CIUDAD`, `CODIGO`,`ID_ENTIDAD`,`NUMERO`,`ABONADO`)
        VALUES
        (" . $IdTercero . ", " . $IdProducto . ", " . $sub . ", '" . $TipoDoc . "', '" . $Consecutivo . "', '" . $IdFormaPago . "', '" . $Secuencia . "',
         '" . $Descripcion . "', '" . $TipoMov . "', " . $Cantidad . ", " . $Valor . ", " . $Descuento . ",0, '" . $Obs . "', " . $UsrReg . ", now(), " . $IdEmpresa . ",
-        '" . $Tipo . "',$DocCruce,'" . $Tipopago . "'," . $Ciudad . ",'" . $Codigo . "'," . $IdEntidad . ",'" . $Numero . "'," . $TotalPagos . ")";
+        '" . $Tipo . "',$IdConcepto,$DocCruce,'" . $Tipopago . "'," . $Ciudad . ",'" . $Codigo . "'," . $IdEntidad . ",'" . $Numero . "'," . $TotalPagos . ")";
 
             if ($this->_DB->Exec($query) > 0) return true;
             else   return false;

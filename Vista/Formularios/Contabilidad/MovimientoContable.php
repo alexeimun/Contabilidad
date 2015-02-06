@@ -7,8 +7,8 @@
     include '../../../Clases/cls_Contabilidad.php';
 
     session_start();
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
-        echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
+        echo '<script > self.location = "../Otros/Login.php"</script>';
 
     $Master = new Master();
     $menu = $Master->Menu();
@@ -18,7 +18,7 @@
     $Cuenta = '<option value ="0">-- Seleccione Una Cuenta --</option>';
 
     foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave1 => $valor1)
-        $Cuenta .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['NOMBRE'] . '</option>';
+        $Cuenta .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['CODIGO'] . ' - ' . $valor1['NOMBRE'] . '</option>';
 
 ?>
 <html>
@@ -72,17 +72,31 @@
                                     <?= $Cuenta ?>
                                 </select>
                             </td>
-                            <input type="hidden" value="2" name="contable"/>
+                            <input type="hidden" value="contable" name="contable">
                         </tr>
                     </table>
                 </form>
                 <br>
-                <input type="button" value="Generar" class="btnAzul"/>
-                <input type="button" value="Exportar" class="btnAzul"/>
+                <input type="button" value="Generar" class="btnAzul" title="Generar una tabla de movimientos">
+                <input type="button" value="Exportar" class="btnAzul" title="Exportar todos los movimientos a excel">
                 <br><br>
 
                 <div id="busqueda"></div>
 
+                <table style="display: none;" id="texp">
+                    <thead>
+                    <tr>
+                        <th style="text-align:left;">FECHA</th>
+                        <th style="text-align:left;">D/C</th>
+                        <th style="text-align:left;">VALOR</th>
+                        <th style="text-align:left;">PRODUCTO/SERVICIO</th>
+                        <th style="text-align:left;">DESCRIPCION</th>
+                        <!--                        <th style="text-align:left;">SALDO</th>-->
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
             </center>
         </div>
     </div>
@@ -91,36 +105,35 @@
 <script>
     $(document).on('ready', function () {
         $('input[value=Generar]').on('click', function () {
-                $.ajax(
-                    {
-                        url: 'Movimientos.php',
-                        type: 'post',
-                        data: $('form').serialize(),
-                        success: function (data) {
-                            $('#busqueda').html(data);
-                        }
-                    });
+            $('input[name=contable]').val('contable');
+            $.ajax(
+                {
+                    url: 'Movimientos.php',
+                    type: 'post',
+                    data: $('form').serialize(),
+                    success: function (data) {
+
+                        $('#busqueda').html(data);
+                    }
+                });
         });
 
-        $('input[value=Exportar]').on('click', function () {
-                $.ajax(
-                    {
-                        url: 'Movimientos.php',
-                        type: 'post',
-                        data: $('form').serialize(),
-                        success: function (data) {
-                            $('#busqueda').html(data);
-                        }
+        $('input[value="Exportar"]').on('click', function () {
+            $('input[name=contable]').val('todomov');
+            $.ajax({
+                url: 'Movimientos.php',
+                type: 'post',
+                data: $('form').serialize(),
+                success: function (data) {
+                    $('#texp tbody').html(data);
+                    $("#texp").battatech_excelexport({
+                        containerid: "texp", datatype: 'table', worksheetName: 'Movimiento Contable'
                     });
-        });
-
-        $('input[name=exportarmanual]').on('click', function () {
-
-            $("#temp").battatech_excelexport({
-                containerid: "temp", datatype: 'table'
+                }
             });
         });
     });
+
 </script>
 
 </body>

@@ -104,8 +104,8 @@
 		t_formas_pago.FECHA_REGISTRO,
 		t_formas_pago.USR_REGISTRO,
 		t_formas_pago.ID_EMPRESA,
-		t_formas_pago.REQUIERE_ENTIDAD,
-		t_formas_pago.REQUIERE_NUMERO,
+		if(t_formas_pago.REQUIERE_ENTIDAD=1,'SI','NO') AS REQUIERE_ENTIDAD,
+		if(t_formas_pago.REQUIERE_NUMERO=1,'SI','NO') AS REQUIERE_NUMERO,
 		t_cuentas.NOMBRE
 		FROM
 		t_formas_pago
@@ -687,4 +687,9 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             return $resulset->fetchAll();
         }
 
+        public function TraeMovcontableTodo($idEmpresa, $inicio, $fin)
+        {
+            $resulset = $this->_DB->Query("CALL TraeMovContableTodo($idEmpresa, '$inicio', '$fin')");
+            return $resulset->fetchAll();
+        }
     }

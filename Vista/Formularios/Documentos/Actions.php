@@ -38,4 +38,5 @@
     } else if (isset($_POST['validar'])) {
 
         echo $Documentos->RequiereTercero($_POST['id'], $_SESSION['login'][0]["ID_EMPRESA"]);
+        exit;
     }

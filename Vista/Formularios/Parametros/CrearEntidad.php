@@ -15,12 +15,12 @@
         if (!empty($_POST)) {
 
             $Componentes->InsertaEntidad($_POST['Nombre'], $_POST['Tipo'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
-            echo '<script language = javascript>alert("Se creó la entidad correctamente.");self.location = "Entidades.php?me=1"</script>';
+            echo '<script >alert("Se creó la entidad correctamente.");self.location = "Entidades.php?me=1"</script>';
         }
 
 
     } else
-        echo '<script language = javascript>self.location = "../Otros/Login.php"</script>';
+        echo '<script >self.location = "../Otros/Login.php"</script>';
 
 ?>
 <html>

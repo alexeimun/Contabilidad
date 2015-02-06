@@ -11,7 +11,7 @@
     $tabla = '';
 
     if (isset($_SESSION['login']) == '')
-        echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "../Otros/Login.php"</script>';
 
     if ($_GET['action'] == 'cambiatabla') {
 

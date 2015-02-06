@@ -25,14 +25,14 @@
                 $Usuarios->registraPermisos($_POST['txtDocumento'], $valor['ID_MODULO'], $_POST['txt' . $valor['ID_MODULO']], $_SESSION['login'][0]["ID_USUARIO"]);
             }
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se creó el usuario correctamente.");
                     self.location = "Usuarios.php";
                     </script>';
         }
 
     } else {
-        echo '<script language = javascript> self.location = "../Otros/Login.php" 	</script>';
+        echo '<script > self.location = "../Otros/Login.php" 	</script>';
     }
 ?>
 <html>

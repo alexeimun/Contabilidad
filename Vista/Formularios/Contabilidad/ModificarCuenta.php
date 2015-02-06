@@ -8,8 +8,8 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "") {
-            echo '<script language = javascript>
-            self.location = "PUC.php"
+            echo '<script >
+            self.location = "PUC.php";
             </script>';
         }
 
@@ -22,10 +22,10 @@
 
         $Naturaleza = '';
 
-        $ManejaTercero = '<input type="checkbox" id="chkManejaTercero" name="chkManejaTercero" onClick="check2()" >
+        $ManejaTercero = '<input type="checkbox" id="chkManejaTercero" name="chkManejaTercero" onClick="check2();" >
                  <input type="hidden" value="0" id="txtManejaTercero" name="txtManejaTercero"><br><br>';
 
-        $ManejaDocCruce = '<br><input type="checkbox" id="chkManejaDocCruce" name="chkManejaDocCruce" onClick="check()">
+        $ManejaDocCruce = '<br><input type="checkbox" id="chkManejaDocCruce" name="chkManejaDocCruce" onClick="check();">
                 <input type="hidden" value="0" id="txtManejaDocCruce" name="txtManejaDocCruce"><br><br>';
 
         foreach ($Contabilidad->TraeDatosCuenta($_GET['id']) as $llave => $valor) {
@@ -34,12 +34,12 @@
             $txtNaturaleza = $valor['NATURALEZA'];
 
             if ($valor['MANEJA_TERCERO'] == 1) {
-                $ManejaTercero = '<input type="checkbox" id="chkManejaTercero" name="chkManejaTercero" onClick="check2()" checked>
+                $ManejaTercero = '<input type="checkbox" id="chkManejaTercero" name="chkManejaTercero" onClick="check2();" checked>
                  <input type="hidden" value="1" id="txtManejaTercero" name="txtManejaTercero"><br><br>';
             }
 
             if ($valor['MANEJA_DOC_CRUCE'] == 1) {
-                $ManejaDocCruce = '<br><input type="checkbox" id="chkManejaDocCruce" name="chkManejaDocCruce" checked onClick="check()">
+                $ManejaDocCruce = '<br><input type="checkbox" id="chkManejaDocCruce" name="chkManejaDocCruce" checked onClick="check();">
                 <input type="hidden" value="1" id="txtManejaDocCruce" name="txtManejaDocCruce"><br><br>';
             }
 
@@ -56,22 +56,15 @@
 
         if (isset($_POST['btnGuardar']) != '') {
 
-            $Contabilidad->ActualizaCuenta($_GET['id'], $_POST['txtCodigo'], $_POST['txtNombre'], $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'], $_POST['rbNaturaleza']);
+            $Contabilidad->ActualizaCuenta($_GET['id'], $_POST['txtCodigo'], ucfirst($_POST['txtNombre']), $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'], $_POST['rbNaturaleza']);
 
-            echo '<script language = javascript>
-                    alert("Se modificó la cuenta correctamente.")
-                    self.location = "PUC.php"
-                    </script>';
-
-
+            echo '<script >alert("Se modificó la cuenta correctamente.");self.location = "PUC.php";</script>';
         }
 
 
-    } else {
-        echo '<script language = javascript>
-        self.location = "../Otros/Login.php"
-	</script>';
-    }
+    } else
+        echo '<script >self.location = "../Otros/Login.php";</script>';
+
 ?>
 <html>
 <head>
@@ -103,7 +96,7 @@
 
     input[type='checkbox'] {
         width: 20px;
-        height: 20px
+        height: 20px;
     }
 </style>
 
@@ -153,8 +146,8 @@
                         <tr>
                             <td>Código</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtCodigo" name="txtCodigo" onkeyup="ValidaCodigo()"
-                                       onkeypress="javascript:return validarNro(event)" value="<?= $txtCodigo; ?>"
+                                <input type="text" id="txtCodigo" name="txtCodigo" onkeyup="ValidaCodigo();"
+                                       onkeypress="javascript:return validarNro(event);" value="<?= $txtCodigo; ?>"
                                        placeholder="Ingrese el código" required>
                                 <br><br></td>
                         </tr>

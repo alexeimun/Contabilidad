@@ -8,7 +8,7 @@
     if (isset($_SESSION['login']) != '' && $_SESSION['login'][0]["NIVEL"] == 2) {
 
         if ($_GET['id'] == "") {
-            echo '<script language = javascript> self.location = "Vendedores.php" </script>';
+            echo '<script > self.location = "Vendedores.php" </script>';
         }
 
         $Master = new Master();

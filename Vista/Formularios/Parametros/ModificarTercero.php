@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -8,11 +7,8 @@
     session_start();
     if (isset($_SESSION['login']) != '') {
 
-        if ($_GET['id'] == "") {
-            echo '<script language = javascript>
-            self.location = "Terceros.php";
-            </script>';
-        }
+        if ($_GET['id'] == "")
+            echo '<script > self.location = "Terceros.php";</script>';
 
         $Master = new Master();
         $menu = $Master->Menu();
@@ -104,42 +100,18 @@
             $cmbCiudad .= '<option style="text-align:left;" value ="' . $valor['ID_CIUDAD'] . '">' . $valor['NOMBRE'] . ',&nbsp;&nbsp;' . $valor['DEPARTAMENTO'] . '</option>';
         }
 
-
         if (isset($_POST['btnGuardar']) != '') {
 
-//  $Parametros->ValidaCodigoProducto($_POST['txtCodigo'],$_SESSION['login'][0]["ID_EMPRESA"]);
-
-
-//         if($Parametros->_ExisteCodigo==1)
-//        {
-//            echo  '<script language = javascript>
-//                   alert("Este Código ya existe." )
-//                   </script>';
-//
-//            $txtCodigo=$_POST['txtCodigo'];
-//            $txtPrecio=$_POST['txtPrecio'];
-//            $txtNombre=$_POST['txtNombre'];
-//            
-//        }  else
-//        {
             $Parametros->ActualizaTercero($_GET['id'], $_POST['txtNombre1'] . $_POST['txtRazonSocial'], $_POST['txtNombre2'], $_POST['txtApellido1'],
                 $_POST['txtApellido2'], $_POST['rbTipoDoc'], str_replace(".", "", $_POST['txtNumDoc']), $_POST['txtDireccion'],
                 $_POST['txtTelefono'], $_POST['txtCelular'], $_POST['txtEmail'], $_POST['cmbCiudad']);
 
 
-            echo '<script language = javascript>
-                    alert("Se modificó el tercero correctamente.");
-                    self.location = "Terceros.php";
-                    </script>';
-//        }
-
+            echo '<script >alert("Se modificó el tercero correctamente.");self.location = "Terceros.php";</script>';
         }
 
 
-    } else {
-        echo '<script language = javascript>
-        self.location = "../Otros/Login.php";
-	</script>';
+    } else {echo '<script >self.location = "../Otros/Login.php";</script>';
     }
 ?>
 <html>
@@ -151,8 +123,9 @@
     <link rel="stylesheet" type="text/css" href="../../Css/menu.css"/>
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
-    <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
     <?php include '../../Css/css.php' ?>
+    <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
+
 </head>
 <style type="text/css">
     select {
@@ -226,7 +199,7 @@
 
     <div id="content-wrap">
         <?= $menu ?>
-
+        <select class="chosen-select" name="" id=""></select>
         <div id="main">
             <form method="POST">
                 <center>
@@ -327,8 +300,6 @@
                                 </select><br><br>
                             </td>
                         </tr>
-
-
                     </table>
                     <br>
 

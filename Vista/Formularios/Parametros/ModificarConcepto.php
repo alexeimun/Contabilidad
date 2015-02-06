@@ -9,7 +9,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "")
-            echo '<script language = javascript>self.location = "Conceptos.php"  </script>';
+            echo '<script >self.location = "Conceptos.php"  </script>';
 
         $Master = new Master();
         $menu = $Master->Menu();
@@ -42,11 +42,11 @@
                 $Parametros->ActualizaConcepto($_POST['txtCodigo'], $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
                     $_SESSION['login'][0]["ID_USUARIO"], $_GET['id']);
 
-                echo '<script language = javascript> alert("Se modificó el concepto correctamente.");self.location = "Conceptos.php" </script>';
+                echo '<script > alert("Se modificó el concepto correctamente.");self.location = "Conceptos.php" </script>';
 
-            } else echo '<script language = javascript>alert("Debe seleccionar una cuenta."); self.location = "ModificarConcepto.php" </script>';
+            } else echo '<script >alert("Debe seleccionar una cuenta."); self.location = "ModificarConcepto.php" </script>';
         }
-    } else echo '<script language = javascript>self.location = "../Otros/Login.php" </script>';
+    } else echo '<script >self.location = "../Otros/Login.php" </script>';
 
 ?>
 <html>

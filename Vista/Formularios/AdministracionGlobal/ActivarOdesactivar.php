@@ -10,5 +10,5 @@
 
     $Vendedor->ActivaOdesactivaVendedor($ID, $_GET['a']);
 
-    echo '<script language = javascript> window.location.href = "AdministrarVendedor.php?id=' . $ID . '"</script>';
+    echo '<script> window.location.href = "AdministrarVendedor.php?id=' . $ID . '"</script>';
 ?>

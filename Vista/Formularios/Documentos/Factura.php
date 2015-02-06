@@ -37,9 +37,9 @@
     if (!empty($_POST)) {
         if ($_POST['cmbTercero'] == '0' || $Factura->_CantidadProductos == 0) {
             if ($_POST['cmbTercero'] == '0')
-                echo '<script language = javascript>alert("Debe seleccionar un tercero.")	 </script>';
+                echo '<script >alert("Debe seleccionar un tercero.")	 </script>';
             else if ($Factura->_CantidadProductos == 0)
-                echo '<script language = javascript>alert("Debe agregar minimo un producto.")	 </script>';
+                echo '<script >alert("Debe agregar minimo un producto.")	 </script>';
 
             $cmbTercero = '<option value ="0">-- Seleccione Un Tercero --</option>';
             $Ter = $_POST['cmbTercero'];
@@ -78,7 +78,7 @@
             //FORMAS DE PAGO
             foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
                 $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT" . $Consecutivo, 'D',
-                    1, $valor['VALOR'], 0, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa',0, '', $valor['ID_ENTIDAD']
+                    1, $valor['VALOR'], 0, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa',0,0, '', $valor['ID_ENTIDAD']
                     , $valor['NUMERO']);
                 $TotalPagos += $valor['VALOR'];
             }
@@ -86,14 +86,14 @@
             //TOTAL PAGOS
 
             $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0,0, 'F', $Consecutivo, 0, ++ $Secuencia, "TOTAL", '', 0, $Total, 0
-                , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',0, $_POST['cmbTipoPago'], 0, '', 0, '', '', $TotalPagos);
+                , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',0,0, $_POST['cmbTipoPago'], 0, '', 0, '', '', $TotalPagos);
 
             //Si es a crédito se genera Recibo
             if ($_POST['cmbTipoPago'] == 'CR') {
                 $Factura->TraeParametrosRecibo($_SESSION['login'][0]["ID_EMPRESA"]);
                 //Inserto el Total del recibo
                 $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'R', $Factura->_ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', '',
-                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',$Consecutivo, '', 0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
+                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',$Consecutivo, '', 0,0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
                 $Documentos->ActualizaConsecutivo($Factura->_ConsecutivoRecibo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO');
             }
 
@@ -258,12 +258,12 @@
                             </td>
                             <td style="text-align: right;"><br>Cantidad</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <br> <input type="number" id="txtCantidad" name="txtCantidad" value="1" required/>
+                                <br> <input type="number" id="txtCantidad" name="txtCantidad" value="1" max="9999" min="1" required/>
                             </td>
                             <td style="text-align: right;"><br>Descuento</td>
 
                             <td style="padding-left: 10px;text-align: left;">
-                                <br> <input type="number" id="txtDescuento" name="txtDescuento" value="0" required/> %
+                                <br> <input type="number" id="txtDescuento" name="txtDescuento" max="100" min="0" value="0" required/> %
                             </td>
                         </tr>
 
@@ -336,9 +336,6 @@
             $("#validaciones").load("procesaProductosFactura.php?action=validar&tipopago=" + document.getElementById('cmbTipoPago').value);
         });
     }
-
 </script>
-
-
 </body>
 </html>

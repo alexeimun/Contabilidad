@@ -6,7 +6,7 @@
 
 
     if ($_GET['id'] == "") {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "ProductosServiciosGrupos.php?me=1"
 	</script>';
     }
@@ -17,12 +17,12 @@
 
     if ($Ter->EliminarProducto($ID) > 0) {
 
-        echo '<script language = javascript>
+        echo '<script >
                       window.location.href = "ProductosServiciosGrupos.php?me=1"
                      </script>';
 //             
     } else {
-        echo '<script language = javascript>
+        echo '<script >
 	alert("Error al eliminar" )
 	</script>';
         header('location:ProductosServiciosGrupos.php?me=1');

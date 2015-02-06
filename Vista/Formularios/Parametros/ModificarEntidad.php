@@ -8,7 +8,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "")
-            echo '<script language = javascript>self.location = "Conceptos.php"  </script>';
+            echo '<script >self.location = "Conceptos.php"  </script>';
 
         $Master = new Master();
         $menu = $Master->Menu();

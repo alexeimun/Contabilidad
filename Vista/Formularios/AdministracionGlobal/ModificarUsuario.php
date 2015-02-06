@@ -8,7 +8,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "") {
-            echo '<script language = javascript>
+            echo '<script >
         self.location = "Usuarios.php";
 	</script>';
         }

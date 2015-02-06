@@ -9,7 +9,7 @@
 
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
-        echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "../Otros/Login.php"</script>';
     $cmbTercero = '<option value ="0">-- Seleccione Un Tercero --</option>';
 
     $Master = new Master();
@@ -36,17 +36,17 @@
     if (isset($_POST['btnFinalizar']) != '') {
 
         if ($_POST['cmbCiudad'] == '0')
-            echo '<script language = javascript>alert("Debe seleccionar una ciudad.")	 </script>';
+            echo '<script >alert("Debe seleccionar una ciudad.")	 </script>';
         else if ($_POST['cmbTercero'] == '0')
-            echo '<script language = javascript>alert("Debe elecccionar un tercero.")	 </script>';
+            echo '<script >alert("Debe elecccionar un tercero.")	 </script>';
         else if ($_POST['cmbConcepto'] == '0')
-            echo '<script language = javascript>alert("Debe seleccionar un concepto.")	 </script>';
+            echo '<script >alert("Debe seleccionar un concepto.")	 </script>';
 
 
         else {
             $Consecutivo = $CajaMenor->_Consecutivo;
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], $_POST['cmbConcepto'], 0, 'C', $Consecutivo, 0, 0, 'TOTAL', 'D',
-                1, $_POST['txtValor'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Con',0, '', 0, '',
+            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'C', $Consecutivo, 0, 0, 'TOTAL', 'D',
+                1, $_POST['txtValor'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Con',$_POST['cmbConcepto'],0, '', 0, '',
                 $_POST['cmbCiudad'], $_POST['Codigo'], 'RECIBO_CAJA_MENOR');
 
             $_SESSION['ConsecutivoCM'] = $Consecutivo;

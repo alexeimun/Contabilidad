@@ -24,10 +24,10 @@
                 $_POST['rbTipoDoc'], str_replace(".", "", $_POST['txtNumDoc']), $_POST['txtDireccion'], $_POST['txtTelefono'],
                 $_POST['txtCelular'], $_POST['txtEmail'], $_POST['cmbCiudad'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
-            echo '<script language = javascript> alert("Se creó el tercero correctamente."); self.location = "Terceros.php" </script>';
+            echo '<script > alert("Se creó el tercero correctamente."); self.location = "Terceros.php" </script>';
         }
 
-    } else   echo '<script language = javascript>self.location = "../Otros/Login.php"</script>';
+    } else   echo '<script >self.location = "../Otros/Login.php"</script>';
 
 ?>
 <html>

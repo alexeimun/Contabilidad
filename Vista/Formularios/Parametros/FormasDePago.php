@@ -28,18 +28,8 @@
             $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_F_PAGO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['CODIGO_F_PAGO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
-
-            if ($valor['REQUIERE_ENTIDAD'] == 1) {
-                $tabla .= '<td style="text-align:left;">SI</td>';
-            } else {
-                $tabla .= '<td style="text-align:left;">NO</td>';
-            }
-
-            if ($valor['REQUIERE_NUMERO'] == 1) {
-                $tabla .= '<td style="text-align:left;">SI</td>';
-            } else {
-                $tabla .= '<td style="text-align:left;">NO</td>';
-            }
+            $tabla .= '<td style="text-align:left;">' . $valor['REQUIERE_ENTIDAD'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['REQUIERE_NUMERO'] . '</td>';
 
             $tabla .= '<td style="text-align:center;">
            <a href="CrearFormaPago.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> 
@@ -56,11 +46,8 @@
         $tabla .= '</tbody></table>';
 
 
-    } else {
-        echo '<script language = javascript>
-        self.location = "../Otros/Login.php"
-	</script>';
-    }
+    } else echo '<script >self.location = "../Otros/Login.php"</script>';
+
 ?>
 <html>
 <head>
@@ -71,7 +58,6 @@
     <link rel="stylesheet" type="text/css" href="../../Css/menu.css"/>
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
-    <script type="text/javascript" language="javascript" src="../../Js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="../../Js/jquery.dataTables.js"></script>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
 </head>
@@ -82,9 +68,6 @@
 <script>
 
     $(document).ready(function () {
-        if (<?= $formas; ?>!=
-        ""
-        )
         $('#table').dataTable({
             "language": {
                 "sProcessing": "Procesando...",
@@ -109,7 +92,6 @@
                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-
             }
         });
     });
@@ -120,6 +102,7 @@
             window.location.href = 'EliminarFormaPago.php?id=' + id;
         }
     }
+
 </script>
 
 <body>

@@ -5,7 +5,7 @@
     include '../../../Clases/Master.php';
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
-        echo '<script language = javascript> self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "../Otros/Login.php"</script>';
     $Master = new Master();
     $menu = $Master->Menu();
     $Usuarios = new cls_Usuarios();

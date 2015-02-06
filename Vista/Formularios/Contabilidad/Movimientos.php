@@ -10,7 +10,7 @@
     session_start();
 
 
-    if (isset($_POST['contable'])) {
+    if (isset($_POST['contable']) && $_POST['contable'] == 'contable') {
         $tabla = '<table id="table" class="table" style="width:90%;">
            <thead>
            <tr>
@@ -29,7 +29,7 @@
             $tabla .= '<td style="text-align:left;">' . $valor['PRODUCTO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['OBS'] . '</td>';
             if ($valor['TIPO_MOV'] == 'C') $Saldo -= $valor['VALOR']; else   $Saldo += $valor['VALOR'];
-            $tabla .= '<td style="text-align:left;">' . number_format($Saldo, 0, '', ',') . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($Saldo, 0, '', ',') . '</td></tr>';
         }
 
         $tabla .= '</tbody></table>';
@@ -64,13 +64,33 @@
                 $tabla .= '<tr> <td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
                 $tabla .= '<td style="text-align:left;">' . $valor['TIPO_MOV'] . '</td>';
                 $tabla .= '<td style="text-align:left;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
-                $tabla .= '<td style="text-align:left;">' . $valor['PRODUCTO'] . '</td>';
+                $tabla .= '<td style="text-align:left;">' . $valor['PRODUCTO'] . '</td></tr>';
             }
 
             $tabla .= '</tbody></table>';
             echo $tabla;
         } catch (Exception $ex) {
         }
+    } else if (isset($_POST['contable']) && $_POST['contable'] == 'todomov') {
+        ob_clean();
+        $tabla = '';
+        $Saldo = 0;
+        foreach ($Parametros->TraeMovcontableTodo($_SESSION['login'][0]["ID_EMPRESA"], date("Y-m-d", strtotime($_POST['desde'])), date("Y-m-d", strtotime($_POST['hasta']))) as $key => $valor) {
+            $tabla .= '<tr>
+        <td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>
+         <td style="text-align:left;">' . $valor['TIPO_MOV'] . '</td>
+          <td style="text-align:left;">' . number_format($valor['VALOR'], 0, '', '.') . '</td>
+          <td style="text-align:left;">' . $valor['PRODUCTO'] . '</td>
+          <td style="text-align:left;">' . $valor['OBS'] . '</td>';
+
+//            if ($valor['TIPO_MOV'] == 'C') $Saldo -= $valor['VALOR']; else   $Saldo += $valor['VALOR'];
+//            $tabla .= '<td style="text-align:left;">' . number_format($Saldo, 0, '', '.') . '</td>
+            $tabla.='</tr>';
+        }
+        echo $tabla;
+        exit;
+
+
     } else if (isset($_POST['filtro'])) {
         if ($_POST['filtro'] == 'Tercero') {
             $cmbTercero = '<option value ="0">-- Seleccione Un Tercero --</option>';

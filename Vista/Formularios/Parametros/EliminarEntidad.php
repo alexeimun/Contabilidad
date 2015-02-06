@@ -5,17 +5,17 @@
     include '../../../Clases/Componentes.php';
 
     if ($_GET['id'] == "")
-        echo '<script language = javascript>self.location = "Entidades.php"</script>';
+        echo '<script >self.location = "Entidades.php"</script>';
 
     $Ter = new Componentes();
 
     $ID = $_GET['id'];
 
     if ($Ter->EliminarEntidad($ID) > 0)
-        echo '<script language = javascript>window.location.href = "Entidades.php" </script>';
+        echo '<script >window.location.href = "Entidades.php" </script>';
 //
     else {
-        echo '<script language = javascript>
+        echo '<script >
 	           alert("Error al eliminar");</script>';
         header('location:Entidades.php');
     }

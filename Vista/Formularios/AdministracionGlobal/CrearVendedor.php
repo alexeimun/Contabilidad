@@ -21,7 +21,7 @@
             $Vendedor->InsertaVendedor($_POST['txtNombre'], $_POST['txtDoc'], $_POST['txtTelefono'], $_POST['txtEmail'], $_POST['txtCantUsuarios'], $_SESSION['login'][0]["ID_ADMIN"]);
 
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se creó el vendedor correctamente.");
                     self.location = "Vendedores.php";
                     </script>';

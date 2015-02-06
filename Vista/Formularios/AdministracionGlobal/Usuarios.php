@@ -45,7 +45,7 @@
 
 
     } else {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "../Otros/Login.php"
 	</script>';
     }

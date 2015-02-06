@@ -9,7 +9,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "") {
-            echo '<script language = javascript>self.location = "ProductosServiciosGrupos.php?me=1"  </script>';
+            echo '<script >self.location = "ProductosServiciosGrupos.php?me=1"  </script>';
         }
 
         $Master = new Master();
@@ -51,7 +51,7 @@
 
             $Parametros->ActualizaProducto($_GET['id'], $_POST['txtCodigo'], $_POST['txtNombre'], $_POST['rbTipo'], str_replace(".", "", $_POST['txtPrecio']), $_POST['cmbGrupo']);
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se modificó el producto correctamente.")
                     self.location = "ProductosServiciosGrupos.php?me=1"
                     </script>';
@@ -59,7 +59,7 @@
 
 
     } else {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "../Otros/Login.php"
 	</script>';
     }

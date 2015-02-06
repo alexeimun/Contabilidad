@@ -33,7 +33,7 @@
         }
     }
 
-    if (isset($_POST['btnIngresar']) != '') {
+    if (!empty($_POST) != '') {
 
         #Sí algún usuario malintencionado esta tratando de aplicar una INYECCIÓN SQL a nuestro sitio, se imprime un mensaje que consiga amedrentarlo
         if (preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/",$_POST['txtLogin'] )
@@ -52,7 +52,6 @@
                     header("Location:../Otros/InicioAdminGlobal.php");
                     break;
             }
-
 
         } else {
             echo '<script>alert("Credenciales Incorrectas." ) </script>';
@@ -73,6 +72,7 @@
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
+    <link href="../../Css/login.css" rel="stylesheet" type="text/css" />
 </head>
 <style type="text/css">
     select {
@@ -92,7 +92,23 @@
     }
 </style>
 
-<script></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".username").focus(function() {
+            $(".user-icon").css("left","-48px");
+        });
+        $(".username").blur(function() {
+            $(".user-icon").css("left","0px");
+        });
+
+        $(".password").focus(function() {
+            $(".pass-icon").css("left","-48px");
+        });
+        $(".password").blur(function() {
+            $(".pass-icon").css("left","0px");
+        });
+    });
+</script>
 
 <body>
 <div id="wrap">
@@ -101,35 +117,38 @@
         <h2 id="slogan">Put your site slogan here...</h2>-->
         <img style="float: none;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
-    <div id="content-wrap">
-        <form id="form" method="POST">
-            <center>
-                <br>
-                <br>
-                <br>
-                <table style="width: 25%;color: #33373d">
-                    <tr>
-                        <td>Correo</td>
-                        <td style="padding-left: 10px;text-align: right;">
-                            <input type="text" id="txtLogin" name="txtLogin" value="<?= $txtLogin; ?>"
-                                   placeholder="Ingrese el correo" required>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Contaseña</td>
-                        <td style="padding-left: 10px;text-align: right;">
-                            <input type="password" id="txtPass" name="txtPass" value="<?= $txtPass; ?>"
-                                   placeholder="Ingrese la contraseña" required>
-                        </td>
-                    </tr>
-                </table>
-                <br>
+    <div id="wrapper">
 
-                <input type="submit" class="btnAzul" id="btnIngresar" name="btnIngresar" value="INGRESAR"
-                       style="width:200px;"/>
+        <!--SLIDE-IN ICONS-->
+        <div class="user-icon"></div>
+        <div class="pass-icon"></div>
+        <!--END SLIDE-IN ICONS-->
 
-            </center>
+        <!--LOGIN FORM-->
+        <form name="login-form" class="login-form" method="post">
+
+            <!--HEADER-->
+            <div class="header">
+                <!--TITLE--><h1>Inicio de Sesión</h1><!--END TITLE-->
+                <!--DESCRIPTION--><span>Bienvenido a Contasistin!<br>Por favor digite sus credenciales de acceso</span><!--END DESCRIPTION-->
+            </div>
+            <!--END HEADER-->
+
+            <!--CONTENT-->
+            <div class="content">
+                <!--USERNAME--><input name="txtLogin" type="text" placeholder="Ingrese su correo" class="input username"  /><!--END USERNAME-->
+                <!--PASSWORD--><input name="txtPass" type="password" placeholder="Ingrese su clave" class="input password" /><!--END PASSWORD-->
+            </div>
+            <!--END CONTENT-->
+
+            <!--FOOTER-->
+            <div class="footer">
+                <!--LOGIN BUTTON--><input type="submit" name="submit" value="Ingresar" class="button btnAzul" /><!--END LOGIN BUTTON-->
+            </div>
+            <!--END FOOTER-->
+
         </form>
+        <!--END LOGIN FORM-->
 
     </div>
 </div>

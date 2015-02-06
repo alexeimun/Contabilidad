@@ -25,7 +25,7 @@
 
             $Parametros->InsertaGrupos($_POST['txtNombre'], $_POST['cmbCtaInventario'], $_POST['cmbCtaVentas'], $_POST['cmbCtaCosto'], $_POST['cmbCtaDevoluciones'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
-            echo '<script language = javascript>
+            echo '<script >
                     alert("Se creó el grupo correctamente.")
                     self.location = "ProductosServiciosGrupos.php?me=2"
                     </script>';
@@ -34,7 +34,7 @@
 
 
     } else {
-        echo '<script language = javascript>
+        echo '<script >
         self.location = "../Otros/Login.php"
 	</script>';
     }
