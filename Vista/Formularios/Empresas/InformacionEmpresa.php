@@ -6,7 +6,7 @@
     include '../../../Clases/cls_Empresas.php';
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
     $Master = new Master();
     $menu = $Master->Menu();
     $Empresa = new cls_Empresas();
@@ -83,7 +83,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 

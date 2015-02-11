@@ -40,7 +40,7 @@
             $tabla .= '<tr><td colspan=5 style="text-align:center;"><a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
 
         $tabla .= '</tbody></table>';
-    } else echo '<script > self.location = "../Otros/Login.php"</script>';
+    } else echo '<script > self.location = "/"</script>';
 
 ?>
 <html>
@@ -105,7 +105,7 @@
 
 <body>
 <div id="header">
-    <a href=""><img src="../../Imagenes/logo.png"></img></a>
+    <a href=""><img src="../../Imagenes/logo.png"></a>
 
     <h1 id="logo"><span class="gray">Administración&nbsp&nbsp; <span
                 style="font-size: 28px;"><?= $_SESSION['login'][0]['NOMBRE'] ?></span></span></h1>

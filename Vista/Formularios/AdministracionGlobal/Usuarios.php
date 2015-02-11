@@ -31,22 +31,22 @@
             $tabla .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['PASSWORD'] . '</td>';
             $tabla .= '<td style="text-align:right;">
-          <a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> 
-          <a href="ModificarUsuario.php?id=' . $valor['ID_USUARIO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></img></a>
-          <a onclick="EliminarUsuario(' . $valor['ID_USUARIO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+          <a href="CrearUsuario.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarUsuario.php?id=' . $valor['ID_USUARIO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarUsuario(' . $valor['ID_USUARIO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
             $cont ++;
         }
 
         if ($cont == 0) {
-            $tabla .= '<tr><td colspan=5 style="text-align:center;"><a href="CrearDocumento.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
+            $tabla .= '<tr><td colspan=5 style="text-align:center;"><a href="CrearDocumento.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
         }
         $tabla .= '</tbody></table>';
 
 
     } else {
         echo '<script >
-        self.location = "../Otros/Login.php"
+        self.location = "/"
 	</script>';
     }
 ?>
@@ -116,7 +116,7 @@
 
 <body>
 <div id="header">
-    <a href=""><img src="../../Imagenes/logo.png"></img></a>
+    <a href=""><img src="../../Imagenes/logo.png"></a>
 
     <h1 id="logo"><span class="gray">Administración</span></h1>
 

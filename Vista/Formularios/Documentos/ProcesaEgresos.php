@@ -84,7 +84,7 @@
             $tabla .= '<td style="text-align:center;">';
 
             $tabla .= '<a href="Imprime.php?id=1&consecutivoE=' . $valor['CONSECUTIVO_EGRESOS'] . '&
-                consecutivoG=' . $valor['CONSECUTIVO_GASTOS'] . ' "><img src="../../Imagenes/print.png" title="Imprimir"></img></a>';
+                consecutivoG=' . $valor['CONSECUTIVO_GASTOS'] . ' "><img src="../../Imagenes/print.png" title="Imprimir"></a>';
 
             $tabla .= '</tr>';
         }

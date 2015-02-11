@@ -11,7 +11,7 @@
     $tabla = '';
 
     if (isset($_SESSION['login']) == '')
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
 
     if ($_GET['action'] == 'cambiatabla') {
 
@@ -33,10 +33,10 @@
                     $tabla .= '<td style="text-align:right;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
                     $tabla .= '<td style="text-align:center;">';
 
-                    $tabla .= '<a href="ReImprime.php?id=0&consecutivo=' . $valor['CONSECUTIVO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></img></a>';
+                    $tabla .= '<a href="ReImprime.php?id=0&consecutivo=' . $valor['CONSECUTIVO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></a>';
 
                     if ($valor['ANULADO'] == 0)
-                        $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
+                        $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></a></td>';
 
                     $tabla .= '</tr>';
                 }
@@ -61,10 +61,10 @@
                     $tabla .= '<td style="text-align:right;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
                     $tabla .= '<td style="text-align:center;">';
                     $tabla .= '<a href="ReImprime.php?id=1&consecutivo=' . $valor['CONSECUTIVO_RECIBO'] . '&
-                    pagos=' . $valor['CONSECUTIVO_FACTURA'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></img></a>';
+                    pagos=' . $valor['CONSECUTIVO_FACTURA'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></a>';
 
                     if ($valor['ANULADO'] == 0)
-                        $tabla .= '<a href="" onclick="AnularRecibo(' . $valor['CONSECUTIVO_RECIBO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
+                        $tabla .= '<a href="" onclick="AnularRecibo(' . $valor['CONSECUTIVO_RECIBO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></a></td>';
 
                     $tabla .= '</tr>';
                 }
@@ -93,10 +93,10 @@
                     $tabla .= '<td style="text-align:left;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
                     $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
                     $tabla .= '<td style="text-align:center;">';
-                    $tabla .= '<a href="ReImprime.php?id=2&consecutivo=' . $valor['CONSECUTIVO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></img></a>';
+                    $tabla .= '<a href="ReImprime.php?id=2&consecutivo=' . $valor['CONSECUTIVO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></a>';
 
                     if ($valor['ANULADO'] == 0)
-                        $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
+                        $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></a></td>';
 
                     $tabla .= '</tr>';
                 }
@@ -125,11 +125,11 @@
                     $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
                     $tabla .= '<td style="text-align:center;">';
                     $tabla .= '<a href="ReImprime.php?id=3&consecutivog=' . $valor['CONSECUTIVO_GASTOS'] . '&consecutivoe=' . $valor['CONSECUTIVO_EGRESOS'] . '
-                    &tipo=' . $valor['TIPO_PAGO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></img></a>';
+                    &tipo=' . $valor['TIPO_PAGO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></a>';
 
                     $doc=$valor['TIPO_DOC']=='E'?0:1;
                     if ($valor['ANULADO'] == 0)
-                        $tabla .= '<a href="" onclick="AnularEgreso(' . $valor['CONSECUTIVO_GASTOS'] .','.$doc.');return false"><img src="../../Imagenes/cancel.png" title="Anular"></img></a></td>';
+                        $tabla .= '<a href="" onclick="AnularEgreso(' . $valor['CONSECUTIVO_GASTOS'] .','.$doc.');return false"><img src="../../Imagenes/cancel.png" title="Anular"></a></td>';
 
                     $tabla .= '</tr>';
                 }

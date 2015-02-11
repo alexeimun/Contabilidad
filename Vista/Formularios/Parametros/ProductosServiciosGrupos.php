@@ -7,7 +7,7 @@
 
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
 
     $Master = new Master();
     $menu = $Master->Menu();
@@ -42,14 +42,14 @@
         $tablaGrupos .= '<td style="text-align:left;">' . $valor['N_CTA_COSTO'] . '</td>';
         $tablaGrupos .= '<td style="text-align:left;">' . $valor['N_CTA_DEVOLUCIONES'] . '</td>';
         $tablaGrupos .= '<td style="text-align:center;">
-          <a href="CrearGrupo.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a>
-          <a href="ModificarGrupo.php?id=' . $valor['ID_GRUPO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></img></a>
-          <a onclick="EliminarGrupo(' . $valor['ID_GRUPO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+          <a href="CrearGrupo.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarGrupo.php?id=' . $valor['ID_GRUPO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarGrupo(' . $valor['ID_GRUPO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
     }
 
     if ($cont == 0) {
-        $tablaGrupos .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearGrupo.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
+        $tablaGrupos .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearGrupo.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
     }
     $tablaGrupos .= '</tbody></table>';
 
@@ -69,14 +69,14 @@
         }
         $tablaProductos .= '<td style="text-align:left;">' . $valor['NOMBRE_GRUPO'] . '</td>';
         $tablaProductos .= '<td style="text-align:center;">
-           <a href="CrearProducto.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> 
-          <a href="ModificarProducto.php?id=' . $valor['ID_PRODUCTO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></img></a>
-          <a onclick="EliminarProducto(' . $valor['ID_PRODUCTO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+           <a href="CrearProducto.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarProducto.php?id=' . $valor['ID_PRODUCTO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarProducto(' . $valor['ID_PRODUCTO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
     }
 
     if ($cont2 == 0) {
-        $tablaProductos .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearProducto.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
+        $tablaProductos .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearProducto.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
     }
     $tablaProductos .= '</tbody></table>';
 
@@ -211,7 +211,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 

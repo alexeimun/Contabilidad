@@ -23,7 +23,7 @@
             echo '<script >alert("Se creó el vendedor correctamente."); self.location = "Vendedores.php";</script>';
         }
 
-    } else echo '<script > self.location = "../Otros/Login.php";</script>';
+    } else echo '<script > self.location = "/";</script>';
 ?>
 <html>
 <head>

@@ -32,7 +32,7 @@
         }
 
     } else {
-        echo '<script > self.location = "../Otros/Login.php" 	</script>';
+        echo '<script > self.location = "/" 	</script>';
     }
 ?>
 <html>

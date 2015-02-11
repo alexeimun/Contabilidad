@@ -60,7 +60,7 @@
 
     } else {
         echo '<script >
-        self.location = "../Otros/Login.php"
+        self.location = "/"
 	</script>';
     }
 ?>
@@ -108,7 +108,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 

@@ -37,7 +37,7 @@
             echo '<script >alert("Se modificaron los datos de la empresa correctamente");self.location = "InformacionCliente.php";</script>';
         }
 
-    } else echo '<script >self.location = "../Otros/Login.php";</script>';
+    } else echo '<script >self.location = "/";</script>';
 
 ?>
 <html>

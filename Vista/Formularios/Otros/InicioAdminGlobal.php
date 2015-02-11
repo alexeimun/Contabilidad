@@ -9,9 +9,8 @@
         $Master = new Master();
         $menu = $Master->Menu();
 
-    } else {
-        echo '<script > self.location = "Login.php"</script>';
-    }
+    } else echo '<script > self.location = "/"</script>';
+
 ?>
 <html>
 <head>
@@ -35,7 +34,7 @@
 
         <h1 id="logo"><span class="gray">ADMINISTRACIÓN</span></h1>
 
-        <img style="float: left;margin-top: 10px;" src="../../Imagenes/logo.png"></img>
+        <img style="float: left;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
 
     <div id="content-wrap">
@@ -44,13 +43,9 @@
         <div id="main">
             <center>
                 <h3><b>INICIO</b></h3><br>
-
-
             </center>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

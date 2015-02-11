@@ -37,17 +37,17 @@
             else $tabla .= '<td style="text-align:left;color:red;">';
             $tabla .=  $valor['ESTADO_CLIENTE'] . '</td>';
             $tabla .= '<td  style="text-align:right;">
-          <a href="AdministrarCliente.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></img></a>
+          <a href="AdministrarCliente.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></a>
                 </td></tr>';
 
         }
         if ($cont == 0) {
-            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearCliente.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
+            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearCliente.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
         }
         $tabla .= '</tbody></table>';
 
     } else {
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
     }
 ?>
 <html>
@@ -103,8 +103,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="../../Imagenes/logo.png"></img></a>
-
+        <a href=""><img src="../../Imagenes/logo.png"></a>
         <h1 id="logo"><span class="gray">Administración </span></h1>
     </div>
     <div id="content-wrap">
@@ -113,7 +112,7 @@
         <div id="main">
             <center>
                 <h3><b>CLIENTE&nbsp;&nbsp;&nbsp;<a href="CrearCliente.php"><img src="../../Imagenes/add.png"
-                                                                                title="Agregar"></img></a></b></h3><br>
+                                                                                title="Agregar"></a></b></h3><br>
                 <?= $tabla ?>
 
             </center>

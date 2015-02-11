@@ -8,7 +8,7 @@
     session_start();
 
     if (isset($_SESSION['login']) == '')
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
 
     $Master = new Master();
     $menu = $Master->Menu();
@@ -26,13 +26,13 @@
         $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_ENTIDAD'] . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['TIPO'] . '</td>';
         $tabla .= '<td style="text-align:right;">
-           <a href="CrearEntidad.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a>
-          <a href="ModificarEntidad.php?id=' . $valor['ID_ENTIDAD'] . '"><img src="../../Imagenes/edit.png" title="Editar"></img></a>
-          <a onclick="EliminarEntidad(' . $valor['ID_ENTIDAD'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+           <a href="CrearEntidad.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarEntidad.php?id=' . $valor['ID_ENTIDAD'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarEntidad(' . $valor['ID_ENTIDAD'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
     }
     if ($cont == 0) {
-        $tabla .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearEntidad.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
+        $tabla .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearEntidad.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
     }
 
     $tabla .= '</tbody></table>';
@@ -101,7 +101,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 

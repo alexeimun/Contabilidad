@@ -37,7 +37,7 @@
             }
             echo '<script >alert("Se creó la empresa correctamente."); self.location = "Empresas.php"; </script>';
         }
-    } else echo '<script> self.location = "../Otros/Login.php";</script>';
+    } else echo '<script> self.location = "/";</script>';
 
 ?>
 <html>

@@ -25,7 +25,7 @@
             echo '<script> alert("Se modificó la entidad correctamente.");self.location = "Entidades.php" </script>';
         }
 
-    } else echo '<script>self.location = "../Otros/Login.php" </script>';
+    } else echo '<script>self.location = "/" </script>';
 
 ?>
 <html>
@@ -68,7 +68,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 
@@ -95,9 +95,7 @@
                         <tr>
                             <td>Tipo</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <input type="text" name="Tipo" value="<?= $Tipo ?>"
-
-                                       placeholder="Ingrese el tipo" required>
+                                <input type="text" name="Tipo" value="<?= $Tipo ?>" placeholder="Ingrese el tipo" required>
                                 <br><br></td>
                         </tr>
                     </table>

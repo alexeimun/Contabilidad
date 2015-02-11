@@ -9,13 +9,14 @@
     if ($_GET['action'] == 'listar') {
 
         $tabla .= '<table class="table" style="width:90%;">
+<tr>
             <th style="text-align:left;">Código</th>
             <th style="text-align:left;">Producto</th>
             <th style="text-align:right;">Precio Unidad</th>   
             <th style="text-align:right;">Descuento</th>
             <th style="text-align:left;">Cantidad</th>
             <th style="text-align:right;">Total</th>
-            <th style="text-align:right;">Acción</th>';
+            <th style="text-align:right;">Acción</th></tr>';
 
         $Total = 0;
         foreach ($Factura->TraeProductos($_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
@@ -26,7 +27,7 @@
             $tabla .= '<td style="text-align:left;">' . $valor['CANTIDAD'] . '</td>';
             $tabla .= '<td style="text-align:right;">' . number_format((($valor['PRECIO'] * $valor['CANTIDAD']) - (($valor['PRECIO'] * ($valor['DESCUENTO'] / 100)) * $valor['CANTIDAD'])), 0, '', '.') . '</td>';
             $tabla .= '<td style="text-align:right;">
-          <a onclick="Eliminar(' . $valor['ID'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+          <a onclick="Eliminar(' . $valor['ID'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
             $Total += (($valor['PRECIO'] * $valor['CANTIDAD']) - (($valor['PRECIO'] * ($valor['DESCUENTO'] / 100)) * $valor['CANTIDAD']));
         }
@@ -59,7 +60,7 @@
             $tabla .= '<td style="text-align:left;">' . $valor['CANTIDAD'] . '</td>';
             $tabla .= '<td style="text-align:right;">' . number_format((($valor['PRECIO'] * $valor['CANTIDAD']) - (($valor['PRECIO'] * ($valor['DESCUENTO'] / 100)) * $valor['CANTIDAD'])), 0, '', '.') . '</td>';
             $tabla .= '<td style="text-align:right;">
-          <a onclick="Eliminar(' . $valor['ID'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+          <a onclick="Eliminar(' . $valor['ID'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
             $Total += (($valor['PRECIO'] * $valor['CANTIDAD']) - (($valor['PRECIO'] * ($valor['DESCUENTO'] / 100)) * $valor['CANTIDAD']));
         }
@@ -97,7 +98,7 @@
             $tabla .= '<td style="text-align:left;">' . $valor['CANTIDAD'] . '</td>';
             $tabla .= '<td style="text-align:right;">' . number_format((($valor['PRECIO'] * $valor['CANTIDAD']) - (($valor['PRECIO'] * ($valor['DESCUENTO'] / 100)) * $valor['CANTIDAD'])), 0, '', '.') . '</td>';
             $tabla .= '<td style="text-align:right;">
-          <a onclick="Eliminar(' . $valor['ID'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+          <a onclick="Eliminar(' . $valor['ID'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
             $Total += (($valor['PRECIO'] * $valor['CANTIDAD']) - (($valor['PRECIO'] * ($valor['DESCUENTO'] / 100)) * $valor['CANTIDAD']));
         }

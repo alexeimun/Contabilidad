@@ -22,7 +22,7 @@
         }
 
     } else {
-        echo '<script > self.location = "../Otros/Login.php" 	</script>';
+        echo '<script > self.location = "/" 	</script>';
     }
 ?>
 <html>
@@ -72,7 +72,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="../../Imagenes/logo.png"></img></a>
+        <a href=""><img src="../../Imagenes/logo.png"></a>
 
         <h1 id="logo"><span class="gray">Administración</span></h1>
 

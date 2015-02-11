@@ -102,7 +102,7 @@
 
     } else {
         echo '<script>
-        self.location = "../Otros/Login.php";
+        self.location = "/";
 	</script>';
     }
 ?>

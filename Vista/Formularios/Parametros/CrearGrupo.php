@@ -26,8 +26,8 @@
             $Parametros->InsertaGrupos($_POST['txtNombre'], $_POST['cmbCtaInventario'], $_POST['cmbCtaVentas'], $_POST['cmbCtaCosto'], $_POST['cmbCtaDevoluciones'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
             echo '<script >
-                    alert("Se creó el grupo correctamente.")
-                    self.location = "ProductosServiciosGrupos.php?me=2"
+                    alert("Se creó el grupo correctamente.");
+                    self.location = "ProductosServiciosGrupos.php?me=2";
                     </script>';
 
         }
@@ -35,7 +35,7 @@
 
     } else {
         echo '<script >
-        self.location = "../Otros/Login.php"
+        self.location = "/";
 	</script>';
     }
 ?>
@@ -70,7 +70,7 @@
 
     input[type='checkbox'] {
         width: 20px;
-        height: 20px
+        height: 20px;
     }
 </style>
 
@@ -80,7 +80,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 
@@ -95,7 +95,7 @@
             <form method="POST">
                 <center>
                     <h3><b>CREAR GRUPO</b></h3><br>
-                    <table style="width: 35%;color: #33373d">
+                    <table style="width: 35%;color: #33373d;">
                         <tr>
                         <tr>
                             <td>Nombre</td>

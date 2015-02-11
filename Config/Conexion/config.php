@@ -5,4 +5,3 @@
     define('USER', 'root');
     define('PASSWD', '');
     define('DBNAME', 'contasistin');
-?>

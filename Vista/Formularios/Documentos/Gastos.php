@@ -11,7 +11,7 @@
     session_start();
 
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
-        echo '<script> self.location = "../Otros/Login.php"</script>';
+        echo '<script> self.location = "/"</script>';
 
     $Parametros = new cls_Parametros();
     $Documentos = new cls_Documentos();
@@ -121,7 +121,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 

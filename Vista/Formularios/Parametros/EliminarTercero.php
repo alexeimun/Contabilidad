@@ -7,7 +7,7 @@
 
     if ($_GET['id'] == "") {
         echo '<script >
-        self.location = "Terceros.php"
+        self.location = "Terceros.php";
 	</script>';
     }
 
@@ -18,12 +18,12 @@
     if ($Ter->EliminarTercero($ID) > 0) {
 
         echo '<script >
-                      window.location.href = "Terceros.php"
+                      window.location.href = "Terceros.php";
                      </script>';
 //             
     } else {
         echo '<script >
-	alert("Error al eliminar" )
+	alert("Error al eliminar" );
 	</script>';
         header('location:Terceros.php');
     }

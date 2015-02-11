@@ -7,7 +7,7 @@
 
     session_start();
     if (isset($_SESSION['login']) == '')
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
     $Consecutivo = $_SESSION['ConsecutivoFact'];
 
     //************************************************************
@@ -236,7 +236,7 @@
 
     $pdf->Cell($pdf->PageNo());
 
-    include '../../View/Formularios/Informes/vw_Informes.php'
+    include '../../View/Formularios/Informes/vw_Informes.php';
 
 ?>
 

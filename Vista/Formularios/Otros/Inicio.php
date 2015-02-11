@@ -9,9 +9,8 @@
         $Master = new Master();
         $menu = $Master->Menu();
 
-    } else {
-        echo '<script > self.location = "Login.php"</script>';
-    }
+    } else echo '<script > self.location = "/"</script>';
+
 ?>
 <html>
 <head>
@@ -32,13 +31,13 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_USUARIO"] ?></span></h3>
 
-        <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png"></img>
+        <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
 
     <div id="content-wrap">
@@ -47,13 +46,9 @@
         <div id="main">
             <center>
                 <h3><b>INICIO</b></h3><br>
-
-
             </center>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

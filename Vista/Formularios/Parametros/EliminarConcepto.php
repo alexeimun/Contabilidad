@@ -16,7 +16,7 @@
 //
     else {
         echo '<script >
-	           alert("Error al eliminar")</script>';
+	           alert("Error al eliminar");</script>';
         header('location:Conceptos.php');
     }
 ?>

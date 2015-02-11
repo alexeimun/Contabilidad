@@ -7,7 +7,7 @@
     session_start();
 
     if (isset($_SESSION['login']) !== '' && $_SESSION['login'][0]["NIVEL"] === 1)
-        echo '<script> self.location = "../Otros/Login.php"</script>';
+        echo '<script> self.location = "/"</script>';
 
 
     if ($_GET['id'] == "")

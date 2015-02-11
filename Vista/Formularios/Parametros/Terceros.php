@@ -33,20 +33,20 @@
             $tabla .= '<td style="text-align:left;">' . $valor['CELULAR'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
             $tabla .= '<td style="text-align:center;">
-           <a href="CrearTercero.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> 
-          <a href="ModificarTercero.php?id=' . $valor['ID_TERCERO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></img></a>
-          <a onclick="EliminarTercero(' . $valor['ID_TERCERO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></img></a>
+           <a href="CrearTercero.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarTercero.php?id=' . $valor['ID_TERCERO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarTercero(' . $valor['ID_TERCERO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
         }
 
         if ($cont == 0) {
-            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearTercero.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
+            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearTercero.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
         }
 
         $tabla .= '</tbody></table>';
 
     } else {
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
     }
 ?>
 <html>
@@ -110,7 +110,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 

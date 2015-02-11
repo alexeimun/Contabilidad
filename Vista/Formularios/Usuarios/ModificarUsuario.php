@@ -66,7 +66,7 @@
             }
             echo '<script>alert("Se modificó el usuario correctamente.");self.location = "Usuarios.php"</script>';
         }
-    } else echo '<script>self.location = "../Otros/Login.php"</script>';
+    } else echo '<script>self.location = "/"</script>';
 
 ?>
 <html>

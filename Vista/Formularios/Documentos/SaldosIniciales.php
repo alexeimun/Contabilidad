@@ -9,7 +9,7 @@
 
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
 
     $Master = new Master();
     $menu = $Master->Menu();
@@ -105,7 +105,7 @@ $(document).ready(function () {
     var AddButton = $("#AgregarCampo"); //ID del Botón Agregar
 
     //var x = número de campos existentes en el contenedor
-    var x = $("#contenedor div").length;
+    var x = $("#contenedor").find("div").length;
     var FieldCount = x - 1; //para el seguimiento de los campos
 
 

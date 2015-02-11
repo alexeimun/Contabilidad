@@ -9,7 +9,7 @@
 
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
     $cmbTercero = '<option value ="0">-- Seleccione Un Tercero --</option>';
 
     $Master = new Master();

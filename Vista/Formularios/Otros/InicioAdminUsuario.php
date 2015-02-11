@@ -10,7 +10,7 @@
         $menu = $Master->Menu();
 
     } else {
-        echo '<script >self.location = "../Otros/Login.php"</script>';
+        echo '<script >self.location = "/"</script>';
     }
 ?>
 <html>
@@ -32,7 +32,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_VENDEDOR"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_VENDEDOR"] ?>"></a>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
 
         <h1 id="logo"><span class="gray">Administración&nbsp&nbsp; <span

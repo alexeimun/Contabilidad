@@ -40,19 +40,19 @@
                 else $tabla .= '<td style="text-align:left;color:red;">';
                 $tabla .=  $valor['ESTADO_EMPRESA'] . '</td>';
                 $tabla .= '<td  style="text-align:right;">
-          <a href="AdministrarEmpresa.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></img></a>
+          <a href="AdministrarEmpresa.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></a>
                 </td></tr>';
 
             }
         }
         if ($cont == 0) {
-            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearEmpresa.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
+            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearEmpresa.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
         }
         $tabla .= '</tbody></table>';
 
 
     } else {
-        echo '<script > self.location = "../Otros/Login.php"</script>';
+        echo '<script > self.location = "/"</script>';
     }
 ?>
 <html>
@@ -108,7 +108,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_VENDEDOR"] ?>"></img></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_VENDEDOR"] ?>"></a>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
 
         <h1 id="logo"><span class="gray">Administración&nbsp&nbsp; <span
@@ -121,7 +121,7 @@
         <div id="main">
             <center>
                 <h3><b>EMPRESAS&nbsp;&nbsp;&nbsp;<a href="CrearEmpresa.php"><img src="../../Imagenes/add.png"
-                                                                                 title="Agregar"></img></a></b></h3><br>
+                                                                                 title="Agregar"></a></b></h3><br>
                 <?= $tabla ?>
 
             </center>
