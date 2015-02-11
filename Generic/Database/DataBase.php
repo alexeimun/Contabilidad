@@ -33,15 +33,10 @@
         public function Query($query)
         {
             return self::$_connect->Query($query);
-
         }
 
         public function __clone()
         {
             trigger_error('Este objeto no se pudo clonar', E_USER_ERROR);
         }
-
-
     }
-
-?>

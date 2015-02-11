@@ -1,6 +1,6 @@
 <?php
 
-    class cls_Vendedores
+    class cls_Clientes
     {
         //put your code here
 
@@ -12,10 +12,10 @@
             $this->_DB = DataBase::Connection();
         }
 
-        public function TraeVendedores()
+        public function TraeClientes()
         {
             $query = "SELECT *,
-            CASE WHEN t_vendedor.ESTADO=1 THEN 'Activa' ELSE 'Inactiva' END AS ESTADO_VENDEDOR,
+            CASE WHEN t_vendedor.ESTADO=1 THEN 'Activa' ELSE 'Inactiva' END AS ESTADO_CLIENTE,
             t_credenciales.EMAIL AS EMAIL
 
             FROM  t_vendedor
@@ -25,7 +25,7 @@
             return $resulset->fetchAll();
         }
 
-        public function ActivaOdesactivaVendedor($id, $a)
+        public function ActivaOdesactivaCliente($id, $a)
         {
 
             if ($a == 'd') {
@@ -42,7 +42,7 @@
 
         }
 
-        public function TraeDatosVendedor($id)
+        public function TraeDatosCliente($id)
         {
             $query = "SELECT *,
         t_credenciales.EMAIL AS EMAIL
@@ -55,7 +55,7 @@
             return $resulset->fetchAll();
         }
 
-        public function TraeUsuariosVendedor($IdVendedor)
+        public function TraeUsuariosCliente($IdVendedor)
         {
             $query = "SELECT *,
             t_credenciales.EMAIL
@@ -68,7 +68,7 @@
             return $resulset->fetchAll();
         }
 
-        public function TraeInfoVendedor($id)
+        public function TraeInfoCliente($id)
         {
             $query = "SELECT *,
         t_credenciales.EMAIL AS EMAIL
@@ -81,7 +81,7 @@
             return $resulset->fetchAll();
         }
 
-        public function InsertaVendedor($Nombre, $Documento, $Telefono, $Email, $CantEmpresas, $idAdmin)
+        public function InsertaCliente($Nombre, $Documento, $Telefono, $Email, $CantEmpresas, $idAdmin)
         {
             $query = "INSERT INTO t_credenciales
          (EMAIL,PASSWORD,NIVEL) VALUES ('" . $Email . "','contasistin',1);
@@ -100,7 +100,7 @@
             }
         }
 
-        public function ActualizaVendedor($Id, $Nombre, $Documento, $Telefono, $Email, $Logo)
+        public function ActualizaCliente($Id, $Nombre, $Documento, $Telefono, $Email, $Logo)
         {
             $query = "UPDATE t_credenciales SET EMAIL=  '" . $Email . "' WHERE ID_CREDENCIAL=(SELECT ID_CREDENCIAL FROM t_vendedor WHERE
         ID_VENDEDOR ='" . $Id . "');
@@ -113,7 +113,7 @@
 
         }
 
-        public function EliminaVendedor($id)
+        public function EliminaCliente($id)
         {
             $query = "DELETE FROM `t_vendedor` WHERE (`ID_VENDEDOR`=" . $id . ")";
 
@@ -124,9 +124,10 @@
             }
         }
 
-        public function ActualizarCantEmpresas($Cant, $IdVendedor)
+        public function ActualizarCantEmpresas($Cant, $IdCliente)
         {
-            $query = "UPDATE  `t_vendedor` SET CANT_EMPRESAS=" . $Cant . " WHERE (`ID_VENDEDOR`=" . $IdVendedor . ")";
+            //ASUMIENDO QUE UN CLIENTE ES UN VENDEDOR
+            $query = "UPDATE  `t_vendedor` SET CANT_EMPRESAS=" . $Cant . " WHERE (`ID_VENDEDOR`=" . $IdCliente . ")";
 
             if ($this->_DB->Exec($query) > 0) {
                 return true;

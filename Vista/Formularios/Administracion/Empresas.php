@@ -19,7 +19,7 @@
             <th style="text-align:left;">TELEFONO</th>
             <th style="text-align:left;">EMAIL</th>
             <th style="text-align:left;">CANTIDAD USUARIOS</th>
-            <th style="text-align:left;">FECHA DE INGRESO</th>
+            <th style="text-align:left;">FECHA DE REGISTRO</th>
             <th style="text-align:left;">ESTADO</th>';
 
         $cont = 0;
@@ -36,7 +36,9 @@
                 $tabla .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
                 $tabla .= '<td style="text-align:left;"><b>' . $valor['CANT_USUARIOS'] . '</b></td>';
                 $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
-                $tabla .= '<td style="text-align:left;">' . $valor['ESTADO_EMPRESA'] . '</td>';
+                if($valor['ESTADO_EMPRESA']=='Activa') $tabla .= '<td style="text-align:left;color:#5ab400;">';
+                else $tabla .= '<td style="text-align:left;color:red;">';
+                $tabla .=  $valor['ESTADO_EMPRESA'] . '</td>';
                 $tabla .= '<td  style="text-align:right;">
           <a href="AdministrarEmpresa.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></img></a>
                 </td></tr>';
@@ -71,7 +73,6 @@
 
 <script>
     $(document).ready(function () {
-        if ('<?= count($Array); ?>' > 0)
             $('#table').dataTable({
                 "language": {
                     "sProcessing": "Procesando...",

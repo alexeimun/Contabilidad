@@ -3,14 +3,14 @@
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
-    include '../../../Clases/cls_Vendedores.php';
+    include '../../../Clases/cls_Clientes.php';
 
     session_start();
     if (isset($_SESSION['login']) != '' && $_SESSION['login'][0]["NIVEL"] == 2) {
 
         $Master = new Master();
         $menu = $Master->Menu();
-        $Vendedores = new cls_Vendedores();
+        $Vendedores = new cls_Clientes();
 
         $tabla = '<table id="table" class="table" style="width:90%;"> <thead><tr>
             <th style="text-align:left;">NOMBRE</th>
@@ -23,7 +23,7 @@
             <th style="text-align:left;">ESTADO</th>
             <th style="text-align:right;">ACCIÓN</th></tr></thead><tbody>';
         $cont = 0;
-        foreach ($Vendedores->TraeVendedores() as $llave => $valor) {
+        foreach ($Vendedores->TraeClientes() as $llave => $valor) {
             $cont ++;
             $idEmpresa = $valor['ID_VENDEDOR'];
             $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
@@ -31,16 +31,18 @@
             $tabla .= '<td style="text-align:left;">' . $valor['TELEFONO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['PASSWORD'] . '</td>';
-            $tabla .= '<td style="text-align:left;"><b>' . $valor['CANT_EMPRESAS'] . '</b></td>';
+            $tabla .= '<td style="text-align:center;"><b>' . $valor['CANT_EMPRESAS'] . '</b></td>';
             $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['ESTADO_VENDEDOR'] . '</td>';
+            if($valor['ESTADO_CLIENTE']=='Activa') $tabla .= '<td style="text-align:left;color:#5ab400;">';
+            else $tabla .= '<td style="text-align:left;color:red;">';
+            $tabla .=  $valor['ESTADO_CLIENTE'] . '</td>';
             $tabla .= '<td  style="text-align:right;">
-          <a href="AdministrarVendedor.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></img></a>
+          <a href="AdministrarCliente.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></img></a>
                 </td></tr>';
 
         }
         if ($cont == 0) {
-            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearVendedor.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
+            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearCliente.php"><img src="../../Imagenes/add.png" title="Nuevo"></img></a> </td></tr>';
         }
         $tabla .= '</tbody></table>';
 
@@ -110,8 +112,8 @@
 
         <div id="main">
             <center>
-                <h3><b>CLIENTE&nbsp;&nbsp;&nbsp;<a href="CrearVendedor.php"><img src="../../Imagenes/add.png"
-                                                                                 title="Agregar"></img></a></b></h3><br>
+                <h3><b>CLIENTE&nbsp;&nbsp;&nbsp;<a href="CrearCliente.php"><img src="../../Imagenes/add.png"
+                                                                                title="Agregar"></img></a></b></h3><br>
                 <?= $tabla ?>
 
             </center>

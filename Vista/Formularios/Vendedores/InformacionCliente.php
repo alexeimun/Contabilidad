@@ -3,12 +3,12 @@
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
-    include '../../../Clases/cls_Vendedores.php';
+    include '../../../Clases/cls_Clientes.php';
     session_start();
     if (isset($_SESSION['login']) != '') {
         $Master = new Master();
         $menu = $Master->Menu();
-        $Vendedor = new cls_Vendedores();
+        $Cliente = new cls_Clientes();
 
         $txtNombre = '';
         $txtDoc = '';
@@ -16,7 +16,7 @@
         $txtEmail = '';
         $Logo = '';
 
-        foreach ($Vendedor->TraeDatosVendedor($_SESSION['login'][0]["ID_VENDEDOR"]) as $llave => $valor) {
+        foreach ($Cliente->TraeDatosCliente($_SESSION['login'][0]["ID_VENDEDOR"]) as $llave => $valor) {
             $txtNombre = $valor['NOMBRE'];
             $txtDoc = $valor['DOCUMENTO'];
             $txtEmail = $valor['EMAIL'];
@@ -26,18 +26,15 @@
 
         if (isset($_POST['btnGuardar']) != '') {
 
-            $img = 'z' . rand(1000000000, 999999999) . '_' . $_FILES["file"]["name"];
+            $img = 'z' . md5(rand(0, 999999999).$txtDoc) . '_' . $_FILES["file"]["name"];
             if ($_FILES["file"]["name"] == '') {
                 $img = $Logo;
             }
-            $Vendedor->ActualizaVendedor($_SESSION['login'][0]["ID_VENDEDOR"], $_POST['txtNombre'], $_POST['txtDoc'], $_POST['txtTelefono'], $_POST['txtEmail'], $img);
+            $Cliente->ActualizaCliente($_SESSION['login'][0]["ID_VENDEDOR"], $_POST['txtNombre'], $_POST['txtDoc'], $_POST['txtTelefono'], $_POST['txtEmail'], $img);
 
             move_uploaded_file($_FILES["file"]["tmp_name"], $img);
 
-            echo '<script >
-                    alert("Se modificaron los datos de la empresa correctamente");
-                    self.location = "InformacionVendedor.php";
-                    </script>';
+            echo '<script >alert("Se modificaron los datos de la empresa correctamente");self.location = "InformacionCliente.php";</script>';
         }
 
     } else echo '<script >self.location = "../Otros/Login.php";</script>';
@@ -45,7 +42,7 @@
 ?>
 <html>
 <head>
-    <title>Información del Vendedor</title>
+    <title>Información del Cliente</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -93,7 +90,7 @@
         <div id="main">
             <form method="post" enctype="multipart/form-data">
                 <center>
-                    <h3><b>INFORMACIÓN DEL VENDEDOR</b></h3><br>
+                    <h3><b>INFORMACIÓN DEL CLIENTE</b></h3><br>
                     <table style="width: 65%;color: #33373d">
                         <tr>
                             <td>Nombre:</td>

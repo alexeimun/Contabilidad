@@ -3,8 +3,7 @@
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
-    include '../../../Clases/cls_Usuarios.php';
-    include '../../../Clases/cls_Vendedores.php';
+    include '../../../Clases/cls_Clientes.php';
     session_start();
     if (isset($_SESSION['login']) != '') {
 
@@ -12,24 +11,19 @@
         $Master = new Master();
         $menu = $Master->Menu();
         $Usuarios = new cls_Usuarios();
-        $Vendedor = new cls_Vendedores();
+        $Vendedor = new cls_Clientes();
         $identi = rand(10000000, 99999999);
 
 
         if (isset($_POST['btnGuardar']) != '') {
 
-            $Vendedor->InsertaVendedor($_POST['txtNombre'], $_POST['txtDoc'], $_POST['txtTelefono'], $_POST['txtEmail'], $_POST['txtCantUsuarios'], $_SESSION['login'][0]["ID_ADMIN"]);
+            $Vendedor->InsertaCliente($_POST['txtNombre'], $_POST['txtDoc'], $_POST['txtTelefono'], $_POST['txtEmail'], $_POST['txtCantUsuarios'], $_SESSION['login'][0]["ID_ADMIN"]);
 
 
-            echo '<script >
-                    alert("Se creó el vendedor correctamente.");
-                    self.location = "Vendedores.php";
-                    </script>';
+            echo '<script >alert("Se creó el vendedor correctamente."); self.location = "Vendedores.php";</script>';
         }
 
-    } else {
-        echo '<script > self.location = "../Otros/Login.php";</script>';
-    }
+    } else echo '<script > self.location = "../Otros/Login.php";</script>';
 ?>
 <html>
 <head>

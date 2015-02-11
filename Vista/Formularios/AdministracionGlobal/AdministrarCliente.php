@@ -2,7 +2,7 @@
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
-    include '../../../Clases/cls_Vendedores.php';
+    include '../../../Clases/cls_Clientes.php';
     include '../../../Clases/cls_Empresas.php';
     session_start();
     if (isset($_SESSION['login']) != '' && $_SESSION['login'][0]["NIVEL"] == 2) {
@@ -13,7 +13,7 @@
 
         $Master = new Master();
         $menu = $Master->Menu();
-        $Vendedor = new cls_Vendedores();
+        $Cliente = new cls_Clientes();
         $Empresas = new cls_Empresas();
 
         $txtNombre = '';
@@ -24,7 +24,7 @@
         $Estado = '';
         $CantidadEmpresas = '';
 
-        foreach ($Vendedor->TraeInfoVendedor($_GET['id']) as $llave => $valor) {
+        foreach ($Cliente->TraeInfoCliente($_GET['id']) as $llave => $valor) {
 
             $txtNombre = $valor['NOMBRE'];
             $txtDoc = $valor['DOCUMENTO'];
@@ -43,9 +43,9 @@
             $Boton = ' <input type="button" class="btnVerde" onclick="ActivaOdesactiva(' . $a . ',' . $_GET['id'] . ')"  id="btnActivar" name="btnActivar" value="ACTIVAR"  style="width:200px;"/>';
         }
         if (isset($_POST['btnGuardar']) != '' && isset($_POST['cantidad']) != '') {
-            $Vendedor->ActualizarCantEmpresas($_POST['cantidad'], $_GET['id']);
+            $Cliente->ActualizarCantEmpresas($_POST['cantidad'], $_GET['id']);
 
-            foreach ($Vendedor->TraeInfoVendedor($_GET['id']) as $llave => $valor)
+            foreach ($Cliente->TraeInfoCliente($_GET['id']) as $llave => $valor)
 
                 $CantidadEmpresas = $valor['CANT_EMPRESAS'];
         }
@@ -59,7 +59,7 @@
             <th style="text-align:left;">FECHA DE REGISTRO</th></tr></thead><tbody>';
 
         $cont = 0;
-        foreach ($Vendedor->TraeUsuariosVendedor($_GET['id']) as $llave => $valor) {
+        foreach ($Cliente->TraeUsuariosCliente($_GET['id']) as $llave => $valor) {
             $idEmpresa = $valor['ID_EMPRESA'];
             $tablaEmpresas .= '<tr><td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
             $tablaEmpresas .= '<td style="text-align:left;">' . $valor['NIT'] . '</td>';
@@ -75,7 +75,7 @@
 ?>
 <html>
 <head>
-    <title>Administrar Empresa</title>
+    <title>Administrar Cliente</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -146,7 +146,7 @@
         <div id="main">
             <form method="post" enctype="multipart/form-data">
                 <center>
-                    <h3><b>ADMINISTRACIÓN DE VENDEDOR</b></h3><br>
+                    <h3><b>ADMINISTRACIÓN DE CLIENTE</b></h3><br>
 
                     <span class="spanb">Vendedor:</span><span class="spana"><?= $txtNombre; ?></span>&nbsp;&nbsp;&nbsp;
                     <span class="spanb">Documento:</span><span class="spana"><?= $txtDoc; ?></span>&nbsp;&nbsp;&nbsp;
@@ -157,7 +157,7 @@
                     <h4><b>Capacidad de Empresas</b></h4>
                     <input type="number" id="num" name="cantidad" value='<?= $CantidadEmpresas; ?>'
                            style="text-align: center;width:60px;" max="99999" min=10/>
-                    <input type="submit" value="Guardar" name="btnGuardar" onclick="Guardar();"
+                    <input type="submit" value="Guardar" class="btnAzul" style="width: 95px;" name="btnGuardar" onclick="Guardar();"
                            style="height: 30px;border-radius: 3px;cursor: pointer; width: 60px;"/>
                     </br>
 

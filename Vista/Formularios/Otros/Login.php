@@ -2,7 +2,6 @@
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
-    include '../../../Clases/cls_Usuarios.php';
     include '../../../Clases/Master.php';
 
     $Usuarios = new cls_Usuarios();
@@ -39,7 +38,7 @@
         if (preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/",$_POST['txtLogin'] )
         || preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/",$_POST['txtPass'] )) {
             echo '<script>alert("Me estás tratando de joder el sitio. Pero te hemos captura la ip y se ha enviado tu ubicación a la base de datos. Estar atento a próximas denuncias") </script>';
-        } else if ($Usuarios->validarCredenciales(LimpiarSql($_POST['txtLogin']), LimpiarSql($_POST['txtPass']))) {
+        } else if ($Usuarios->validarCredenciales($_POST['txtLogin'], $_POST['txtPass'])) {
 
             switch ($_SESSION['login'][0]["NIVEL"]) {
                 case 0 :

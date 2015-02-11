@@ -199,7 +199,6 @@
 
     <div id="content-wrap">
         <?= $menu ?>
-        <select class="chosen-select" name="" id=""></select>
         <div id="main">
             <form method="POST">
                 <center>

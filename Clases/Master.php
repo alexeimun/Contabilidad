@@ -14,7 +14,7 @@
             <ul class="menu">
                 <li class="item1"><a href="#">Documentos</a>
                     <ul>';
-                if ($valor[0][1] == 1)
+                if ($valor[0][1] == '1')
                     $menu .= '  <li ><a href="../Documentos/Factura.php">Factura</a></li>';
 
                 if ($valor[1][1] == 1)
@@ -124,7 +124,7 @@
                     <li class="item5"><a href="#">Administración</a>
                         <ul style="text-align:left;">
                              <li ><a href="../Administracion/Empresas.php">Empresas</a></li>
-                              <li ><a href="../Vendedores/InformacionVendedor.php">Modificar Datos</a></li>
+                              <li ><a href="../Clientes/InformacionCliente.php">Modificar Datos</a></li>
                     </ul>
                 </li>
         <a style="font-family:Helvetica, Arial, sans-serif;color: #fff;font-weight:600;padding-left:35px;" href="../Otros/Logout.php">Salir</a> 
@@ -136,7 +136,7 @@
                 <ul class="menu">
                     <li class="item5"><a href="#">Administración</a>
                         <ul>
-                             <li ><a href="../AdministracionGlobal/Vendedores.php">Vendedores</a></li>
+                             <li ><a href="../AdministracionGlobal/Clientes.php">Clientes</a></li>
                            <!---  <li ><a href="../AdministracionGlobal/">Administradores</a></li>-->
                         </ul>
                     </li>

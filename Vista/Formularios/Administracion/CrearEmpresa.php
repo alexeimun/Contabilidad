@@ -3,7 +3,6 @@
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
-    include '../../../Clases/cls_Usuarios.php';
     include '../../../Clases/cls_Empresas.php';
     include '../../../Clases/cls_Documentos.php';
     session_start();
