@@ -8,7 +8,7 @@
     include '../../../Clases/cls_CajaMenor.php';
 
     session_start();
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script > self.location = "/"</script>';
     $cmbTercero = '<option value ="0">-- Seleccione Un Tercero --</option>';
 
@@ -46,12 +46,12 @@
         else {
             $Consecutivo = $CajaMenor->_Consecutivo;
             $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'C', $Consecutivo, 0, 0, 'TOTAL', 'D',
-                1, $_POST['txtValor'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Con',$_POST['cmbConcepto'],0, '', 0, '',
+                1, $_POST['txtValor'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Con', $_POST['cmbConcepto'], 0, '', 0, '',
                 $_POST['cmbCiudad'], $_POST['Codigo'], 'RECIBO_CAJA_MENOR');
 
             $_SESSION['ConsecutivoCM'] = $Consecutivo;
 
-            $Documentos->ActualizaConsecutivo($Consecutivo+1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO_CAJA_MENOR');
+            $Documentos->ActualizaConsecutivo($Consecutivo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO_CAJA_MENOR');
 
             echo '<script >
           alert("Se creó el recibo correctamente.");

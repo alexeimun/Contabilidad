@@ -4,7 +4,7 @@
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
     session_start();
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script > self.location = "/"</script>';
     $Master = new Master();
     $menu = $Master->Menu();
@@ -91,7 +91,8 @@
         if (root == 1) {
             alert("No se puede eliminar un usuario principal");
         }
-        else if (<?= $_SESSION['login'][0]['ID_USUARIO']; ?>==id)
+        else if (<?= $_SESSION['login'][0]['ID_USUARIO']; ?>==id
+    )
 
         alert("Acción inválida.");
     else

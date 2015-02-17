@@ -207,9 +207,10 @@
                             $letras .= (string)' ';
                     return $letras;
                 }
+            } catch (Exception $e) {
+                echo var_dump($e);
             }
-            catch(Exception $e){echo var_dump( $e);}
-            }
+        }
 
         /*
             Retorna el valor de la decena que se le envie como parametro
@@ -237,7 +238,7 @@
                     return $valores[103];
                     break;
                 default:
-                  //  return $valores[$VCentena];
+                    //  return $valores[$VCentena];
             }
         }
 

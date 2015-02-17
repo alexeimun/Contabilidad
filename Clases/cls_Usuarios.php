@@ -460,6 +460,15 @@
             else return false;
         }
 
+        public function TraeModulo($nombre)
+        {
+            $this->Retocar($nombre);
+            $query = "SELECT ID_MODULO  FROM t_modulo WHERE t_modulo.NOMBRE='" . $nombre . "'";
+            $resulset = $this->_DB->Query($query);
+            $Campos = $resulset->fetchAll();
+            return $Campos[0][0];
+        }
+
         private function Retocar(&$nombre)
         {
             $nombre = str_replace('.php', '', basename($nombre));
@@ -469,15 +478,6 @@
                 else $link .= $nombre[$i];
             }
             $nombre = $link;
-        }
-
-        public function TraeModulo($nombre)
-        {
-            $this->Retocar($nombre);
-            $query = "SELECT ID_MODULO  FROM t_modulo WHERE t_modulo.NOMBRE='" . $nombre . "'";
-            $resulset = $this->_DB->Query($query);
-            $Campos = $resulset->fetchAll();
-            return $Campos[0][0];
         }
 
         public function Permiso($idmodulo, $iduser)

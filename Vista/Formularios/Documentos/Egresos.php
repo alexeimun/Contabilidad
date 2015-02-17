@@ -9,7 +9,7 @@
     include '../../../Clases/cls_Egresos.php';
     session_start();
 
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script> self.location = "/"</script>';
 
     $Parametros = new cls_Parametros();
@@ -37,7 +37,7 @@
         $tabla .= '<td style="text-align:right;">' . number_format($valor['ABONADO'], 0, '', ',') . '</td>';
         $tabla .= '<td style="text-align:right;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
         $tabla .= '<td style="text-align:center;">';
-        $tabla .= "<a onclick='GeneraEgreso(" . $valor['CONSECUTIVO'] . "," . $valor['VALOR'] . "," . $valor['ABONADO'] . "," . $valor['ID_TERCERO'] . "," . $valor['ID_CONCEPTO'] .");return false'>
+        $tabla .= "<a onclick='GeneraEgreso(" . $valor['CONSECUTIVO'] . "," . $valor['VALOR'] . "," . $valor['ABONADO'] . "," . $valor['ID_TERCERO'] . "," . $valor['ID_CONCEPTO'] . ");return false'>
                     <img style='width:30px;height:32px;' src='../../Imagenes/pay.png' title='Pagar'></a>";
         $tabla .= "&nbsp;&nbsp;<a onclick='Antecedentes(" . $valor['CONSECUTIVO'] . ")'><img style='width:30px;height:32px;' src='../../Imagenes/reg.png' title='Antecedentes'></a></tr>";
     }
@@ -54,13 +54,13 @@
         foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Secuencia ++;
             $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'G', $_POST['ConsecutivoGastos'], $valor['ID_F_PAGO'], $Secuencia, "ABONO GASTOS" . $Egresos->_ConsecutivoEgresos,
-                'D', 1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa',0,0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
+                'D', 1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
         }
         //Consultar que ID_CUENTA_MOV le paso
         // echo var_dump($_POST['ConsecutivoEgreso'])."TOTAL= ".$_SESSION['TOTAL2']." ABonado= ".$_POST['Abonado'];
         //Debito
         $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, $_POST['Concepto'], 'E', $Egresos->_ConsecutivoEgresos, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
-            1, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'E',$_POST['ConsecutivoGastos'], '', 0,0, '', 0, '', 'EGRESOS', $_SESSION['TOTAL2']);
+            1, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'E', $_POST['Concepto'], $_POST['ConsecutivoGastos'], '', 0, '', 0, '', 'EGRESOS', $_SESSION['TOTAL2']);
 
 
         $Documentos->ActualizaEgresosAbono($_POST['ConsecutivoGastos'], $_SESSION['login'][0]["ID_EMPRESA"], $_SESSION['TOTAL2'] + $_SESSION['Abonado']);
@@ -196,8 +196,8 @@
     function Change() {
         $("#botones").load("procesaProductosFactura.php?action=consultafpago&id=" + document.getElementById('cmbfPago').value);
     }
-    function GeneraEgreso(consecutivo, valor, abonado, tercero,concepto) {
-        $("#formas").load("ProcesaEgresos.php?action=EgresoPago&id=" + consecutivo + "&valor=" + valor + "&Tercero=" + tercero + "&abonado=" + abonado+ "&concepto=" + concepto,
+    function GeneraEgreso(consecutivo, valor, abonado, tercero, concepto) {
+        $("#formas").load("ProcesaEgresos.php?action=EgresoPago&id=" + consecutivo + "&valor=" + valor + "&Tercero=" + tercero + "&abonado=" + abonado + "&concepto=" + concepto,
             function () {
                 $("#pagos").load("procesaProductosFactura.php?action=listarpagos");
                 $("#validaciones").load("ProcesaEgresos.php?action=validaegreso");

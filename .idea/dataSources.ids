@@ -12,7 +12,7 @@
       <column name="NOMBRE" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="DOCUMENTO" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="ID_CREDENCIAL" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <primary-key name="PRIMARY" columns="ID_ADMIN"/>
       <foreign-key name="t_admin_ibfk_1" columns="ID_CREDENCIAL" ref-table="t_credenciales" ref-schema="" ref-catalog="contasistin" ref-columns="ID_CREDENCIAL" update-rule="0" delete-rule="0" deferrability="2"/>
       <exported-key name="t_vendedor_ibfk_1" table="t_vendedor" schema="" catalog="contasistin" columns="ID_ADMIN"/>
@@ -31,8 +31,8 @@
       <column name="ID_CUENTA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="CONCEPTO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="CONCEPTO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="ID_CONCEPTO"/>
     </table>
@@ -51,10 +51,10 @@
       <column name="ID_CUENTA" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
       <column name="CODIGO" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
       <column name="NOMBRE" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
-      <column name="MANEJA_TERCERO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
-      <column name="MANEJA_DOC_CRUCE" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="MANEJA_TERCERO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
+      <column name="MANEJA_DOC_CRUCE" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="NATURALEZA" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
@@ -71,7 +71,7 @@
       <column name="NOMBRE_IMPRESO" sqlType="VARCHAR" precision="500" scale="0" nullable="true" jdbcType="12"/>
       <column name="CONSECUTIVO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="LEYENDA" sqlType="VARCHAR" precision="200" scale="0" nullable="true" jdbcType="12"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="TIPO_INTERNO" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
@@ -89,7 +89,7 @@
       <column name="CANT_USUARIOS" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MTA="/>
       <column name="ID_CREDENCIAL" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_VENDEDOR" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="ID_EMPRESA"/>
       <foreign-key name="t_empresas_ibfk_1" columns="ID_VENDEDOR" ref-table="t_vendedor" ref-schema="" ref-catalog="contasistin" ref-columns="ID_VENDEDOR" update-rule="0" delete-rule="0" deferrability="2"/>
@@ -108,7 +108,7 @@
       <column name="NOMBRE_ENTIDAD" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="TIPO" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="ID_ENTIDAD"/>
@@ -131,9 +131,9 @@
       <column name="ID_CUENTA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="CODIGO_F_PAGO" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
       <column name="NOMBRE_F_PAGO" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
-      <column name="REQUIERE_ENTIDAD" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
-      <column name="REQUIERE_NUMERO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="REQUIERE_ENTIDAD" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
+      <column name="REQUIERE_NUMERO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
@@ -150,7 +150,7 @@
       <column name="CTA_VENTAS" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="CTA_COSTO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="CTA_DEVOLUCIONES" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
@@ -167,7 +167,7 @@
       <column name="ID_MODULO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
       <column name="NOMBRE" sqlType="VARCHAR" precision="200" scale="0" nullable="false" jdbcType="12"/>
       <column name="PADRE" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="VISIBLE" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="VISIBLE" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="ORDEN" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <primary-key name="PRIMARY" columns="ID_MODULO"/>
       <exported-key name="t_permisos_ibfk_2" table="t_permisos" schema="" catalog="contasistin" columns="ID_MODULO"/>
@@ -186,7 +186,7 @@
       <column name="CANTIDAD" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="VALOR" sqlType="DECIMAL" precision="18" scale="2" nullable="true" jdbcType="3"/>
       <column name="DESCUENTO" sqlType="DECIMAL" precision="18" scale="2" nullable="true" jdbcType="3"/>
-      <column name="ANULADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ANULADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="USR_ANULA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="FECHA_ANULA" sqlType="DATETIME" precision="19" scale="0" nullable="true" jdbcType="93"/>
       <column name="OBS" sqlType="VARCHAR" precision="500" scale="0" nullable="true" jdbcType="12"/>
@@ -202,6 +202,7 @@
       <column name="TIPO" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="DOC_CRUCE" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_CONCEPTO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="TRANSPORTADOR" sqlType="VARCHAR" precision="40" scale="0" nullable="true" jdbcType="12"/>
       <primary-key name="PRIMARY" columns="ID_MOVIMIENTO"/>
     </table>
     <table name="t_pagos_t" schema="" catalog="contasistin" type="TABLE">
@@ -211,14 +212,14 @@
       <column name="NUMERO" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="VALOR" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_USUARIO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <primary-key name="PRIMARY" columns="ID_PAGO_T"/>
     </table>
     <table name="t_permisos" schema="" catalog="contasistin" type="TABLE">
       <column name="ID_PERMISO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
       <column name="ID_USUARIO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
       <column name="ID_MODULO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
-      <column name="SI_O_NO" sqlType="BIT" precision="1" scale="0" nullable="false" jdbcType="-7"/>
+      <column name="SI_O_NO" sqlType="BINARY" precision="1" scale="0" nullable="false" jdbcType="-2"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="false" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="ID_PERMISO"/>
@@ -234,7 +235,7 @@
       <column name="DESCRIPCION" sqlType="VARCHAR" precision="500" scale="0" nullable="true" jdbcType="12"/>
       <column name="PRECIO" sqlType="DECIMAL" precision="18" scale="2" nullable="true" jdbcType="3"/>
       <column name="ID_GRUPO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
@@ -256,7 +257,7 @@
       <column name="CELULAR" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
       <column name="EMAIL" sqlType="VARCHAR" precision="100" scale="0" nullable="true" jdbcType="12"/>
       <column name="ID_CIUDAD" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
@@ -271,8 +272,8 @@
       <column name="DOCUMENTO" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="ID_CREDENCIAL" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="RAIZ" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7" def="YicwJw=="/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="RAIZ" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2" def="AA=="/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="ID_USUARIO"/>
       <foreign-key name="t_usuarios_ibfk_1" columns="ID_CREDENCIAL" ref-table="t_credenciales" ref-schema="" ref-catalog="contasistin" ref-columns="ID_CREDENCIAL" update-rule="0" delete-rule="0" deferrability="2"/>
@@ -290,7 +291,7 @@
       <column name="LOGO" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="ID_CREDENCIAL" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_ADMIN" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="ESTADO" sqlType="BIT" precision="1" scale="0" nullable="true" jdbcType="-7"/>
+      <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <primary-key name="PRIMARY" columns="ID_VENDEDOR"/>
       <foreign-key name="t_vendedor_ibfk_1" columns="ID_ADMIN" ref-table="t_admin" ref-schema="" ref-catalog="contasistin" ref-columns="ID_ADMIN" update-rule="0" delete-rule="0" deferrability="2"/>
@@ -308,9 +309,8 @@
     <procedure name="TraeMovContableTodo" schema="" catalog="contasistin" type="1">
       <prototype>
         <parameter name="idEmpresa" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" type="1" index="1"/>
-        <parameter name="CuentaMov" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5" type="1" index="2"/>
-        <parameter name="Inicio" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="3"/>
-        <parameter name="Fin" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="4"/>
+        <parameter name="Inicio" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="2"/>
+        <parameter name="Fin" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91" type="1" index="3"/>
       </prototype>
     </procedure>
     <procedure name="TraeMovTerceroporDoc" schema="" catalog="contasistin" type="1">

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -20,7 +19,7 @@
             $Vendedor->InsertaCliente($_POST['txtNombre'], $_POST['txtDoc'], $_POST['txtTelefono'], $_POST['txtEmail'], $_POST['txtCantUsuarios'], $_SESSION['login'][0]["ID_ADMIN"]);
 
 
-            echo '<script >alert("Se creó el vendedor correctamente."); self.location = "Vendedores.php";</script>';
+            echo '<script >alert("Se creó el Cliente correctamente."); self.location = "Cliente.php";</script>';
         }
 
     } else echo '<script > self.location = "/";</script>';
@@ -102,7 +101,7 @@
                             <td><br>Documento</td>
                             <td style="padding-left: 10px;text-align: right;">
                                 <br><input type="text" id="txtDoc" name="txtDoc" onkeyup="Valida();"
-                                           onkeypress="javascript:return validarNro(event);" value=""
+                                           onkeypress="javascript:return validarNro(event);"
                                            placeholder="Ingrese Documento" required>
                             </td>
                         </tr>
@@ -120,7 +119,6 @@
                                            placeholder="Ingrese el correo" required>
                             </td>
                         </tr>
-
                         <tr>
                             <td><br>Cantidad de Empresas</td>
                             <td style="padding-left: 33px;text-align: left;">
@@ -128,7 +126,6 @@
                                            value="10" required>
                             </td>
                         </tr>
-
                     </table>
                     <br>
 
@@ -136,17 +133,13 @@
                         <h3></h3>
                     </div>
                     <br>
-
                     <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
                                                 value="GUARDAR" style="width:200px;"/>
                     </ul>
                 </center>
-
             </form>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

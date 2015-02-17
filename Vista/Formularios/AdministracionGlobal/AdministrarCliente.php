@@ -157,7 +157,8 @@
                     <h4><b>Capacidad de Empresas</b></h4>
                     <input type="number" id="num" name="cantidad" value='<?= $CantidadEmpresas; ?>'
                            style="text-align: center;width:60px;" max="99999" min=10/>
-                    <input type="submit" value="Guardar" class="btnAzul" style="width: 95px;" name="btnGuardar" onclick="Guardar();"
+                    <input type="submit" value="Guardar" class="btnAzul" style="width: 95px;" name="btnGuardar"
+                           onclick="Guardar();"
                            style="height: 30px;border-radius: 3px;cursor: pointer; width: 60px;"/>
                     </br>
 

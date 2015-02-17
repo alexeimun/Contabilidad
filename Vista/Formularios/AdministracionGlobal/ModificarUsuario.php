@@ -8,9 +8,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "") {
-            echo '<script >
-        self.location = "Usuarios.php";
-	</script>';
+            echo '<script >self.location = "Usuarios.php";</script>';
         }
 
         $Master = new Master();
@@ -45,19 +43,14 @@
 
             $Usuarios->ActualizaUsuario($_GET['id'], $_POST['txtNombre'], $_POST['txtDocumento'], $_POST['txtEmail'], $_POST['txtPass']);
 
-            foreach ($Usuarios->traeModulosXUsuarioAdmin($_GET['id']) as $llave => $valor) {
+            foreach ($Usuarios->traeModulosXUsuarioAdmin($_GET['id']) as $llave => $valor)
 
                 $Usuarios->actualizaPermisos($_GET['id'], $valor['ID_MODULO'], $_POST['txt' . $valor['ID_MODULO']]);
-            }
 
 
             echo '<script>alert("Se modificó el usuario correctamente.");self.location = "Usuarios.php";</script>';
-
-
         }
-
     } else echo '<script>self.location = "/";</script>';
-
 ?>
 <html>
 <head>

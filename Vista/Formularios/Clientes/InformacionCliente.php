@@ -26,7 +26,7 @@
 
         if (isset($_POST['btnGuardar']) != '') {
 
-            $img = 'z' . md5(rand(0, 999999999).$txtDoc) . '_' . $_FILES["file"]["name"];
+            $img = 'z' . md5(rand(0, 999999999) . $txtDoc) . '_' . $_FILES["file"]["name"];
             if ($_FILES["file"]["name"] == '') {
                 $img = $Logo;
             }

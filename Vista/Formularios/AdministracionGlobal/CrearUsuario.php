@@ -16,8 +16,8 @@
 
 
             echo '<script >
-                    alert("Se creó el usuario correctamente.")
-                    self.location = "Usuarios.php"
+                    alert("Se creó el usuario correctamente.");
+                    self.location = "Usuarios.php";
                     </script>';
         }
 
@@ -96,15 +96,16 @@
                         <tr>
                             <td><br>Documento</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><input type="text" id="txtDocumento" name="txtDocumento" onkeyup="ValidaUsuario()"
-                                           onkeypress="javascript:return validarNro(event)" value=""
+                                <br><input type="text" id="txtDocumento" name="txtDocumento" onkeyup="ValidaUsuario();"
+                                           onkeypress="javascript:return validarNro(event);" value=""
                                            placeholder="Ingrese Documento" required>
                             </td>
                         </tr>
                         <tr>
                             <td><br>E-Mail</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><input type="email" id="txtEmail" name="txtEmail" onkeyup="ValidaUsuario()" value=""
+                                <br><input type="email" id="txtEmail" name="txtEmail" onkeyup="ValidaUsuario();"
+                                           value=""
                                            placeholder="Ingrese el correo" required>
                             </td>
                         </tr>

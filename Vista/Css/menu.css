@@ -8,10 +8,11 @@ body {
     width: 100%;
 
 }
-#header h3 span
-{
+
+#header h3 span {
     letter-spacing: 1px;
 }
+
 html {
     height: 100%;
 }
@@ -35,7 +36,7 @@ div ul.menu li ul {
 #header {
     position: relative;
     height: 80px;
-    background: #5E83A3 ;
+    background: #5E83A3;
     border-bottom: 5px solid #444;
 }
 

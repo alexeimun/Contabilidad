@@ -5,7 +5,7 @@
     include '../../../Clases/Master.php';
     include '../../../Clases/cls_Parametros.php';
     session_start();
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script > self.location = "/"</script>';
 
 

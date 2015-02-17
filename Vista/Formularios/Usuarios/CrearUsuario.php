@@ -117,19 +117,22 @@
                         <tr>
                             <td><br>Correo</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><input type="email"  name="txtEmail" onkeyup="ValidaUsuario();" placeholder="Ingrese el correo" required>
+                                <br><input type="email" name="txtEmail" onkeyup="ValidaUsuario();"
+                                           placeholder="Ingrese el correo" required>
                             </td>
                         </tr>
                         <tr>
                             <td><br>Clave</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><input type="password"  name="txtClave" onkeyup="ValidaUsuario();"  placeholder="Ingrese su clave" required>
+                                <br><input type="password" name="txtClave" onkeyup="ValidaUsuario();"
+                                           placeholder="Ingrese su clave" required>
                             </td>
                         </tr>
                         <tr>
                             <td><br>Confirme Clave</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><input type="password"  onkeyup="ValidaUsuario();"  placeholder="Confirme su clave" required>
+                                <br><input type="password" onkeyup="ValidaUsuario();" placeholder="Confirme su clave"
+                                           required>
                             </td>
                         </tr>
                     </table>
@@ -149,15 +152,14 @@
 
 </div>
 <script>
-$('form').submit(function () {
+    $('form').submit(function () {
 
-    if($('input:password:first').val()!=$('input:password:last').val())
-    {
-        event.preventDefault();
-        $('#val').html('<br><br><span class="Error">LAS CLAVES NO COINSIDEN</span><br><br>');
-    }
-    else $('#val').html('');
-});
+        if ($('input:password:first').val() != $('input:password:last').val()) {
+            event.preventDefault();
+            $('#val').html('<br><br><span class="Error">LAS CLAVES NO COINSIDEN</span><br><br>');
+        }
+        else $('#val').html('');
+    });
 
 </script>
 </body>

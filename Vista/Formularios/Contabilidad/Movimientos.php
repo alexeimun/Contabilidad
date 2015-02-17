@@ -9,7 +9,6 @@
 
     session_start();
 
-
     if (isset($_POST['contable']) && $_POST['contable'] == 'contable') {
         $tabla = '<table id="table" class="table" style="width:90%;">
            <thead>
@@ -85,7 +84,7 @@
 
 //            if ($valor['TIPO_MOV'] == 'C') $Saldo -= $valor['VALOR']; else   $Saldo += $valor['VALOR'];
 //            $tabla .= '<td style="text-align:left;">' . number_format($Saldo, 0, '', '.') . '</td>
-            $tabla.='</tr>';
+            $tabla .= '</tr>';
         }
         echo $tabla;
         exit;

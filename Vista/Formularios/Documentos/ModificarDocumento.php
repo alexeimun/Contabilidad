@@ -31,7 +31,7 @@
         $TipoInterno = '';
 
         if ($_GET['id'] == "")
-            echo '<script > self.location = "Documentos.php";</script>';
+            echo '<script > self.location = "Documento.php";</script>';
 
         foreach ($Parametros->TraeDatosDocumento($_GET['id']) as $llave => $valor) {
             $TipoInterno = $valor['TIPO_INTERNO'];
@@ -94,17 +94,11 @@
                 $Parametros->ActualizaDocGastos($_POST['cmbConsumo'], $_POST['cmbCxP'], $_SESSION['login'][0]["ID_EMPRESA"]);
 
 
-            echo '<script>
-              alert("Se modificó el documento correctamente.");
-              self.location = "Documentos.php";
-              </script>';
+            echo '<script>  alert("Se modificó el documento correctamente.");self.location = "Documento.php"; </script>';
         }
 
-    } else {
-        echo '<script>
-        self.location = "/";
-	</script>';
-    }
+    } else  echo '<script>self.location = "/";</script>';
+
 ?>
 <html>
 <head>
@@ -187,34 +181,22 @@
                                            required>
                             </td>
                         </tr>
-
-                        <?= $cmbCta; ?>
-
-                        <?= $cmbConsumo; ?>
-
-                        <?= $cmbCxP; ?>
-
+                        <?= $cmbCta. $cmbConsumo. $cmbCxP; ?>
                         <tr>
                             <td><br>Leyenda</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <br><textarea id="txtComentarios" name="txtComentarios" cols="6" style="width: 300px;"
-                                              placeholder="Ingrese la leyenda" title="Texto" maxlength="500" rows="8"
-                                              style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
+                                <br><textarea id="txtComentarios" name="txtComentarios" cols="6" style="width: 300px;" placeholder="Ingrese la leyenda" title="Texto" maxlength="500" rows="8"style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
                             </td>
                         </tr>
 
                     </table>
                     <br>
-                    <br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"
-                               style="width:200px;"/>
-
+                    <br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
                 </center>
-
             </form>
         </div>
     </div>
 
 </div>
-
 </body>
 </html>

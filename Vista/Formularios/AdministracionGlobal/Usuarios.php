@@ -45,9 +45,7 @@
 
 
     } else {
-        echo '<script >
-        self.location = "/"
-	</script>';
+        echo '<script >self.location = "/";</script>';
     }
 ?>
 <html>

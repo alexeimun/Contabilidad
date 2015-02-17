@@ -269,13 +269,13 @@
 
         function Fila(i) {
             return '<tr>'
-            + '<td><input readonly value="' + (i + 1) + '"></td>'
-            + '<td><input onkeypress="return validarNro(event)"></td>'
-            + '<td><input onkeypress="return validarNro(event)"></td>'
-            + '<td><input onkeypress="return validarNro(event)"></td>'
-            + '<td><input onkeypress="return validarNro(event)"></td>'
-            + '<td><input readonly></td>'
-            + '</tr>';
+                + '<td><input readonly value="' + (i + 1) + '"></td>'
+                + '<td><input onkeypress="return validarNro(event)"></td>'
+                + '<td><input onkeypress="return validarNro(event)"></td>'
+                + '<td><input onkeypress="return validarNro(event)"></td>'
+                + '<td><input onkeypress="return validarNro(event)"></td>'
+                + '<td><input readonly></td>'
+                + '</tr>';
         }
 
         function ArmarTabla(tabla) {

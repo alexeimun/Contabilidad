@@ -194,7 +194,8 @@
 <script>
     $('form').submit(function () {
 
-        if (<?= $modraiz?> == 1 && <?=$_SESSION['login'][0]['RAIZ']?> == 0)
+        if (<?= $modraiz?> == 1 && <?=$_SESSION['login'][0]['RAIZ']?> == 0
+        )
         {
             event.preventDefault();
             return false;

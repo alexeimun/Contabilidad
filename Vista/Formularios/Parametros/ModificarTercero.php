@@ -111,7 +111,8 @@
         }
 
 
-    } else {echo '<script >self.location = "/";</script>';
+    } else {
+        echo '<script >self.location = "/";</script>';
     }
 ?>
 <html>

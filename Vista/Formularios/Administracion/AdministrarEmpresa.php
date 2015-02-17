@@ -62,8 +62,8 @@
     $cont = 0;
     foreach ($Usuarios->TraeUsuariosEmpresa($_GET['id']) as $llave => $valor) {
         $idEmpresa = $valor['ID_EMPRESA'];
-        if($valor['RAIZ']==1)$tablaUsuarios.= '<tr style="background: #ecf0f3;">';
-        else $tablaUsuarios.='<tr>';
+        if ($valor['RAIZ'] == 1) $tablaUsuarios .= '<tr style="background: #ecf0f3;">';
+        else $tablaUsuarios .= '<tr>';
 
         $tablaUsuarios .= '<td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
         $tablaUsuarios .= '<td style="text-align:left;">' . $valor['DOCUMENTO'] . '</td>';
@@ -162,7 +162,7 @@
                     <img style="width: 140px;" src="../../Formularios/Empresas/<?= $Logo; ?>"><br>
 
                     <h4><b>Capacidad de Usuarios</b></h4>
-                    <input type="number" id="num" name="cantidad" max="999" min="10"   value='<?= $CantidadUsuarios; ?>'
+                    <input type="number" id="num" name="cantidad" max="999" min="10" value='<?= $CantidadUsuarios; ?>'
                            style="text-align: center;width:60px;" max="999" min=10/>
                     <input type="submit" value="Guardar" class="btnAzul" name="btnGuardar" onclick="Guardar();"/>
                     </br>

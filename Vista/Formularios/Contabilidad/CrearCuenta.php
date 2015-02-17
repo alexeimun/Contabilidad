@@ -14,7 +14,7 @@
 
 
         if (isset($_POST['btnGuardar']) != '') {
-            $Contabilidad->InsertaCuenta($_POST['txtCodigo'],ucfirst($_POST['txtNombre']), $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'],
+            $Contabilidad->InsertaCuenta($_POST['txtCodigo'], ucfirst($_POST['txtNombre']), $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'],
                 $_POST['rbNaturaleza'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
             echo '<script >alert("Se creó la cuenta correctamente.");self.location = "PUC.php";</script>';
         }

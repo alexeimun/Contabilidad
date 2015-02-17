@@ -95,7 +95,8 @@
                         <tr>
                             <td>Tipo</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <input type="text" name="Tipo" value="<?= $Tipo ?>" placeholder="Ingrese el tipo" required>
+                                <input type="text" name="Tipo" value="<?= $Tipo ?>" placeholder="Ingrese el tipo"
+                                       required>
                                 <br><br></td>
                         </tr>
                     </table>

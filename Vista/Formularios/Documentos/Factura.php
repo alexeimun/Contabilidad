@@ -8,7 +8,7 @@
     include '../../../Clases/cls_Factura.php';
     session_start();
 
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script> self.location = "/"</script>';
 
     $Master = new Master();
@@ -78,22 +78,28 @@
             //FORMAS DE PAGO
             foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
                 $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT" . $Consecutivo, 'D',
-                    1, $valor['VALOR'], 0, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa',0,0, '', $valor['ID_ENTIDAD']
+                    1, $valor['VALOR'], 0, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, 0, '', $valor['ID_ENTIDAD']
                     , $valor['NUMERO']);
                 $TotalPagos += $valor['VALOR'];
             }
 
+            $IdCiudad=$Documentos->TraeCiudadTercero($_POST['cmbTercero']);
+
             //TOTAL PAGOS
 
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0,0, 'F', $Consecutivo, 0, ++ $Secuencia, "TOTAL", '', 0, $Total, 0
-                , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',0,0, $_POST['cmbTipoPago'], 0, '', 0, '', '', $TotalPagos);
+            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, 0, ++ $Secuencia, "TOTAL", '', 0, $Total, 0
+                , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', 0, 0, $_POST['cmbTipoPago'], 0, '',
+                $IdCiudad, '', '', $TotalPagos, $_POST['txtTransportador']);
 
             //Si es a crédito se genera Recibo
             if ($_POST['cmbTipoPago'] == 'CR') {
+
                 $Factura->TraeParametrosRecibo($_SESSION['login'][0]["ID_EMPRESA"]);
                 //Inserto el Total del recibo
                 $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'R', $Factura->_ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', '',
-                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '',$Consecutivo, '', 0,0, '', 0, '', 'RECIBO', $_SESSION['TOTAL2']);
+                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', 0, $Consecutivo, $_POST['cmbTipoPago'], 0, '', $IdCiudad, '',
+                    'RECIBO', $_SESSION['TOTAL2'], $_POST['txtTransportador']);
+
                 $Documentos->ActualizaConsecutivo($Factura->_ConsecutivoRecibo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO');
             }
 
@@ -243,6 +249,10 @@
                                     <option value="CR">CREDITO</option>
                                 </select>
                             </td>
+                            <td style="text-align: right;">Transportador</td>
+                            <td style="padding-left: 10px;text-align: left;">
+                                <input type="text" name="txtTransportador" maxlength="40" style="width: 200px;"/>
+                            </td>
                         </tr>
                     </table>
                     <hr>
@@ -251,8 +261,7 @@
                         <tr>
                             <td style="text-align: right;"><br>Producto</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <br> <select id="cmbProducto" name="cmbProducto" class="chosen-select"
-                                             onchange="Precio();">
+                                <br> <select id="cmbProducto" name="cmbProducto" class="chosen-select" onchange="Precio();">
                                     <?= $cmbProducto; ?>
                                 </select> <label style="color:#5E83A3;font-weight: bold;" id="LblPrecio"></label>
                             </td>
@@ -263,7 +272,7 @@
                             <td style="text-align: right;"><br>Descuento</td>
 
                             <td style="padding-left: 10px;text-align: left;">
-                                <br> <input type="number" id="txtDescuento" name="txtDescuento" max="100" min="0" value="0" required/> %
+                                <br> <input type="number" id="txtDescuento" name="txtDescuento" max="100" min="0"value="0" required/> %
                             </td>
                         </tr>
 
@@ -281,7 +290,6 @@
                         <hr>
                         <table style="width: 95%;color: #33373d;">
                             <tr>
-
                                 <td style="padding-left: 10px;text-align: center;">
                                     <br> <select style="width: 220px;" id="cmbfPago" name="cmbfPago"
                                                  class="chosen-select" style="width:350px;"
@@ -290,10 +298,8 @@
                                     </select> <label style="color:#5E83A3;font-weight: bold;" id="LblPago"></label>
                                 </td>
                             </tr>
-
                         </table>
                         <ul id="botones"></ul>
-
                         <br>
                         <input type="button" id="btnAgregarpago" class="btnAzul" onclick="agregarpago();"
                                name="btnAgregarpago" value="Agregar pago" style="width:120px;"/>
@@ -312,12 +318,9 @@
                                               style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
                                     <br> Máximo 500 caracteres
                                 </td>
-
                             </tr>
-
                             <tr>
                                 <td colspan="2" style="text-align: center;"><br>
-
                                     <ul id="validaciones"></ul>
                                 </td>
                             </tr>

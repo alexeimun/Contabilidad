@@ -33,9 +33,9 @@
             $tabla .= '<td style="text-align:left;">' . $valor['PASSWORD'] . '</td>';
             $tabla .= '<td style="text-align:center;"><b>' . $valor['CANT_EMPRESAS'] . '</b></td>';
             $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
-            if($valor['ESTADO_CLIENTE']=='Activa') $tabla .= '<td style="text-align:left;color:#5ab400;">';
+            if ($valor['ESTADO_CLIENTE'] == 'Activa') $tabla .= '<td style="text-align:left;color:#5ab400;">';
             else $tabla .= '<td style="text-align:left;color:red;">';
-            $tabla .=  $valor['ESTADO_CLIENTE'] . '</td>';
+            $tabla .= $valor['ESTADO_CLIENTE'] . '</td>';
             $tabla .= '<td  style="text-align:right;">
           <a href="AdministrarCliente.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></a>
                 </td></tr>';
@@ -104,6 +104,7 @@
 <div id="wrap">
     <div id="header">
         <a href=""><img src="../../Imagenes/logo.png"></a>
+
         <h1 id="logo"><span class="gray">Administración </span></h1>
     </div>
     <div id="content-wrap">

@@ -6,7 +6,7 @@
     include '../../../Clases/cls_Contabilidad.php';
     session_start();
 
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__,$_SESSION['login'][0]['ID_USUARIO']))
+    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script > self.location = "/"</script>';
 
     $Master = new Master();
@@ -65,9 +65,7 @@
 <script>
 
     $(document).ready(function () {
-        if (<?= $cont; ?> >
-        0
-        )
+
         $('#table').dataTable({
             "language": {
                 "sProcessing": "Procesando...",
@@ -114,20 +112,15 @@
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_USUARIO"] ?></span></h3>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
-
     <div id="content-wrap">
         <?= $menu ?>
-
         <div id="main">
             <center>
                 <h3><b>PLAN DE CUENTAS</b></h3><br>
                 <?= $tabla ?>
-
             </center>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

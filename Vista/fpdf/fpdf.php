@@ -1668,7 +1668,7 @@
             $this->SetFont('', 'B');
             // Cabecera
             $this->SetX(20);
-            $header = ['DESCRIPCION', 'CANTIDAD', 'VALOR UNITARIO', 'VALOR TOTAL'];
+            $header = [utf8_decode('DESCRIPCIÓN DEL ARTÍCULO'), 'CANTIDAD', 'VALOR UNITARIO', 'VALOR TOTAL'];
             $this->Cell(85, 7, $header[0], 1, 0, 'C', true);
             $this->Cell(25, 7, $header[1], 1, 0, 'C', true);
             $this->Cell(30, 7, $header[2], 1, 0, 'C', true);

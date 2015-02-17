@@ -36,9 +36,9 @@
                 $tabla .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
                 $tabla .= '<td style="text-align:left;"><b>' . $valor['CANT_USUARIOS'] . '</b></td>';
                 $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
-                if($valor['ESTADO_EMPRESA']=='Activa') $tabla .= '<td style="text-align:left;color:#5ab400;">';
+                if ($valor['ESTADO_EMPRESA'] == 'Activa') $tabla .= '<td style="text-align:left;color:#5ab400;">';
                 else $tabla .= '<td style="text-align:left;color:red;">';
-                $tabla .=  $valor['ESTADO_EMPRESA'] . '</td>';
+                $tabla .= $valor['ESTADO_EMPRESA'] . '</td>';
                 $tabla .= '<td  style="text-align:right;">
           <a href="AdministrarEmpresa.php?id=' . $idEmpresa . '"><img src="../../Imagenes/machine.png" title="Administrar"></a>
                 </td></tr>';
@@ -73,33 +73,33 @@
 
 <script>
     $(document).ready(function () {
-            $('#table').dataTable({
-                "language": {
-                    "sProcessing": "Procesando...",
-                    "sLengthMenu": "Mostrar _MENU_ registros",
-                    "sZeroRecords": "No se encontraron resultados",
-                    "sEmptyTable": "Ningún dato disponible en esta tabla",
-                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix": "",
-                    "sSearch": "Buscar:",
-                    "sUrl": "",
-                    "sInfoThousands": ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-
+        $('#table').dataTable({
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sSearch": "Buscar:",
+                "sUrl": "",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-            });
+
+            }
+        });
     });
 
 
@@ -112,7 +112,7 @@
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
 
         <h1 id="logo"><span class="gray">Administración&nbsp&nbsp; <span
-                    style="font-size: 28px"><?= $_SESSION['login'][0]['NOMBRE_VENDEDOR'] ?></span></span></h1>
+                    style="font-size: 28px;"><?= $_SESSION['login'][0]['NOMBRE_VENDEDOR'] ?></span></span></h1>
 
     </div>
     <div id="content-wrap">

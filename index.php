@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include 'Config/Conexion/config.php';
     include 'Generic/Database/DataBase.php';
@@ -35,9 +34,10 @@
     if (!empty($_POST) != '') {
 
         #Sí algún usuario malintencionado esta tratando de aplicar una INYECCIÓN SQL a nuestro sitio, se imprime un mensaje que consiga amedrentarlo
-        if (preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/",$_POST['txtLogin'] )
-            || preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/",$_POST['txtPass'] )) {
-            echo '<script>alert("Me estás tratando de joder el sitio. Pero te hemos captura la ip y se ha enviado tu ubicación a la base de datos. Estar atento a próximas denuncias") </script>';
+        if (preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/", $_POST['txtLogin'])
+            || preg_match("/([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})?'( ){0,20}?([o-zA-Z]{2})( ){0,20}?'([1-9]{0,20}[a-zA-Z]{1,20}|[a-zA-Z]{0,20}[0-9]{0,20})'( ){0,20}?=( ){0,20}?'([0-9]{0,20}[a-zA-Z]{0,20}|[a-zA-Z]{0,20}[0-9]{0,20})( ){0,20}?/", $_POST['txtPass'])
+        ) {
+            echo '<script>alert("Me estás tratando de joder el sitio. Pero te hemos capturado la ip y se ha enviado tu ubicación a la base de datos. Estar atento a próximas denuncias") </script>';
         } else if ($Usuarios->validarCredenciales($_POST['txtLogin'], $_POST['txtPass'])) {
 
             switch ($_SESSION['login'][0]["NIVEL"]) {
@@ -71,7 +71,7 @@
     <link rel="stylesheet" type="text/css" href="Vista/Css/style.css"/>
     <script src="Vista/Js/menu.js"></script>
     <link rel="stylesheet" type="text/css" href="Vista/Css/stilos.css"/>
-    <link href="Vista/Css/login.css" rel="stylesheet" type="text/css" />
+    <link href="Vista/Css/login.css" rel="stylesheet" type="text/css"/>
 </head>
 <style type="text/css">
     select {
@@ -92,19 +92,19 @@
 </style>
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        $(".username").focus(function() {
-            $(".user-icon").css("left","-48px");
+    $(document).ready(function () {
+        $(".username").focus(function () {
+            $(".user-icon").css("left", "-48px");
         });
-        $(".username").blur(function() {
-            $(".user-icon").css("left","0px");
+        $(".username").blur(function () {
+            $(".user-icon").css("left", "0px");
         });
 
-        $(".password").focus(function() {
-            $(".pass-icon").css("left","-48px");
+        $(".password").focus(function () {
+            $(".pass-icon").css("left", "-48px");
         });
-        $(".password").blur(function() {
-            $(".pass-icon").css("left","0px");
+        $(".password").blur(function () {
+            $(".pass-icon").css("left", "0px");
         });
     });
 </script>
@@ -135,14 +135,16 @@
 
             <!--CONTENT-->
             <div class="content">
-                <!--USERNAME--><input name="txtLogin" type="text" placeholder="Ingrese su correo" class="input username"  /><!--END USERNAME-->
-                <!--PASSWORD--><input name="txtPass" type="password" placeholder="Ingrese su clave" class="input password" /><!--END PASSWORD-->
+                <!--USERNAME--><input name="txtLogin" type="text" placeholder="Ingrese su correo"
+                                      class="input username"/><!--END USERNAME-->
+                <!--PASSWORD--><input name="txtPass" type="password" placeholder="Ingrese su clave"
+                                      class="input password"/><!--END PASSWORD-->
             </div>
             <!--END CONTENT-->
 
             <!--FOOTER-->
             <div class="footer">
-                <!--LOGIN BUTTON--><input type="submit" name="submit" value="Ingresar" class="button btnAzul" /><!--END LOGIN BUTTON-->
+                <!--LOGIN BUTTON--><input type="submit" name="submit" value="Ingresar" class="button btnAzul"/><!--END LOGIN BUTTON-->
             </div>
             <!--END FOOTER-->
 

@@ -121,6 +121,7 @@
 		t_terceros.DIRECCION,
 		t_terceros.TELEFONO,
 		t_empresas.NOMBRE,
+		t_ciudades.NOMBRE aS CIUDAD,
 		t_empresas.LOGO,
 		t_empresas.NIT,
 		t_empresas.DIRECCION AS DIR_EMPRESA,
@@ -128,13 +129,16 @@
 		t_credenciales.EMAIL,
 		t_movimiento.FECHA_REGISTRO,
 		t_movimiento.OBS,
+		if(t_movimiento.TIPO_PAGO='CR','Crédito','Contado') as TIPO_PAGO,
 		t_movimiento.ABONADO,
+		t_movimiento.TRANSPORTADOR,
 		t_movimiento.ANULADO,
 		t_usuarios.NOMBRE AS NOMBRE_USUARIO,
 		(SELECT LEYENDA FROM t_documentos WHERE TIPO_INTERNO='FACTURA' AND ID_EMPRESA=" . $idEmpresa . ") AS LEYENDA
 		FROM
 		t_movimiento
 		INNER JOIN t_empresas ON t_movimiento.ID_EMPRESA = t_empresas.ID_EMPRESA
+		INNER JOIN t_ciudades ON t_movimiento.ID_CIUDAD = t_ciudades.ID_CIUDAD
 		INNER JOIN t_credenciales ON t_credenciales.ID_CREDENCIAL=t_empresas.ID_CREDENCIAL
 		INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 		INNER JOIN t_usuarios ON t_movimiento.USR_REGISTRO = t_usuarios.ID_USUARIO
@@ -441,7 +445,8 @@
         }
 
         public function InsertaMovimiento($IdTercero, $IdProducto, $IdCuentaMov, $TipoDoc, $Consecutivo, $IdFormaPago, $Secuencia, $Descripcion, $TipoMov
-            , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '',$IdConcepto=0, $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '', $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0)
+            , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '', $IdConcepto = 0, $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '',
+             $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0,$Transportador='')
         {
             $sub = $IdCuentaMov;
             if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")"; else
@@ -452,11 +457,11 @@
             $query = "INSERT INTO  t_movimiento
        (`ID_TERCERO`, `ID_PRODUCTO`, `ID_CUENTA_MOV`, `TIPO_DOC`, `CONSECUTIVO`, `ID_F_PAGO`, `SECUENCIA`,`DESCRIPCION`, 
        `TIPO_MOV`, `CANTIDAD`, `VALOR`,`DESCUENTO`, `ANULADO`, `OBS`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`,`TIPO`,`ID_CONCEPTO`
-       ,`DOC_CRUCE`, `TIPO_PAGO`, `ID_CIUDAD`, `CODIGO`,`ID_ENTIDAD`,`NUMERO`,`ABONADO`)
+       ,`DOC_CRUCE`, `TIPO_PAGO`, `ID_CIUDAD`, `CODIGO`,`ID_ENTIDAD`,`NUMERO`,`ABONADO`,`TRANSPORTADOR`)
        VALUES
        (" . $IdTercero . ", " . $IdProducto . ", " . $sub . ", '" . $TipoDoc . "', '" . $Consecutivo . "', '" . $IdFormaPago . "', '" . $Secuencia . "',
         '" . $Descripcion . "', '" . $TipoMov . "', " . $Cantidad . ", " . $Valor . ", " . $Descuento . ",0, '" . $Obs . "', " . $UsrReg . ", now(), " . $IdEmpresa . ",
-        '" . $Tipo . "',$IdConcepto,$DocCruce,'" . $Tipopago . "'," . $Ciudad . ",'" . $Codigo . "'," . $IdEntidad . ",'" . $Numero . "'," . $TotalPagos . ")";
+        '" . $Tipo . "',$IdConcepto,$DocCruce,'" . $Tipopago . "'," . $Ciudad . ",'" . $Codigo . "'," . $IdEntidad . ",'" . $Numero . "'," . $TotalPagos . ",'".$Transportador."')";
 
             if ($this->_DB->Exec($query) > 0) return true;
             else   return false;
@@ -637,8 +642,8 @@
         AND DAY(t_movimiento.FECHA_REGISTRO)=$Dia AND t_movimiento.ID_EMPRESA=$IdEmpresa";
 
             $resulset = $this->_DB->Query($query);
-            $Esaclar = $resulset->fetchAll();
-            return $Esaclar[0][0];
+            $Escalar = $resulset->fetchAll();
+            return $Escalar[0][0];
         }
 
         public function TraeCompraBienes($Ano, $Mes, $Dia, $IdEmpresa)
@@ -651,8 +656,8 @@
              AND DAY(t_movimiento.FECHA_REGISTRO)=$Dia AND t_movimiento.ID_EMPRESA=$IdEmpresa";
 
             $resulset = $this->_DB->Query($query);
-            $Esaclar = $resulset->fetchAll();
-            return $Esaclar[0][0];
+            $Escalar = $resulset->fetchAll();
+            return $Escalar[0][0];
         }
 
         public function TraePagoServicios($Ano, $Mes, $Dia, $IdEmpresa)
@@ -665,8 +670,8 @@
              AND DAY(t_movimiento.FECHA_REGISTRO)=$Dia AND t_movimiento.ID_EMPRESA=$IdEmpresa";
 
             $resulset = $this->_DB->Query($query);
-            $Esaclar = $resulset->fetchAll();
-            return $Esaclar[0][0];
+            $Escalar = $resulset->fetchAll();
+            return $Escalar[0][0];
         }
 
         public function TraeIVA($Ano, $Mes, $Dia, $IdEmpresa)
@@ -679,15 +684,23 @@
              AND DAY(t_movimiento.FECHA_REGISTRO)=$Dia AND t_movimiento.ID_EMPRESA=$IdEmpresa";
 
             $resulset = $this->_DB->Query($query);
-            $Esaclar = $resulset->fetchAll();
-            return $Esaclar[0][0];
+            $Escalar = $resulset->fetchAll();
+            return $Escalar[0][0];
         }
 
         public function RequiereTercero($IdCuenta, $IdEmpresa)
         {
             $query = "SELECT MANEJA_TERCERO from t_cuentas where ID_CUENTA=$IdCuenta and ID_EMPRESA=$IdEmpresa";
             $resulset = $this->_DB->Query($query);
-            $Esaclar = $resulset->fetchAll();
-            return $Esaclar[0][0];
+            $Escalar = $resulset->fetchAll();
+            return $Escalar[0][0];
+        }
+
+        public function TraeCiudadTercero($IdTercero)
+        {
+            $query = "SELECT ID_CIUDAD from t_terceros WHERE ID_TERCERO=$IdTercero";
+            $resulset = $this->_DB->Query($query);
+            $Escalar = $resulset->fetchAll();
+            return $Escalar[0][0];
         }
     }

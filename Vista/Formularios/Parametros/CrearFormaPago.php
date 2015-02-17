@@ -31,8 +31,8 @@
             $Parametros->InsertaFormaPago($_POST['txtCodigo'], $_POST['txtNombre'], $_POST['cmbCuenta'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
             echo '<script >
-                    alert("Se creó la forma de pago correctamente.")
-                    self.location = "FormasDePago.php"
+                    alert("Se creó la forma de pago correctamente.");
+                    self.location = "FormasDePago.php";
                     </script>';
 
         }
@@ -40,7 +40,7 @@
 
     } else {
         echo '<script >
-        self.location = "/"
+        self.location = "/";
 	</script>';
     }
 ?>
@@ -127,8 +127,8 @@
                         <tr>
                             <td>Código</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtCodigo" onkeyup="ValidaCodigo()" name="txtCodigo"
-                                       onkeypress="javascript:return validarNro(event)" value=""
+                                <input type="text" id="txtCodigo" onkeyup="ValidaCodigo();" name="txtCodigo"
+                                       onkeypress="return validarNro(event);" value=""
                                        placeholder="Ingrese el código" required>
                                 <br><br></td>
                         </tr>
@@ -151,7 +151,7 @@
                             <td>Requiere Entidad</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <input type="checkbox" id="chkRequiereEntidad" name="chkRequiereEntidad"
-                                       onClick="check2()">
+                                       onClick="check2();">
                                 <input type="hidden" value="0" id="txtRequiereEntidad"
                                        name="txtRequiereEntidad"><br><br>
                             </td>
@@ -161,7 +161,7 @@
                             <td>Requiere Número</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <br><input type="checkbox" id="chkRequiereNumero" name="chkRequiereNumero"
-                                           onClick="check()">
+                                           onClick="check();">
                                 <input type="hidden" value="0" id="txtRequiereNumero" name="txtRequiereNumero"><br><br>
                             </td>
                         </tr>

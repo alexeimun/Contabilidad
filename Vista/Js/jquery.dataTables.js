@@ -14126,10 +14126,10 @@
                             '';
 
                         return negative + (prefix || '') +
-                        intPart.toString().replace(
-                            /\B(?=(\d{3})+(?!\d))/g, thousands
-                        ) +
-                        floatPart;
+                            intPart.toString().replace(
+                                /\B(?=(\d{3})+(?!\d))/g, thousands
+                            ) +
+                            floatPart;
                     }
                 };
             }
