@@ -29,7 +29,7 @@
         $tabla .= '<td style="text-align:right;">
            <a href="CrearConcepto.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
           <a href="ModificarConcepto.php?id=' . $valor['ID_CONCEPTO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
-          <a onclick="EliminarConcepto(' . $valor['ID_CONCEPTO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
+          <a onclick="EliminarConcepto(' . $valor['ID_CONCEPTO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
     }
     if ($cont == 0) {

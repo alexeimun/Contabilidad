@@ -16,14 +16,14 @@
         $Contabilidad = new cls_Contabilidad();
         $options = '<option value ="0">-- Seleccione Una Cuenta --</option>';
 
-        foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
-            $options .= '<option value="' . $valor['ID_CUENTA'] . '"  style="text-align=left;">' . $valor['NOMBRE'] . '</option>';
-        }
+        foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
+            $options .= '<option value="' . $valor['ID_CUENTA'] . '"  style="text-align=left;">'  . $valor['CODIGO'] ." - ".$valor['NOMBRE'] .'</option>';
+
 
         if (isset($_POST['btnGuardar']) != '') {
             if ($_POST['txtCuenta'] != 0) {
 
-                $Parametros->InsertaConcepto($_POST['txtCodigo'], $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
+                $Parametros->InsertaConcepto( $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
                     $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
                 echo '<script > alert("Se creó el concepto correctamente.");self.location = "Conceptos.php" </script>';
@@ -89,13 +89,6 @@
                 <center>
                     <h3><b>CREAR CONCEPTO</b></h3><br>
                     <table style="width: 35%;color: #33373d">
-                        <tr>
-                            <td>Código</td>
-                            <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtCodigo" name="txtCodigo" value=""
-                                       placeholder="Ingrese el código" required>
-                            </td>
-                        </tr>
                         <tr>
                             <td><br>Concepto</td>
                             <td style="padding-left: 10px;text-align: right;">

@@ -53,18 +53,14 @@
 
         }
 
-
         if (isset($_POST['btnGuardar']) != '') {
 
             $Contabilidad->ActualizaCuenta($_GET['id'], $_POST['txtCodigo'], ucfirst($_POST['txtNombre']), $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'], $_POST['rbNaturaleza']);
 
             echo '<script >alert("Se modificó la cuenta correctamente.");self.location = "PUC.php";</script>';
         }
-
-
     } else
         echo '<script >self.location = "/";</script>';
-
 ?>
 <html>
 <head>

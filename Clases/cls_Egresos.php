@@ -22,7 +22,7 @@
 
         public function TraeConsecutivoGastos($idEmpresa)
         {
-            $query = "SELECT   CONSECUTIVO FROM t_documentos WHERE TIPO_INTERNO='GASTOS' AND ID_EMPRESA=" . $idEmpresa;
+            $query = "SELECT   CONSECUTIVO FROM t_documentos WHERE TIPO_INTERNO='GASTOS' AND ID_EMPRESA= $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
@@ -31,7 +31,7 @@
 
         public function TraeConsecutivoEgresos($idEmpresa)
         {
-            $query = "SELECT   CONSECUTIVO FROM t_documentos WHERE TIPO_INTERNO='EGRESOS' AND ID_EMPRESA=" . $idEmpresa;
+            $query = "SELECT   CONSECUTIVO FROM t_documentos WHERE TIPO_INTERNO='EGRESOS' AND ID_EMPRESA= $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
@@ -41,12 +41,55 @@
         public function TraeCuentas($idEmpresa)
         {
             $query = "SELECT  ID_CUENTA FROM  t_documentos
-        WHERE (TIPO_INTERNO='GASTOS' OR TIPO_INTERNO='IMPUESTO_CONSUMO') AND   ID_EMPRESA=" . $idEmpresa;
+        WHERE (TIPO_INTERNO='GASTOS' OR TIPO_INTERNO='IMPUESTO_CONSUMO') AND   ID_EMPRESA=$idEmpresa";
 
             $resulset = $this->_DB->Query($query);
 
             $Campos = $resulset->fetchAll();
             $this->_IdCuentaGastos = $Campos[0][0];
             $this->_IdCuentaConsumo = $Campos[1][0];
+        }
+
+        public function TraeGastosTemp($IdUsuario)
+        {
+            $query = "SELECT *,
+           concat( t_terceros.NOMBRE1,' ',t_terceros.NOMBRE2,' ',t_terceros.APELLIDO1,' ',t_terceros.APELLIDO2) as NOMBRE_TERCERO,
+           if(t_gasto_t.POR='SV','Servicios','Bienes') AS  POR,
+           if(t_gasto_t.FORMA_PAGO='CO','Contado','Crédito') AS  FORMA_PAGO,
+           IF(t_conceptos.CONCEPTO=1,'Ingresos','Gastos') AS CONCEPTO
+
+       FROM t_gasto_t
+
+       INNER JOIN t_terceros ON t_terceros.ID_TERCERO=t_gasto_t.ID_TERCERO
+       INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO=t_gasto_t.ID_CONCEPTO
+
+         WHERE ID_USUARIO=$IdUsuario";
+
+            $resulset = $this->_DB->Query($query);
+            return $resulset->fetchAll();
+        }
+
+        public function  InsertaGastoTemp($IdTercero, $IdConcepto, $IdUsuario, $FormaPago, $Por, $Detalle, $ValorBase, $Iva, $ImpuConsumo)
+        {
+            $query = "INSERT INTO `t_gasto_t`
+        (`ID_TERCERO`, `ID_CONCEPTO`,`ID_USUARIO`,`FORMA_PAGO`,`POR`,`DETALLE`,`VALOR_BASE`,`IVA`,`IMPU_CONSUMO`)
+        VALUES  ($IdTercero,$IdConcepto,$IdUsuario,'" . $FormaPago . "','" . $Por . "','" . $Detalle . "',$ValorBase,$Iva,$ImpuConsumo)";
+
+            if ($this->_DB->Exec($query) > 0) return true;
+            else  return false;
+        }
+
+        public function EliminarGasto($id)
+        {
+            $query = "DELETE FROM `t_gasto_t` WHERE `ID_GASTO_TEMP`=$id";
+            if ($this->_DB->Exec($query) > 0) return true;
+            else  return false;
+        }
+
+        public function EliminarGastos($IdUsuario)
+        {
+            $query = "DELETE FROM `t_gasto_t` WHERE `ID_USUARIO`=$IdUsuario";
+            if ($this->_DB->Exec($query) > 0) return true;
+            else  return false;
         }
     }

@@ -84,7 +84,6 @@
             $tabla .= '<a href="Imprime.php?id=0&consecutivo=' . $valor['CONSECUTIVO_RECIBO'] . '&
                 pagos=' . $valor['CONSECUTIVO_FACTURA'] . ' "><img src="../../Imagenes/print.png" title="Imprimir"></a>';
 
-
             $tabla .= '</tr>';
         }
         // $tabla.='<tr></td><td></td><td></td><td><td style="text-align:right;">Total:</td><td></td></tr>';

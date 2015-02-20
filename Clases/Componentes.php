@@ -2,7 +2,6 @@
     include_once 'cls_Factura.php';
     include_once '../../Css/css.php';
 
-
     class Componentes
     {
         private $_RequiereEntidad;
@@ -195,6 +194,4 @@
                 ['url' => 'url', 'nombre' => 'nombre'],
                 ['url' => 'url', 'nombre' => 'nombre'],];
         }
-
-
     }

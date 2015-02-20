@@ -18,15 +18,112 @@
     foreach ($Parametros->TraeFormasPago($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
         $cmbfPago .= '<option style="text-align:left;" value ="' . $valor['ID_F_PAGO'] . '" >' . $valor['NOMBRE_F_PAGO'] . '</option>';
 
-    if ($_GET['action'] == 'validagasto') {
+    if (isset($_GET['action']) && $_GET['action'] == 'frame') {
+        $tabla = '<table class="table" style="width:95%;">
+            <th style="text-align:left;">Tercero</th>
+            <th style="text-align:left;">Forma Pago</th>
+            <th style="text-align:left;">Concepto</th>
+            <th style="text-align:left;">Por</th>
+            <th style="text-align:left;">Detalle</th>
+            <th style="text-align:left;">Valor Base</th>
+            <th style="text-align:left;">IVA</th>
+            <th style="text-align:left;">Imp Consumo</th>
+            <th style="text-align:left;">Valor</th>
+            <th style="text-align:left;">Acción</th>';
+        $Total = 0;
 
-        if (($_GET['valor'] > $_SESSION['TOTAL2']) && $_GET['tipopago'] == 'CO')
-            echo '<span class="Error">LA CANTIDAD A PAGAR ES MENOR QUE EL TOTAL </span><br><br><br>
-           <input type="submit" class="btnAzul"  value="FINALIZAR" style="width:200px; background-color: #A9A9A9;cursor: auto;" disabled/> ';
-        else if ($_GET['valor'] < $_SESSION['TOTAL2'])
-            echo '<span class="Error">LA CANTIDAD A PAGAR ES MAYOR QUE EL TOTAL</span><br><br><br>
-       <input type="submit" class="btnAzul"  value="FINALIZAR" style="width:200px; background-color: #A9A9A9;cursor: auto" disabled/> ';
-        else
-            echo '<input type="submit" class="btnAzul"  value="FINALIZAR" style="width:200px;" /> ';
+        foreach ($Egresos->TraeGastosTemp($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
+            $Valor = $valor['VALOR_BASE'] + $valor['IVA'] + $valor['IMPU_CONSUMO'];
+            $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_TERCERO'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['FORMA_PAGO'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['CONCEPTO'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['POR'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['DETALLE'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($valor['VALOR_BASE'], 0, '', '.') . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($valor['IVA'], 0, '', '.') . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($valor['IMPU_CONSUMO'], 0, '', '.') . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($Valor, 0, '', '.') . '</td>';
+            $tabla .= '<td style="text-align:left;">
+          <a onclick="EliminarGasto(' . $valor['ID_GASTO_TEMP'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a></td></tr>';
+            $Total += $Valor;
+        }
+        $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total) . '</b></td></tr>';
 
+        echo $tabla;
+
+        exit;
+    } else if (isset($_GET['action']) && $_GET['action'] == 'eliminarpago') {
+        $Egresos->EliminarGasto($_GET['id']);
+        $tabla = '<table class="table" style="width:95%;">
+            <th style="text-align:left;">Tercero</th>
+            <th style="text-align:left;">Forma Pago</th>
+            <th style="text-align:left;">Concepto</th>
+            <th style="text-align:left;">Por</th>
+            <th style="text-align:left;">Detalle</th>
+            <th style="text-align:left;">Valor Base</th>
+            <th style="text-align:left;">IVA</th>
+            <th style="text-align:left;">Imp Consumo</th>
+             <th style="text-align:left;">Valor</th>
+
+            <th style="text-align:left;">Acción</th>';
+        $Total = 0;
+
+        foreach ($Egresos->TraeGastosTemp($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
+            $Valor = $valor['VALOR_BASE'] + $valor['IVA'] + $valor['IMPU_CONSUMO'];
+            $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_TERCERO'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['FORMA_PAGO'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['CONCEPTO'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['POR'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['DETALLE'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($valor['VALOR_BASE'], 0, '', '.') . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($valor['IVA'], 0, '', '.') . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($valor['IMPU_CONSUMO'], 0, '', '.') . '</td>';
+            $tabla .= '<td style="text-align:left;">' . number_format($Valor, 0, '', '.') . '</td>';
+            $tabla .= '<td style="text-align:left;">
+          <a onclick="EliminarGasto(' . $valor['ID_GASTO_TEMP'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a></td></tr>';
+            $Total += $Valor;
+        }
+        $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total) . '</b></td></tr>';
+
+        echo $tabla;
+    } else if (isset($_POST)) {
+        try {
+            $Egresos->InsertaGastoTemp($_POST['cmbTercero'], $_POST['cmbConcepto'], $_SESSION['login'][0]["ID_USUARIO"], $_POST['cmbTipoPago'],
+                $_POST['txtPor'], $_POST['txtDetalle'], $_POST['txtValorBase'], $_POST['txtIVA'], $_POST['txtConsumo']);
+
+            $tabla = '<table class="table" style="width:95%;">
+            <th style="text-align:left;">Tercero</th>
+            <th style="text-align:left;">Forma Pago</th>
+            <th style="text-align:left;">Concepto</th>
+            <th style="text-align:left;">Por</th>
+            <th style="text-align:left;">Detalle</th>
+            <th style="text-align:left;">Valor Base</th>
+            <th style="text-align:left;">IVA</th>
+            <th style="text-align:left;">Imp Consumo</th>
+            <th style="text-align:left;">Valor</th>
+            <th style="text-align:left;">Acción</th>';
+
+            $Total = 0;
+
+            foreach ($Egresos->TraeGastosTemp($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
+                $Valor = $valor['VALOR_BASE'] + $valor['IVA'] + $valor['IMPU_CONSUMO'];
+                $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_TERCERO'] . '</td>';
+                $tabla .= '<td style="text-align:left;">' . $valor['FORMA_PAGO'] . '</td>';
+                $tabla .= '<td style="text-align:left;">' . $valor['CONCEPTO'] . '</td>';
+                $tabla .= '<td style="text-align:left;">' . $valor['POR'] . '</td>';
+                $tabla .= '<td style="text-align:left;">' . $valor['DETALLE'] . '</td>';
+                $tabla .= '<td style="text-align:left;">' . number_format($valor['VALOR_BASE'], 0, '', '.') . '</td>';
+                $tabla .= '<td style="text-align:left;">' . number_format($valor['IVA'], 0, '', '.') . '</td>';
+                $tabla .= '<td style="text-align:left;">' . number_format($valor['IMPU_CONSUMO'], 0, '', '.') . '</td>';
+                $tabla .= '<td style="text-align:left;">' . number_format($Valor, 0, '', '.') . '</td>';
+                $tabla .= '<td style="text-align:left;">
+          <a onclick="EliminarGasto(' . $valor['ID_GASTO_TEMP'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a></td></tr>';
+                $Total += $Valor;
+            }
+            $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total) . '</b></td></tr>';
+
+            echo $tabla;
+        } catch (Exception $e) {
+            exit;
+        }
     }

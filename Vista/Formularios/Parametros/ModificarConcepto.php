@@ -19,7 +19,6 @@
         $options = '<option value ="0">-- Seleccione Una Cuenta --</option>';
 
         foreach ($Parametros->TraeConcepto($_GET['id']) as $llave => $valor) {
-            $txtCodigo = $valor["CODIGO"];
             $cmbconcepto = '';
             $txtComentarios = $valor['DESCRIPCION'];
 
@@ -29,9 +28,9 @@
 
             foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave1 => $valor1) {
                 if ($valor['ID_CUENTA'] == $valor1['ID_CUENTA']) {
-                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['NOMBRE'] . '</option>';
+                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['CODIGO'] ." - ".$valor1['NOMBRE'] .'</option>';
                 } else {
-                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '">' . $valor1['NOMBRE'] . '</option>';
+                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '">' . $valor1['CODIGO']  ." - ".$valor1['NOMBRE'] . '</option>';
                 }
             }
         }
@@ -39,7 +38,7 @@
         if (isset($_POST['btnGuardar']) != '') {
             if ($_POST['txtCuenta'] != 0) {
 
-                $Parametros->ActualizaConcepto($_POST['txtCodigo'], $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
+                $Parametros->ActualizaConcepto( $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
                     $_SESSION['login'][0]["ID_USUARIO"], $_GET['id']);
 
                 echo '<script > alert("Se modificó el concepto correctamente.");self.location = "Conceptos.php" </script>';
@@ -106,13 +105,6 @@
                 <center>
                     <h3><b>MODIFICAR CONCEPTO</b></h3><br>
                     <table style="width: 35%;color: #33373d">
-                        <tr>
-                            <td>Código</td>
-                            <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtCodigo" name="txtCodigo" value="<?= $txtCodigo; ?>"
-                                       placeholder="Ingrese el código" required>
-                            </td>
-                        </tr>
                         <tr>
                             <td><br>Concepto</td>
                             <td style="padding-left: 10px;text-align: right;">

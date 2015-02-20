@@ -34,7 +34,7 @@
             t_documentos.FECHA_REGISTRO,
             t_documentos.ID_EMPRESA
             FROM
-            t_documentos WHERE t_documentos.ESTADO=1 AND t_documentos.ID_EMPRESA=" . $idEmpresa . "";
+            t_documentos WHERE t_documentos.ESTADO=1 AND t_documentos.ID_EMPRESA=" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -72,7 +72,7 @@
             t_terceros.ESTADO
             FROM
             t_terceros
-            WHERE t_terceros.ESTADO=1 AND t_terceros.ID_EMPRESA=" . $idEmpresa . "";
+            WHERE t_terceros.ESTADO=1 AND t_terceros.ID_EMPRESA=" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -110,7 +110,7 @@
 		FROM
 		t_formas_pago
 		INNER JOIN t_cuentas ON t_formas_pago.ID_CUENTA = t_cuentas.ID_CUENTA
-		WHERE t_formas_pago.ESTADO=1 AND t_formas_pago.ID_EMPRESA=" . $idEmpresa . "";
+		WHERE t_formas_pago.ESTADO=1 AND t_formas_pago.ID_EMPRESA=" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -144,7 +144,7 @@
         {
             $query = "SELECT *
 FROM
-t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc . "";
+t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -261,7 +261,7 @@ t_grupos.FECHA_REGISTRO,
 t_grupos.ID_EMPRESA
 FROM
 t_grupos
-WHERE t_grupos.ID_GRUPO=" . $id . "";
+WHERE t_grupos.ID_GRUPO=" . $id;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -282,7 +282,7 @@ t_formas_pago.USR_REGISTRO,
 t_formas_pago.ID_EMPRESA
 FROM
 t_formas_pago
-WHERE t_formas_pago.ID_F_PAGO=" . $id . "";
+WHERE t_formas_pago.ID_F_PAGO=" . $id;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -314,7 +314,7 @@ t_productos.FECHA_REGISTRO,
 t_productos.ID_EMPRESA
 FROM
 t_productos
-WHERE t_productos.ID_PRODUCTO=" . $id . "";
+WHERE t_productos.ID_PRODUCTO=" . $id;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -353,7 +353,7 @@ t_terceros.ID_EMPRESA,
 t_terceros.ESTADO
 FROM
 t_terceros
-WHERE t_terceros.ID_TERCERO=" . $id . "";
+WHERE t_terceros.ID_TERCERO=" . $id;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -378,7 +378,7 @@ WHERE t_terceros.ID_TERCERO=" . $id . "";
             t_grupos.ID_EMPRESA
             FROM
             t_grupos
-            WHERE t_grupos.ESTADO=1 AND t_grupos.ID_EMPRESA=" . $idEmpresa . "";
+            WHERE t_grupos.ESTADO=1 AND t_grupos.ID_EMPRESA=" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -401,7 +401,7 @@ t_grupos.NOMBRE AS NOMBRE_GRUPO
 FROM
 t_productos
 INNER JOIN t_grupos ON t_productos.ID_GRUPO = t_grupos.ID_GRUPO
-WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
+WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -604,14 +604,14 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
         t_conceptos.ESTADO,
         t_conceptos.ID_CONCEPTO,
         t_conceptos.DESCRIPCION,
-        t_conceptos.CODIGO,
+        t_cuentas.CODIGO,
         if(t_conceptos.CONCEPTO=0,'Gastos','Ingresos') AS 'CONCEPTO',
         t_cuentas.NOMBRE AS 'NOMBRE_CUENTA'
         
         FROM
             t_conceptos
         INNER JOIN t_cuentas ON t_cuentas.ID_CUENTA=t_conceptos.ID_CUENTA
-        WHERE  t_conceptos.ESTADO=1 AND t_conceptos.ID_EMPRESA =" . $IdEmpresa;
+        WHERE  t_conceptos.ESTADO=1 AND t_cuentas.ESTADO=1 AND t_conceptos.ID_EMPRESA =$IdEmpresa AND t_cuentas.ID_EMPRESA=$IdEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -623,7 +623,7 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
         t_conceptos.ESTADO,
         t_conceptos.ID_CONCEPTO,
         t_conceptos.DESCRIPCION,
-        t_conceptos.CODIGO,
+        t_cuentas.CODIGO,
         t_conceptos.CONCEPTO,
         t_cuentas.NOMBRE AS 'NOMBRE_CUENTA',
         t_conceptos.ID_CUENTA
@@ -637,12 +637,12 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             return $resulset->fetchAll();
         }
 
-        public function InsertaConcepto($Codigo, $Concepto, $Descripcion, $Idcuenta, $UsrReg, $IdEmpresa)
+        public function InsertaConcepto($Concepto, $Descripcion, $Idcuenta, $UsrReg, $IdEmpresa)
         {
             $query = "INSERT INTO `t_conceptos`
-        ( `CODIGO`,`CONCEPTO`,`DESCRIPCION`,`ID_CUENTA`, `ESTADO`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`)
+        ( `CONCEPTO`,`DESCRIPCION`,`ID_CUENTA`, `ESTADO`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`)
        VALUES
-       ('" . $Codigo . "', '" . $Concepto . "', '" . $Descripcion . "', '" . $Idcuenta . "',1," . $UsrReg . ", now(), " . $IdEmpresa . ")";
+       ( '" . $Concepto . "', '" . $Descripcion . "', '" . $Idcuenta . "',1," . $UsrReg . ", now(), " . $IdEmpresa . ")";
 
             if ($this->_DB->Exec($query) > 0) {
                 return true;
@@ -651,9 +651,9 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa . "";
             }
         }
 
-        public function ActualizaConcepto($Codigo, $Concepto, $Descripcion, $Idcuenta, $UsrReg, $Idconcepto)
+        public function ActualizaConcepto( $Concepto, $Descripcion, $Idcuenta, $UsrReg, $Idconcepto)
         {
-            $query = "UPDATE `t_conceptos` SET `CODIGO`='" . $Codigo . "', `CONCEPTO`=" . $Concepto . ",
+            $query = "UPDATE `t_conceptos` SET `CONCEPTO`=" . $Concepto . ",
        `DESCRIPCION`='" . $Descripcion . "', `ID_CUENTA`=" . $Idcuenta . ", `USR_REGISTRO`=" . $UsrReg . "
        , `FECHA_REGISTRO`=now()
         WHERE (`ID_CONCEPTO`=" . $Idconcepto . ")";

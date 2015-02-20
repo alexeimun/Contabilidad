@@ -40,18 +40,6 @@
             <tbody>
             </tbody>
         </table>';
-
-    if (!empty($_POST)) {
-
-        $cont = 1;
-        $valor = [];
-
-        for ($i = 0; $i < $date; $i ++)
-            $valor = $Documentos->TraeLibroFiscal($_POST['ano'], $_POST['mes'], $_SESSION['login'][0]["ID_EMPRESA"], $cont);
-
-
-    }
-
 ?>
 <html>
 <head>

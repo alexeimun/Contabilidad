@@ -26,7 +26,6 @@
     </table>
     <table name="t_conceptos" schema="" catalog="contasistin" type="TABLE">
       <column name="ID_CONCEPTO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
-      <column name="CODIGO" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="DESCRIPCION" sqlType="VARCHAR" precision="500" scale="0" nullable="true" jdbcType="12"/>
       <column name="ID_CUENTA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
@@ -142,6 +141,19 @@
       <foreign-key name="t_formas_pago_ibfk_2" columns="ID_EMPRESA" ref-table="t_empresas" ref-schema="" ref-catalog="contasistin" ref-columns="ID_EMPRESA" update-rule="0" delete-rule="0" deferrability="2"/>
       <index name="t_formas_pago_ibfk_1" unique="false" columns="ID_CUENTA"/>
       <index name="t_formas_pago_ibfk_2" unique="false" columns="ID_EMPRESA"/>
+    </table>
+    <table name="t_gasto_t" schema="" catalog="contasistin" type="TABLE">
+      <column name="ID_GASTO_TEMP" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="ID_TERCERO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="ID_CONCEPTO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="ID_USUARIO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="FORMA_PAGO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
+      <column name="POR" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
+      <column name="VALOR_BASE" sqlType="DOUBLE" precision="11" scale="0" nullable="true" jdbcType="8"/>
+      <column name="IVA" sqlType="DOUBLE" precision="11" scale="0" nullable="true" jdbcType="8"/>
+      <column name="IMPU_CONSUMO" sqlType="DOUBLE" precision="11" scale="0" nullable="true" jdbcType="8"/>
+      <column name="DETALLE" sqlType="VARCHAR" precision="80" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="ID_GASTO_TEMP"/>
     </table>
     <table name="t_grupos" schema="" catalog="contasistin" type="TABLE">
       <column name="ID_GRUPO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>

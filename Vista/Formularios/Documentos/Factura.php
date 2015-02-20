@@ -313,9 +313,7 @@
                                 <td>Observaciones</td>
                                 <td style="padding-left: 15px;text-align: right;">
                                     <textarea id="txtComentarios" name="txtComentarios" cols="6"
-                                              placeholder="Ingrese los comentarios" title="Texto" maxlength="500"
-                                              rows="8"
-                                              style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
+                                              placeholder="Ingrese los comentarios" title="Texto" maxlength="500" rows="8" style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
                                     <br> Máximo 500 caracteres
                                 </td>
                             </tr>

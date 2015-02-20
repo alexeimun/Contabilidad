@@ -27,7 +27,7 @@
 
         public function EliminaProductosFinal($idUsuario, $idEmpresa)
         {
-            $query = "DELETE FROM t_factura_temporal WHERE t_factura_temporal.ID_USUARIO=" . $idUsuario . " AND t_factura_temporal.ID_EMPRESA=" . $idEmpresa . "";
+            $query = "DELETE FROM t_factura_temporal WHERE t_factura_temporal.ID_USUARIO=" . $idUsuario . " AND t_factura_temporal.ID_EMPRESA=" . $idEmpresa;
 
             if ($this->_DB->Exec($query) > 0) {
                 return true;
@@ -121,7 +121,7 @@
 		t_terceros.DIRECCION,
 		t_terceros.TELEFONO,
 		t_empresas.NOMBRE,
-		t_ciudades.NOMBRE aS CIUDAD,
+		t_ciudades.NOMBRE AS CIUDAD,
 		t_empresas.LOGO,
 		t_empresas.NIT,
 		t_empresas.DIRECCION AS DIR_EMPRESA,
@@ -129,7 +129,7 @@
 		t_credenciales.EMAIL,
 		t_movimiento.FECHA_REGISTRO,
 		t_movimiento.OBS,
-		if(t_movimiento.TIPO_PAGO='CR','Crédito','Contado') as TIPO_PAGO,
+		if(t_movimiento.TIPO_PAGO='CR','Crédito','Contado') AS TIPO_PAGO,
 		t_movimiento.ABONADO,
 		t_movimiento.TRANSPORTADOR,
 		t_movimiento.ANULADO,
@@ -169,7 +169,7 @@
         INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
         INNER JOIN t_empresas ON t_movimiento.ID_EMPRESA = t_empresas.ID_EMPRESA
 
-        WHERE TIPO_DOC='R'  AND t_movimiento.DESCRIPCION='TOTAL'  AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+        WHERE TIPO_DOC='R'  AND t_movimiento.DESCRIPCION='TOTAL'  AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -195,7 +195,7 @@
         INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
         INNER JOIN t_empresas ON t_movimiento.ID_EMPRESA = t_empresas.ID_EMPRESA
 
-        WHERE TIPO_DOC='R'  AND DESCRIPCION<>'TOTAL'  AND t_movimiento.ID_EMPRESA =" . $idEmpresa . " AND t_movimiento.DOC_CRUCE=" . $Consecutivo;
+        WHERE TIPO_DOC='R'  AND DESCRIPCION<>'TOTAL'  AND t_movimiento.ID_EMPRESA = $idEmpresa  AND t_movimiento.DOC_CRUCE= $Consecutivo";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -222,7 +222,7 @@
         INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
         INNER JOIN t_empresas ON t_movimiento.ID_EMPRESA = t_empresas.ID_EMPRESA
 
-        WHERE TIPO_DOC='E'  AND DESCRIPCION<>'TOTAL'  AND t_movimiento.ID_EMPRESA =" . $idEmpresa . " AND t_movimiento.DOC_CRUCE=" . $Consecutivo;
+        WHERE TIPO_DOC='E'  AND DESCRIPCION<>'TOTAL'  AND t_movimiento.ID_EMPRESA = $idEmpresa  AND t_movimiento.DOC_CRUCE= $Consecutivo";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -303,7 +303,7 @@
 
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 
-		WHERE TIPO_DOC='E' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+		WHERE TIPO_DOC='E' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -322,7 +322,7 @@
         t_movimiento
         WHERE TIPO_DOC='F' AND  t_movimiento.ID_PRODUCTO <> 0 AND t_movimiento.ID_CUENTA_MOV<>0 AND t_movimiento.DOC_CRUCE=0
         AND t_movimiento.DESCRIPCION<>'TOTAL'
-         AND t_movimiento.CONSECUTIVO=" . $Consecutivo . " AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+         AND t_movimiento.CONSECUTIVO=$Consecutivo  AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -446,7 +446,7 @@
 
         public function InsertaMovimiento($IdTercero, $IdProducto, $IdCuentaMov, $TipoDoc, $Consecutivo, $IdFormaPago, $Secuencia, $Descripcion, $TipoMov
             , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '', $IdConcepto = 0, $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '',
-             $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0,$Transportador='')
+                                          $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0, $Transportador = '')
         {
             $sub = $IdCuentaMov;
             if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")"; else
@@ -461,7 +461,7 @@
        VALUES
        (" . $IdTercero . ", " . $IdProducto . ", " . $sub . ", '" . $TipoDoc . "', '" . $Consecutivo . "', '" . $IdFormaPago . "', '" . $Secuencia . "',
         '" . $Descripcion . "', '" . $TipoMov . "', " . $Cantidad . ", " . $Valor . ", " . $Descuento . ",0, '" . $Obs . "', " . $UsrReg . ", now(), " . $IdEmpresa . ",
-        '" . $Tipo . "',$IdConcepto,$DocCruce,'" . $Tipopago . "'," . $Ciudad . ",'" . $Codigo . "'," . $IdEntidad . ",'" . $Numero . "'," . $TotalPagos . ",'".$Transportador."')";
+        '" . $Tipo . "',$IdConcepto,$DocCruce,'" . $Tipopago . "'," . $Ciudad . ",'" . $Codigo . "'," . $IdEntidad . ",'" . $Numero . "'," . $TotalPagos . ",'" . $Transportador . "')";
 
             if ($this->_DB->Exec($query) > 0) return true;
             else   return false;
@@ -522,7 +522,7 @@
 		INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 		INNER JOIN t_usuarios ON t_movimiento.USR_REGISTRO = t_usuarios.ID_USUARIO
 
-		WHERE  t_movimiento.TIPO_DOC='R' AND  t_movimiento.CONSECUTIVO=" . $Consecutivo . " AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+		WHERE  t_movimiento.TIPO_DOC='R' AND  t_movimiento.CONSECUTIVO= $Consecutivo AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -542,7 +542,7 @@
 		INNER JOIN t_entidades ON t_movimiento.ID_ENTIDAD = t_entidades.ID_ENTIDAD
 		INNER JOIN t_formas_pago ON t_movimiento.ID_F_PAGO = t_formas_pago.ID_F_PAGO
 		WHERE  t_formas_pago.REQUIERE_ENTIDAD=1 AND(t_movimiento.DESCRIPCION='" . $Tipo . ($SegConsecutivo == 0 ? $Consecutivo : $SegConsecutivo) . "')
-		AND t_movimiento.ID_EMPRESA=" . $idEmpresa . " AND t_movimiento.CONSECUTIVO=" . $Consecutivo . "
+		AND t_movimiento.ID_EMPRESA=" . $idEmpresa . " AND t_movimiento.CONSECUTIVO= $Consecutivo
 		UNION
 		(SELECT
             t_movimiento.VALOR,
@@ -574,8 +574,8 @@
 		INNER JOIN t_entidades ON t_movimiento.ID_ENTIDAD = t_entidades.ID_ENTIDAD
 		INNER JOIN t_formas_pago ON t_movimiento.ID_F_PAGO = t_formas_pago.ID_F_PAGO
 		WHERE t_formas_pago.REQUIERE_ENTIDAD=1 AND   TIPO_DOC='$Tipodoc' AND t_movimiento.ID_EMPRESA=$idEmpresa
-		AND  t_movimiento.CONSECUTIVO=" . $Consecutivo .
-                "
+		AND  t_movimiento.CONSECUTIVO= $Consecutivo
+
                 UNION
                 SELECT
             t_movimiento.VALOR,
@@ -589,7 +589,7 @@
 
 		INNER JOIN t_formas_pago ON t_movimiento.ID_F_PAGO = t_formas_pago.ID_F_PAGO
 		WHERE t_formas_pago.REQUIERE_ENTIDAD=0 AND TIPO_DOC='$Tipodoc' AND t_movimiento.ID_EMPRESA=$idEmpresa
-		AND t_movimiento.CONSECUTIVO=" . $Consecutivo;
+		AND t_movimiento.CONSECUTIVO= $Consecutivo";
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
         }
@@ -597,7 +597,7 @@
 
         public function ActualizaRecibo($Consecutivo, $idEmpresa, $Abono)
         {
-            $query = "UPDATE t_movimiento SET ABONADO=ABONADO+" . $Abono . " WHERE ID_EMPRESA= $idEmpresa AND CONSECUTIVO=" . $Consecutivo;
+            $query = "UPDATE t_movimiento SET ABONADO=ABONADO + $Abono  WHERE ID_EMPRESA= $idEmpresa AND CONSECUTIVO= $Consecutivo";
 
             if ($this->_DB->Exec($query) > 0)
                 return true;
@@ -608,7 +608,7 @@
         {
             $query = "SELECT
 		 CONSECUTIVO FROM t_documentos
-		 WHERE TIPO_INTERNO='SALDOS_INICIALES' AND ID_EMPRESA=" . $idEmpresa;
+		 WHERE TIPO_INTERNO='SALDOS_INICIALES' AND ID_EMPRESA= $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
@@ -620,7 +620,7 @@
         {
             $query = "SELECT
 		 CONSECUTIVO FROM t_documentos
-		 WHERE TIPO_INTERNO='NOTA_CONTABLE' AND ID_EMPRESA=" . $idEmpresa;
+		 WHERE TIPO_INTERNO='NOTA_CONTABLE' AND ID_EMPRESA= $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
