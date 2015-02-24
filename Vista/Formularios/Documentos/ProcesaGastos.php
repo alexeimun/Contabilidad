@@ -20,7 +20,6 @@
 
     if (isset($_GET['action']) && $_GET['action'] == 'frame') {
         $tabla = '<table class="table" style="width:95%;">
-            <th style="text-align:left;">Tercero</th>
             <th style="text-align:left;">Forma Pago</th>
             <th style="text-align:left;">Concepto</th>
             <th style="text-align:left;">Por</th>
@@ -34,7 +33,7 @@
 
         foreach ($Egresos->TraeGastosTemp($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Valor = $valor['VALOR_BASE'] + $valor['IVA'] + $valor['IMPU_CONSUMO'];
-            $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_TERCERO'] . '</td>';
+            $tabla .= '<tr>';
             $tabla .= '<td style="text-align:left;">' . $valor['FORMA_PAGO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['CONCEPTO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['POR'] . '</td>';
@@ -47,7 +46,7 @@
           <a onclick="EliminarGasto(' . $valor['ID_GASTO_TEMP'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a></td></tr>';
             $Total += $Valor;
         }
-        $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total) . '</b></td></tr>';
+        $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total, 0, '', '.') . '</b></td></tr>';
 
         echo $tabla;
 
@@ -55,7 +54,6 @@
     } else if (isset($_GET['action']) && $_GET['action'] == 'eliminarpago') {
         $Egresos->EliminarGasto($_GET['id']);
         $tabla = '<table class="table" style="width:95%;">
-            <th style="text-align:left;">Tercero</th>
             <th style="text-align:left;">Forma Pago</th>
             <th style="text-align:left;">Concepto</th>
             <th style="text-align:left;">Por</th>
@@ -70,7 +68,7 @@
 
         foreach ($Egresos->TraeGastosTemp($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Valor = $valor['VALOR_BASE'] + $valor['IVA'] + $valor['IMPU_CONSUMO'];
-            $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_TERCERO'] . '</td>';
+            $tabla .= '<tr>';
             $tabla .= '<td style="text-align:left;">' . $valor['FORMA_PAGO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['CONCEPTO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['POR'] . '</td>';
@@ -83,16 +81,15 @@
           <a onclick="EliminarGasto(' . $valor['ID_GASTO_TEMP'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a></td></tr>';
             $Total += $Valor;
         }
-        $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total) . '</b></td></tr>';
+        $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total, 0, '', '.') . '</b></td></tr>';
 
         echo $tabla;
     } else if (isset($_POST)) {
         try {
-            $Egresos->InsertaGastoTemp($_POST['cmbTercero'], $_POST['cmbConcepto'], $_SESSION['login'][0]["ID_USUARIO"], $_POST['cmbTipoPago'],
+            $Egresos->InsertaGastoTemp($_POST['cmbConcepto'], $_SESSION['login'][0]["ID_USUARIO"], $_POST['cmbTipoPago'],
                 $_POST['txtPor'], $_POST['txtDetalle'], $_POST['txtValorBase'], $_POST['txtIVA'], $_POST['txtConsumo']);
 
             $tabla = '<table class="table" style="width:95%;">
-            <th style="text-align:left;">Tercero</th>
             <th style="text-align:left;">Forma Pago</th>
             <th style="text-align:left;">Concepto</th>
             <th style="text-align:left;">Por</th>
@@ -107,7 +104,7 @@
 
             foreach ($Egresos->TraeGastosTemp($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
                 $Valor = $valor['VALOR_BASE'] + $valor['IVA'] + $valor['IMPU_CONSUMO'];
-                $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_TERCERO'] . '</td>';
+                $tabla .= '<tr>';
                 $tabla .= '<td style="text-align:left;">' . $valor['FORMA_PAGO'] . '</td>';
                 $tabla .= '<td style="text-align:left;">' . $valor['CONCEPTO'] . '</td>';
                 $tabla .= '<td style="text-align:left;">' . $valor['POR'] . '</td>';
@@ -120,7 +117,7 @@
           <a onclick="EliminarGasto(' . $valor['ID_GASTO_TEMP'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a></td></tr>';
                 $Total += $Valor;
             }
-            $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total) . '</b></td></tr>';
+            $tabla .= '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td style="text-align:right;"><b>Total:</b><td colspan="2" style="text-align: center;"><b>' . number_format($Total, 0, '', '.') . '</b></td></tr>';
 
             echo $tabla;
         } catch (Exception $e) {

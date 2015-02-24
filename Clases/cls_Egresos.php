@@ -53,14 +53,14 @@
         public function TraeGastosTemp($IdUsuario)
         {
             $query = "SELECT *,
-           concat( t_terceros.NOMBRE1,' ',t_terceros.NOMBRE2,' ',t_terceros.APELLIDO1,' ',t_terceros.APELLIDO2) as NOMBRE_TERCERO,
+           t_conceptos.ID_CONCEPTO,
            if(t_gasto_t.POR='SV','Servicios','Bienes') AS  POR,
            if(t_gasto_t.FORMA_PAGO='CO','Contado','Crédito') AS  FORMA_PAGO,
            IF(t_conceptos.CONCEPTO=1,'Ingresos','Gastos') AS CONCEPTO
 
        FROM t_gasto_t
 
-       INNER JOIN t_terceros ON t_terceros.ID_TERCERO=t_gasto_t.ID_TERCERO
+
        INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO=t_gasto_t.ID_CONCEPTO
 
          WHERE ID_USUARIO=$IdUsuario";
@@ -69,11 +69,11 @@
             return $resulset->fetchAll();
         }
 
-        public function  InsertaGastoTemp($IdTercero, $IdConcepto, $IdUsuario, $FormaPago, $Por, $Detalle, $ValorBase, $Iva, $ImpuConsumo)
+        public function  InsertaGastoTemp($IdConcepto, $IdUsuario, $FormaPago, $Por, $Detalle, $ValorBase, $Iva, $ImpuConsumo)
         {
             $query = "INSERT INTO `t_gasto_t`
-        (`ID_TERCERO`, `ID_CONCEPTO`,`ID_USUARIO`,`FORMA_PAGO`,`POR`,`DETALLE`,`VALOR_BASE`,`IVA`,`IMPU_CONSUMO`)
-        VALUES  ($IdTercero,$IdConcepto,$IdUsuario,'" . $FormaPago . "','" . $Por . "','" . $Detalle . "',$ValorBase,$Iva,$ImpuConsumo)";
+        (`ID_CONCEPTO`,`ID_USUARIO`,`FORMA_PAGO`,`POR`,`DETALLE`,`VALOR_BASE`,`IVA`,`IMPU_CONSUMO`)
+        VALUES  ($IdConcepto,$IdUsuario,' $FormaPago',' $Por',' $Detalle',$ValorBase,$Iva,$ImpuConsumo)";
 
             if ($this->_DB->Exec($query) > 0) return true;
             else  return false;
@@ -91,5 +91,19 @@
             $query = "DELETE FROM `t_gasto_t` WHERE `ID_USUARIO`=$IdUsuario";
             if ($this->_DB->Exec($query) > 0) return true;
             else  return false;
+        }
+
+        public function TraeCantidadEgresosTemp($IdUsuario)
+        {
+            $query = "SELECT Count(*) FROM t_gasto_t WHERE ID_USUARIO=$IdUsuario";
+
+            $resulset = $this->_DB->Query($query);
+            $Escalar = $resulset->fetchAll();
+            return $Escalar[0][0];
+        }
+
+        public function EliminaGastosTemp($idUsuario)
+        {
+            return $this->_DB->Exec("DELETE FROM t_gasto_t WHERE ID_USUARIO=$idUsuario") > 0;
         }
     }

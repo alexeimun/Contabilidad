@@ -13,8 +13,6 @@
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script> self.location = "/"</script>';
 
-
-
     $Parametros = new cls_Parametros();
     $Documentos = new cls_Documentos();
     $Egresos = new cls_Egresos();
@@ -47,63 +45,49 @@
     //unset($_POST);
 
     if (!empty($_POST)) {
+        if ($Egresos->TraeCantidadEgresosTemp($_SESSION['login'][0]["ID_USUARIO"]) == 0) {
+            echo '<script> alert("No se han agregados gastos a la tabla.") </script>';
+
+        } else {
 
             $Secuencia = 0;
             $Egresos->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]);
-            if (isset($_SESSION['ConsecutivoEgresos'])) unset($_SESSION['ConsecutivoEgresos']);
             $_SESSION['ReciboEgresos'] = 'no';
 
-            //Ingreso del valor base
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $_POST['cmbConcepto'], 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                1, $_POST['txtValorBase'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['txtPor'], 0, 0, $_POST['cmbTipoPago']);
+            $Total = 0;
 
-            //Ingreso del IVA
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $Egresos->_IdCuentaGastos, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                1, $_POST['txtIVA'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'I', 0, 0, $_POST['cmbTipoPago']);
+            $p=0;
+            foreach ($Egresos->TraeGastosTemp($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
+                $Valor = $valor['VALOR_BASE'] + $valor['IVA'] + $valor['IMPU_CONSUMO'];
+                $Total += $Valor;$p++;
+                //Ingreso del valor base
+                $Documentos->InsertaMovimiento(0, 0, 0, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
+                    1, $valor['VALOR_BASE'], 0,  $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['txtPor'], $valor['ID_CONCEPTO'], 0, $valor['FORMA_PAGO']);
 
-            //Ingreso del Consumo
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $Egresos->_IdCuentaConsumo, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                1, $_POST['txtConsumo'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Com', 0, 0, $_POST['cmbTipoPago']);
+                //Ingreso del IVA
+                $Documentos->InsertaMovimiento(0, 0, $Egresos->_IdCuentaGastos, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
+                    1, $valor['IVA'], 0,  $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'I', 0, 0, $valor['FORMA_PAGO']);
+
+                //Ingreso del Consumo
+                $Documentos->InsertaMovimiento(0, 0, $Egresos->_IdCuentaConsumo, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
+                    1, $valor['IMPU_CONSUMO'], 0,  $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Com', 0, 0, $valor['FORMA_PAGO']);
 
 
-            $TotalValores = $_POST['txtValorBase'] + $_POST['txtIVA'] + $_POST['txtConsumo'];
-            //TOTAL DE GASTOS
-        //Si es a crédito
-            if ($_POST['cmbTipoPago'] == 'CR') {
-                $Egresos->TraeConsecutivoEgresos($_SESSION['login'][0]["ID_EMPRESA"]);
-                $_SESSION['ConsecutivoEgresos'] = $Egresos->_ConsecutivoEgresos;
-                $_SESSION['Tipo'] = 'CR';
-                $_SESSION['ReciboEgresos'] = 'ok';
-
-                //FORMAS DE PAGO
-                foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
-                    $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'G', $Egresos->_ConsecutivoGastos, $valor['ID_F_PAGO'], ++ $Secuencia, "ABONO GASTOS" . $Egresos->_ConsecutivoEgresos,
-                        'D', 0, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
-                }
-
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'E', $Egresos->_ConsecutivoEgresos, '', ++ $Secuencia,
-                    'TOTAL', '', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $_POST['cmbConcepto'], $Egresos->_ConsecutivoGastos, $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
-
-                $Documentos->ActualizaConsecutivo($Egresos->_ConsecutivoEgresos + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'EGRESOS');
-            } else //De Contado
-            {
-                $_SESSION['ReciboEgresos'] = 'no';
-                //FORMAS DE PAGO
-                foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
-                    $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'G', $Egresos->_ConsecutivoGastos, $valor['ID_F_PAGO'], ++ $Secuencia, "ABONO GASTOS" . $Egresos->_ConsecutivoGastos,
-                        'D', 0, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
-                }
-                $_SESSION['Tipo'] = 'CO';
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'E', $Egresos->_ConsecutivoGastos, $_POST['cmbfPago'], ++ $Secuencia,
-                    'TOTAL', '', 1, $TotalValores, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $_POST['cmbConcepto'], 0, $_POST['cmbTipoPago'], 0, '', 0, '', '', $_SESSION['TOTAL2']);
+                $Documentos->InsertaMovimiento(0, 0, 0, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, 'SUBTOTAL', '', 1, $Valor, 0, $valor['DETALLE'],
+                    $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', $valor['ID_CONCEPTO'], $Egresos->_ConsecutivoGastos, $valor['FORMA_PAGO']);
             }
 
-            $Documentos->EliminaPagosFinal($_SESSION['login'][0]["ID_USUARIO"]);
+            $Documentos->InsertaMovimiento(0, 0, 0, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, 'TOTAL', '', 1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"],
+                $_SESSION['login'][0]["ID_EMPRESA"], '', 0, 0, 0, $_POST['cmbEntidad'], $_POST['txtCheque'], 0, '', '', $_POST['txtValor']);
+
+
             $Documentos->ActualizaConsecutivo($Egresos->_ConsecutivoGastos + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'GASTOS');
             $_SESSION['ConsecutivoGastos'] = $Egresos->_ConsecutivoGastos;
             $_SESSION['Total'] = 'no';
+            $Egresos->EliminaGastosTemp($_SESSION['login'][0]["ID_USUARIO"]);
 
             echo '<script >alert("Se ha creado el gasto con éxito..");window.open("ImpresionReciboEgresos.php");self.location = "Gastos.php"	; </script>';
+        }
     }
 
 ?>
@@ -118,6 +102,11 @@
     <?php include '../../Css/css.php' ?>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
 </head>
+<style>
+    td {
+        color: black;
+    }
+</style>
 
 <body>
 <div id="wrap">
@@ -140,13 +129,19 @@
                 <form method="POST">
                     <table style="width: 80%;">
                         <tr>
-                            <td style="text-align: right;">Tercero</td>
-                            <td style="padding-left: 10px;text-align: left;">
-                                <select id="cmbTercero" name="cmbTercero" class="chosen-select" required
-                                        style="width: 250px;">
-                                    <?= $cmbTercero; ?>
-                                </select>
-                            </td>
+<!--                            <td style="text-align: right;">Tercero</td>-->
+<!--                            <td style="padding-left: 10px;text-align: left;">-->
+<!--                                <select id="cmbTercero" name="cmbTercero" class="chosen-select"-->
+<!--                                        style="width: 250px;">-->
+<!--                                    --><?//= $cmbTercero; ?>
+<!--                                </select>-->
+<!--                            </td>-->
+
+                        </tr>
+                    </table>
+
+                    <table style="width: 90%;">
+                        <tr>
                             <td style="text-align: right;">Forma de Pago</td>
                             <td style="padding-left: 10px;text-align: left;">
                                 <select id="cmbTipoPago" class="chosen-select" name="cmbTipoPago">
@@ -154,16 +149,10 @@
                                     <option value="CR">CREDITO</option>
                                 </select>
                             </td>
-                        </tr>
-                    </table>
-                    <br><br>
-                    <hr>
-                    <br>
-                    <table style="width: 55%;">
-                        <tr>
                             <td style="text-align: right;">Concepto</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <select id="cmbConcepto" class="chosen-select" name="cmbConcepto" required style="width: 210px;">
+                                <select id="cmbConcepto" class="chosen-select" name="cmbConcepto"
+                                        style="width: 210px;">
                                     <?= $cmbConcepto ?>
                                 </select>
                             </td>
@@ -181,7 +170,7 @@
                         <tr>
                             <td style="text-align: right;"> Detalle</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="text" style="width:300px;" name="txtDetalle"/>
+                                <input type="text" style="width:350px;" name="txtDetalle"/>
                             </td>
                         </tr>
                     </table>
@@ -191,25 +180,26 @@
                             <td style="text-align: right;">Valor base $</td>
                             <td style="padding-left: 10px;text-align: left;">
                                 <input type="text" name="txtValorBase" style="width: 150px;"
-                                       onkeypress="return validarNro(event);" value="0" required>
+                                       onkeypress="return validarNro(event);" value="0">
                             </td>
 
                             <td style="text-align: right;">IVA $</td>
                             <td style="padding-left: 10px;text-align: left;">
                                 <input type="text" name="txtIVA" style="width: 150px;"
-                                       onkeypress="return validarNro(event);" value="0" required>
+                                       onkeypress="return validarNro(event);" value="0">
                             </td>
 
                             <td style="text-align: right;">Impu Consumo $</td>
                             <td style="padding-left: 10px;text-align: left;">
                                 <input type="text" name="txtConsumo" style="width: 150px;"
-                                       onkeypress="return validarNro(event);" value="0" required>
+                                       onkeypress="return validarNro(event);" value="0">
                             </td>
                         </tr>
                     </table>
                     <hr>
                     <input type="button" id="agregar" value="Agregar Gasto" class="btnAzul"/>
                     <br> <br>
+
                     <div id="val"></div>
                     <div id="frame"></div>
                     <hr>
@@ -219,27 +209,29 @@
                         <tr>
                             <td style="text-align: right;">Entidad:</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <select style="width: 190px;"  id="cmbEntidad" name="cmbEntidad" class="chosen-select" >
-                                    <?= $cmbEntidad?>
+                                <select style="width: 190px;" id="cmbEntidad" name="cmbEntidad" class="chosen-select">
+                                    <?= $cmbEntidad ?>
                                 </select>
                             </td>
 
-                            <td style="text-align: right;">Ceque N°</td>
+                            <td style="text-align: right;color:black;">Ceque N°</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="text" name="txtCheque" style="width: 150px;" onkeypress="return validarNro(event);"  value="0" required>
+                                <input type="text" name="txtCheque" style="width: 150px;"
+                                       onkeypress="return validarNro(event);" value="0">
                             </td>
 
-                            <td style="text-align: right;">Valor</td>
+                            <td style="text-align: right;color:black;">Valor</td>
                             <td style="padding-left: 10px;text-align: left;">
                                 <input type="text" name="txtValor" style="width: 150px;"
-                                       onkeypress="return validarNro(event);" value="0" required>
+                                       onkeypress="return validarNro(event);" value="0">
                             </td>
                         </tr>
                     </table>
 
                     <br> <br>
-                    <input type="submit" id="finalizar"  value="FINALIZAR" style="width: 200px;" class="btnAzul"/>
+                    <input type="submit" id="finalizar" value="FINALIZAR" style="width: 200px;" class="btnAzul"/>
                     <br> <br>
+
                     <div id="val1"></div>
                 </form>
             </center>
@@ -266,8 +258,7 @@
             $('#val1').html('<span style="color:#ff0000;">DEBE INGRESAR UN VALOR</span><br> <br>');
             $('input[name=txtValor]').css('border', '1px solid red');
         }
-        else
-        {
+        else {
             $('#val1').html('');
             $('input:text').css('border', '1px solid #CCCCCC');
         }

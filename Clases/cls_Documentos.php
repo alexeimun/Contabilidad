@@ -375,70 +375,33 @@
         public function TraeDetalleGastos($Consecutivo, $idEmpresa)
         {
             $query = "SELECT
-		t_terceros.NOMBRE1,
-		t_terceros.NOMBRE2,
-		t_terceros.APELLIDO1,
-		t_terceros.APELLIDO2,
-        t_movimiento.VALOR,
+       t_movimiento.ABONADO,
         t_movimiento.FECHA_REGISTRO,
         t_movimiento.ANULADO,
         t_movimiento.CONSECUTIVO,
-        t_movimiento.ID_TERCERO,
-        if(t_conceptos.CONCEPTO=1,'Ingresos','Gastos') AS CONCEPTO
+        t_movimiento.NUMERO,
+        t_entidades.NOMBRE_ENTIDAD
 
 		 FROM t_movimiento
-		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
-
-		 WHERE TIPO_DOC='E' AND TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
+         INNER JOIN t_entidades on t_entidades.ID_ENTIDAD=t_movimiento.ID_ENTIDAD
+		 WHERE TIPO_DOC='G' AND t_movimiento.DESCRIPCION='TOTAL' AND  t_movimiento.ID_EMPRESA = $idEmpresa   AND t_movimiento.CONSECUTIVO= $Consecutivo";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
         }
 
-        public function TraeDetalleEgresos($ConsecutivoE, $ConsecutivoG, $idEmpresa)
+        public function TraeGastosSubtotales($Consecutivo, $idEmpresa)
         {
             $query = "SELECT
-		t_terceros.NOMBRE1,
-		t_terceros.NOMBRE2,
-		t_terceros.APELLIDO1,
-		t_terceros.APELLIDO2,
-        t_movimiento.VALOR,
-        t_movimiento.FECHA_REGISTRO,
-        t_movimiento.ANULADO,
-        t_movimiento.CONSECUTIVO,
-        t_movimiento.ID_TERCERO,
-        if(t_conceptos.CONCEPTO=1,'Ingresos','Gastos') AS CONCEPTO
+           t_movimiento.OBS,
+           t_movimiento.VALOR,
+            t_cuentas.CODIGO
 
 		 FROM t_movimiento
-		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
+         INNER JOIN t_cuentas ON t_conceptos.ID_CUENTA = t_cuentas.ID_CUENTA
 
-		 WHERE TIPO_DOC='E' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $ConsecutivoG . " AND t_movimiento.DOC_CRUCE = " . $ConsecutivoE;
-
-            $resulset = $this->_DB->Query($query);
-            return $resulset->fetchAll();
-        }
-
-        public function TraeDetalleReciboEgresos($ConsecutivoE, $ConsecutivoG, $idEmpresa)
-        {
-            $query = "SELECT
-		t_terceros.NOMBRE1,
-		t_terceros.NOMBRE2,
-		t_terceros.APELLIDO1,
-		t_terceros.APELLIDO2,
-        t_movimiento.VALOR,
-        t_movimiento.FECHA_REGISTRO,
-        t_movimiento.ANULADO,
-        t_movimiento.CONSECUTIVO,
-        t_movimiento.ID_TERCERO,
-        if(t_conceptos.CONCEPTO=1,'Ingresos','Gastos') AS CONCEPTO
-
-		 FROM t_movimiento
-		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
-
-		 WHERE TIPO_DOC='E' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $ConsecutivoE . " AND t_movimiento.DOC_CRUCE = " . $ConsecutivoG;
+		 WHERE TIPO_DOC='G' AND t_movimiento.DESCRIPCION='SUBTOTAL' AND  t_movimiento.ID_EMPRESA = $idEmpresa   AND CONSECUTIVO= $Consecutivo";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -489,7 +452,6 @@
 
             if ($this->_DB->Exec($query) > 0) return true;
             else return false;
-
         }
 
         public function TraeInformacionRecibo($Consecutivo, $idEmpresa)
