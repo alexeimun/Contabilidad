@@ -73,24 +73,14 @@
         {
             $query = "INSERT INTO `t_gasto_t`
         (`ID_CONCEPTO`,`ID_USUARIO`,`FORMA_PAGO`,`POR`,`DETALLE`,`VALOR_BASE`,`IVA`,`IMPU_CONSUMO`)
-        VALUES  ($IdConcepto,$IdUsuario,' $FormaPago',' $Por',' $Detalle',$ValorBase,$Iva,$ImpuConsumo)";
+        VALUES  ($IdConcepto, $IdUsuario,' $FormaPago',' $Por',' $Detalle', $ValorBase, $Iva, $ImpuConsumo)";
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else  return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function EliminarGasto($id)
         {
-            $query = "DELETE FROM `t_gasto_t` WHERE `ID_GASTO_TEMP`=$id";
-            if ($this->_DB->Exec($query) > 0) return true;
-            else  return false;
-        }
-
-        public function EliminarGastos($IdUsuario)
-        {
-            $query = "DELETE FROM `t_gasto_t` WHERE `ID_USUARIO`=$IdUsuario";
-            if ($this->_DB->Exec($query) > 0) return true;
-            else  return false;
+            return $this->_DB->Exec("DELETE FROM `t_gasto_t` WHERE `ID_GASTO_TEMP`=$id") > 0;
         }
 
         public function TraeCantidadEgresosTemp($IdUsuario)

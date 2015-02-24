@@ -57,27 +57,17 @@
                 $RequiereNumero = '<br><input type="checkbox" id="chkRequiereNumero" name="chkRequiereNumero" onClick="check();">
                  <input type="hidden" value="0" id="txtRequiereNumero" name="txtRequiereNumero"><br><br>';
             }
-
         }
 
 
-        if (isset($_POST['btnGuardar']) != '') {
-
+        if (!empty($_POST)) {
             $Parametros->ActualizaFormaPago($_GET['id'], $_POST['txtCodigo'], $_POST['txtNombre'], $_POST['cmbCuenta'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero']);
-
-            echo '<script >
-                    alert("Se modificó la forma de pago correctamente.");
-                    self.location = "FormasDePago.php";
-                    </script>';
-
+            echo '<script > alert("Se modificó la forma de pago correctamente.");self.location = "FormasDePago.php";</script>';
         }
 
 
-    } else {
-        echo '<script >
-        self.location = "/";
-	</script>';
-    }
+    } else  echo '<script > self.location = "/";</script>';
+
 ?>
 <html>
 <head>
@@ -110,7 +100,7 @@
 
     input[type='checkbox'] {
         width: 20px;
-        height: 20px
+        height: 20px;
     }
 </style>
 
@@ -141,7 +131,7 @@
 <body>
 <div id="wrap">
     <div id="header">
-        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>">></a>
+        <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
 
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
 

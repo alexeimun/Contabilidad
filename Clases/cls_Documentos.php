@@ -29,23 +29,12 @@
         {
             $query = "DELETE FROM t_factura_temporal WHERE t_factura_temporal.ID_USUARIO=" . $idUsuario . " AND t_factura_temporal.ID_EMPRESA=" . $idEmpresa;
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function EliminaPagosFinal($idUsuario)
         {
-            $query = "DELETE FROM t_pagos_t WHERE ID_USUARIO=" . $idUsuario;
-
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
-
+            return $this->_DB->Exec("DELETE FROM t_pagos_t WHERE ID_USUARIO= $idUsuario") > 0;
         }
 
         public function AnulaFactura($Consecutivo, $idUsuario, $idEmpresa, $Tipodoc)
@@ -53,18 +42,14 @@
             $query = "UPDATE `t_movimiento` SET `ANULADO`=1, `USR_ANULA`=" . $idUsuario . ", `FECHA_ANULA`=now() WHERE (`CONSECUTIVO`=" . $Consecutivo . " AND ID_EMPRESA=" . $idEmpresa . "
             AND TIPO_DOC='" . $Tipodoc . "')";
 
-            if ($this->_DB->Exec($query) > 0)
-                return true;
-            else
-                return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaConsecutivo($Consecutivo, $idEmpresa, $Tipointerno)
         {
-            $query = "UPDATE `t_documentos` SET `CONSECUTIVO`=" . $Consecutivo . " WHERE (ID_EMPRESA=" . $idEmpresa . " AND TIPO_INTERNO='" . $Tipointerno . "')";
+            $query = "UPDATE `t_documentos` SET `CONSECUTIVO`= $Consecutivo  WHERE (ID_EMPRESA= $idEmpresa  AND TIPO_INTERNO=' $Tipointerno')";
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else   return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaReciboAbono($Consecutivo, $idEmpresa, $Abonado)
@@ -72,8 +57,7 @@
             $query = "UPDATE t_movimiento SET `ABONADO`=" . $Abonado . "
             WHERE  DESCRIPCION='TOTAL' AND  TIPO_DOC='R' AND  ID_EMPRESA=" . $idEmpresa . " AND DOC_CRUCE=" . $Consecutivo;
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else   return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaEgresosAbono($Consecutivo, $idEmpresa, $Abonado)
@@ -81,8 +65,7 @@
             $query = "UPDATE t_movimiento SET `ABONADO`=" . $Abonado . "
             WHERE  DESCRIPCION='TOTAL' AND  TIPO_DOC='E' AND  ID_EMPRESA=" . $idEmpresa . " AND CONSECUTIVO=" . $Consecutivo;
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else   return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TraeProductosFinal($idUsuario, $idEmpresa)
@@ -284,26 +267,16 @@
         public function TraeEgresosReimpresion($idEmpresa)
         {
             $query = "SELECT DISTINCT
-		t_movimiento.FECHA_REGISTRO,
-		t_movimiento.VALOR,
-		t_movimiento.CONSECUTIVO AS CONSECUTIVO_GASTOS,
-		t_movimiento.ID_PRODUCTO AS CONSECUTIVO_EGRESOS,
-		t_movimiento.ANULADO,
-		t_movimiento.ABONADO,
-		t_movimiento.TIPO_PAGO,
-		t_movimiento.TIPO_DOC,
-		t_movimiento.FECHA_REGISTRO,
-		t_terceros.NOMBRE1,
-		t_terceros.NOMBRE2,
-		t_terceros.APELLIDO1,
-		t_terceros.APELLIDO2
+            t_movimiento.FECHA_REGISTRO,
+            t_movimiento.VALOR,
+            t_movimiento.CONSECUTIVO,
+            t_usuarios.NOMBRE as NOMBRE_USR
 
-		FROM
-		t_movimiento
+            FROM
+            t_movimiento
 
-		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-
-		WHERE TIPO_DOC='E' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.TIPO_PAGO='CO' AND t_movimiento.ID_EMPRESA = $idEmpresa";
+        INNER JOIN t_usuarios on t_usuarios.ID_USUARIO=t_movimiento.USR_REGISTRO
+		WHERE TIPO_DOC='G' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -313,16 +286,16 @@
         public function TraeDetalleFactura($Consecutivo, $idEmpresa)
         {
             $query = "SELECT DISTINCT
-        t_movimiento.DESCRIPCION,
-        t_movimiento.CANTIDAD,
-        t_movimiento.VALOR,
-        t_movimiento.DESCUENTO
+            t_movimiento.DESCRIPCION,
+            t_movimiento.CANTIDAD,
+            t_movimiento.VALOR,
+            t_movimiento.DESCUENTO
 
-        FROM
-        t_movimiento
-        WHERE TIPO_DOC='F' AND  t_movimiento.ID_PRODUCTO <> 0 AND t_movimiento.ID_CUENTA_MOV<>0 AND t_movimiento.DOC_CRUCE=0
-        AND t_movimiento.DESCRIPCION<>'TOTAL'
-         AND t_movimiento.CONSECUTIVO=$Consecutivo  AND t_movimiento.ID_EMPRESA = $idEmpresa";
+            FROM
+            t_movimiento
+            WHERE TIPO_DOC='F' AND  t_movimiento.ID_PRODUCTO <> 0 AND t_movimiento.ID_CUENTA_MOV<>0 AND t_movimiento.DOC_CRUCE=0
+            AND t_movimiento.DESCRIPCION<>'TOTAL'
+            AND t_movimiento.CONSECUTIVO=$Consecutivo  AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -409,7 +382,7 @@
 
         public function InsertaMovimiento($IdTercero, $IdProducto, $IdCuentaMov, $TipoDoc, $Consecutivo, $IdFormaPago, $Secuencia, $Descripcion, $TipoMov
             , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '', $IdConcepto = 0, $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '',
-                                          $Ciudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0, $Transportador = '')
+                                          $IdCiudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0, $Transportador = '')
         {
             $sub = $IdCuentaMov;
             if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")"; else
@@ -422,12 +395,10 @@
        `TIPO_MOV`, `CANTIDAD`, `VALOR`,`DESCUENTO`, `ANULADO`, `OBS`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`,`TIPO`,`ID_CONCEPTO`
        ,`DOC_CRUCE`, `TIPO_PAGO`, `ID_CIUDAD`, `CODIGO`,`ID_ENTIDAD`,`NUMERO`,`ABONADO`,`TRANSPORTADOR`)
        VALUES
-       (" . $IdTercero . ", " . $IdProducto . ", " . $sub . ", '" . $TipoDoc . "', '" . $Consecutivo . "', '" . $IdFormaPago . "', '" . $Secuencia . "',
-        '" . $Descripcion . "', '" . $TipoMov . "', " . $Cantidad . ", " . $Valor . ", " . $Descuento . ",0, '" . $Obs . "', " . $UsrReg . ", now(), " . $IdEmpresa . ",
-        '" . $Tipo . "',$IdConcepto,$DocCruce,'" . $Tipopago . "'," . $Ciudad . ",'" . $Codigo . "'," . $IdEntidad . ",'" . $Numero . "'," . $TotalPagos . ",'" . $Transportador . "')";
+       ( $IdTercero ,  $IdProducto,  $sub, ' $TipoDoc',$Consecutivo, ' $IdFormaPago', ' $Secuencia', '$Descripcion', ' $TipoMov ', $Cantidad,  $Valor,$Descuento
+       ,0, ' $Obs',  $UsrReg, now(), $IdEmpresa , '$Tipo',$IdConcepto,$DocCruce,'$Tipopago', $IdCiudad,' $Codigo',$IdEntidad,' $Numero', $TotalPagos,' $Transportador')";
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else   return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
 
@@ -450,41 +421,40 @@
 	      ('008','NOTA CONTABLE','NOTA CONTABLE',1,'LEYENDA',1, " . $subquery1 . ",'NOTA_CONTABLE'," . $subquery2 . ",NOW()),
 	      ('009','SALDOS INICIALES','SALDOS INICIALES',1,'LEYENDA',1, " . $subquery1 . ",'SALDOS_INICIALES'," . $subquery2 . ",NOW())";
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TraeInformacionRecibo($Consecutivo, $idEmpresa)
         {
             $query = "SELECT DISTINCT
-		t_terceros.NOMBRE1,
-		t_terceros.NOMBRE2,
-		t_terceros.APELLIDO1,
-		t_terceros.APELLIDO2,
-		t_terceros.NUM_DOCUMENTO,
-		t_terceros.DIRECCION,
-		t_terceros.TELEFONO,
-		t_empresas.NOMBRE,
-		t_empresas.LOGO,
-		t_empresas.NIT,
-		t_empresas.DIRECCION AS DIR_EMPRESA,
-		t_empresas.TELEFONO AS TEL_EMPRESA,
-		t_movimiento.FECHA_REGISTRO,
-		t_movimiento.OBS,
-		t_movimiento.ANULADO,
-		t_credenciales.EMAIL,
-		IF(t_movimiento.ABONADO IS NULL ,0,t_movimiento.ABONADO) AS  ABONADO,
-		t_usuarios.NOMBRE AS NOMBRE_USUARIO,
-		(SELECT LEYENDA FROM t_documentos WHERE TIPO_INTERNO='RECIBO' AND ID_EMPRESA=" . $idEmpresa . ") AS LEYENDA
-		FROM
+            t_terceros.NOMBRE1,
+            t_terceros.NOMBRE2,
+            t_terceros.APELLIDO1,
+            t_terceros.APELLIDO2,
+            t_terceros.NUM_DOCUMENTO,
+            t_terceros.DIRECCION,
+            t_terceros.TELEFONO,
+            t_empresas.NOMBRE,
+            t_empresas.LOGO,
+            t_empresas.NIT,
+            t_empresas.DIRECCION AS DIR_EMPRESA,
+            t_empresas.TELEFONO AS TEL_EMPRESA,
+            t_movimiento.FECHA_REGISTRO,
+            t_movimiento.OBS,
+            t_movimiento.ANULADO,
+            t_credenciales.EMAIL,
+            IF(t_movimiento.ABONADO IS NULL ,0,t_movimiento.ABONADO) AS  ABONADO,
+            t_usuarios.NOMBRE AS NOMBRE_USUARIO,
+            (SELECT LEYENDA FROM t_documentos WHERE TIPO_INTERNO='RECIBO' AND ID_EMPRESA=" . $idEmpresa . ") AS LEYENDA
+            FROM
 
-		t_movimiento
-		INNER JOIN t_empresas ON t_movimiento.ID_EMPRESA = t_empresas.ID_EMPRESA
-		INNER JOIN t_credenciales ON t_credenciales.ID_CREDENCIAL=t_empresas.ID_CREDENCIAL
-		INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-		INNER JOIN t_usuarios ON t_movimiento.USR_REGISTRO = t_usuarios.ID_USUARIO
+            t_movimiento
+            INNER JOIN t_empresas ON t_movimiento.ID_EMPRESA = t_empresas.ID_EMPRESA
+            INNER JOIN t_credenciales ON t_credenciales.ID_CREDENCIAL=t_empresas.ID_CREDENCIAL
+            INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
+            INNER JOIN t_usuarios ON t_movimiento.USR_REGISTRO = t_usuarios.ID_USUARIO
 
-		WHERE  t_movimiento.TIPO_DOC='R' AND  t_movimiento.CONSECUTIVO= $Consecutivo AND t_movimiento.ID_EMPRESA = $idEmpresa";
+            WHERE  t_movimiento.TIPO_DOC='R' AND  t_movimiento.CONSECUTIVO= $Consecutivo AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -559,11 +529,7 @@
 
         public function ActualizaRecibo($Consecutivo, $idEmpresa, $Abono)
         {
-            $query = "UPDATE t_movimiento SET ABONADO=ABONADO + $Abono  WHERE ID_EMPRESA= $idEmpresa AND CONSECUTIVO= $Consecutivo";
-
-            if ($this->_DB->Exec($query) > 0)
-                return true;
-            else  return false;
+            return $this->_DB->Exec("UPDATE t_movimiento SET ABONADO=ABONADO + $Abono  WHERE ID_EMPRESA= $idEmpresa AND CONSECUTIVO= $Consecutivo") > 0;
         }
 
         public function TraeParametrosSaldosIniciales($idEmpresa)

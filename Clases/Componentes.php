@@ -50,7 +50,7 @@
 
         public function TraeEntidades($IdEmpresa)
         {
-            $query = "SELECT * FROM t_entidades WHERE ESTADO=1 AND ID_EMPRESA=" . $IdEmpresa;
+            $query = "SELECT * FROM t_entidades WHERE ESTADO=1 AND ID_EMPRESA=$IdEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -97,10 +97,7 @@
 
         public function EliminarPagoTemporal($id)
         {
-            $query = "DELETE FROM `t_pagos_t` WHERE (`ID_PAGO_T`=" . $id . ")";
-
-            if ($this->_DB->Exec($query) > 0) return true;
-            else   return false;
+            return $this->_DB->Exec("DELETE FROM `t_pagos_t` WHERE (`ID_PAGO_T`= $id") > 0;
         }
 
         public function  ValidaAgregaPago($idPago, $Valor, $IdEntidad, $Numero, $Idusuario)
@@ -129,8 +126,7 @@
         (`ID_ENTIDAD`, `VALOR`,`ID_F_PAGO`,`NUMERO`,`ID_USUARIO`,`ESTADO`)
         VALUES  (" . $IdEntidad . ", '" . $Valor . "','" . $idPago . "','" . $Numero . "'," . $Idusuario . ",1)";
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else  return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function  InsertaEntidad($Nombre, $Tipo, $IdUsuario, $IdEmpresa)
@@ -139,8 +135,7 @@
         (NOMBRE_ENTIDAD,TIPO,ESTADO,USR_REGISTRO,ID_EMPRESA)
         VALUES  ('" . $Nombre . "', '" . $Tipo . "',1," . $IdUsuario . "," . $IdEmpresa . ")";
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else  return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TraeEntidad($IdEntidad)
@@ -155,8 +150,7 @@
         {
             $query = "UPDATE `t_entidades` SET `ESTADO`=0 WHERE (`ID_ENTIDAD`=" . $IdEntidad . ")";
 
-            if ($this->_DB->Exec($query) > 0) return true;
-            else  return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaEntidad($Nombre, $Tipo, $UsrReg, $IdEntidad)
@@ -165,7 +159,7 @@
             `USR_REGISTRO`=" . $UsrReg . ", `FECHA_REGISTRO`=now()
             WHERE (`ID_ENTIDAD`=" . $IdEntidad . ")";
 
-            if ($this->_DB->Exec($query) > 0) return true; else return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
         #ASIGNACIÓN DE PERMISOS

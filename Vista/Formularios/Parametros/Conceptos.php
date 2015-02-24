@@ -18,6 +18,7 @@
             <th style="text-align:left;">CÓDIGO</th>
             <th style="text-align:left;">CONCEPTO</th>
             <th style="text-align:left;">CUENTA</th>
+            <th style="text-align:left;">FECHA REGISTRO</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
     $cont = 0;
 
@@ -26,6 +27,7 @@
         $tabla .= '<tr><td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['CONCEPTO'] . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE_CUENTA'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
         $tabla .= '<td style="text-align:right;">
            <a href="CrearConcepto.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
           <a href="ModificarConcepto.php?id=' . $valor['ID_CONCEPTO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
@@ -60,9 +62,6 @@
 <script>
 
     $(document).ready(function () {
-        if (<?= $cont; ?>>
-        0
-        )
         $('#table').dataTable({
             "language": {
                 "sProcessing": "Procesando...",

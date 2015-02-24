@@ -18,6 +18,7 @@
         <thead><tr>
             <th style="text-align:left;">NOMBRE</th>
             <th style="text-align:left;">TIPO</th>
+            <th style="text-align:left;">FECHA REGISTRO</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
     $cont = 0;
 
@@ -25,10 +26,11 @@
         $cont ++;
         $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_ENTIDAD'] . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['TIPO'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
         $tabla .= '<td style="text-align:right;">
            <a href="CrearEntidad.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
           <a href="ModificarEntidad.php?id=' . $valor['ID_ENTIDAD'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
-          <a onclick="EliminarEntidad(' . $valor['ID_ENTIDAD'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
+          <a onclick="EliminarEntidad(' . $valor['ID_ENTIDAD'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
     }
     if ($cont == 0) {

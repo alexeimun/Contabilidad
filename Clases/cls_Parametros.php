@@ -605,6 +605,7 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa;
         t_conceptos.ID_CONCEPTO,
         t_conceptos.DESCRIPCION,
         t_cuentas.CODIGO,
+        t_conceptos.FECHA_REGISTRO,
         if(t_conceptos.CONCEPTO=0,'Gastos','Ingresos') AS 'CONCEPTO',
         t_cuentas.NOMBRE AS 'NOMBRE_CUENTA'
         
