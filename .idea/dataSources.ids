@@ -80,6 +80,7 @@
     </table>
     <table name="t_empresas" schema="" catalog="contasistin" type="TABLE">
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="ID_REGIMEN" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="NOMBRE" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="LOGO" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
       <column name="NIT" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
@@ -147,8 +148,8 @@
       <column name="ID_TERCERO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_CONCEPTO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_USUARIO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="FORMA_PAGO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
-      <column name="POR" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
+      <column name="FORMA_PAGO" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <column name="POR" sqlType="VARCHAR" precision="2" scale="0" nullable="true" jdbcType="12"/>
       <column name="VALOR_BASE" sqlType="DOUBLE" precision="11" scale="0" nullable="true" jdbcType="8"/>
       <column name="IVA" sqlType="DOUBLE" precision="11" scale="0" nullable="true" jdbcType="8"/>
       <column name="IMPU_CONSUMO" sqlType="DOUBLE" precision="11" scale="0" nullable="true" jdbcType="8"/>
@@ -205,7 +206,6 @@
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="CODIGO" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12"/>
       <column name="ID_CIUDAD" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_ENTIDAD" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="NUMERO" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12"/>
@@ -255,6 +255,11 @@
       <foreign-key name="t_productos_ibfk_1" columns="ID_GRUPO" ref-table="t_grupos" ref-schema="" ref-catalog="contasistin" ref-columns="ID_GRUPO" update-rule="0" delete-rule="0" deferrability="2"/>
       <foreign-key name="t_productos_ibfk_2" columns="ID_EMPRESA" ref-table="t_empresas" ref-schema="" ref-catalog="contasistin" ref-columns="ID_EMPRESA" update-rule="0" delete-rule="0" deferrability="2"/>
       <index name="t_productos_ibfk_2" unique="false" columns="ID_EMPRESA"/>
+    </table>
+    <table name="t_regimenes" schema="" catalog="contasistin" type="TABLE">
+      <column name="ID_REGIMEN" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
+      <column name="NOMBRE" sqlType="VARCHAR" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="ID_REGIMEN"/>
     </table>
     <table name="t_terceros" schema="" catalog="contasistin" type="TABLE">
       <column name="ID_TERCERO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>

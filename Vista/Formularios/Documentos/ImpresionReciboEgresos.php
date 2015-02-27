@@ -1,5 +1,4 @@
 <?php
-
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/cls_Documentos.php';
@@ -61,7 +60,6 @@
     $pdf->Cell(35, 6, '$ ' . number_format($TOTAL, 0, '', '.'), 1, 0, 'C');
 
 
-
     $pdf->SetFont('Arial', '', 8);
     #FIN COLUMNAS
     foreach ($Documentos->TraeDetalleGastos($_SESSION['ConsecutivoGastos'], $_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
@@ -71,10 +69,9 @@
         $pdf->Cell(40, 6, utf8_decode('CHEQUE N°') . ' ' . $valor['NUMERO'], 1, 0, 'L');
 
         $pdf->SetX(60);
-        $pdf->Cell(45, 6, utf8_decode('EFECTIVO'), 1, 0, 'L');
+        $pdf->Cell(45, 6, utf8_decode('EFECTIVO:'), 1, 0, 'L');
 
-        $pdf->SetXY(78, 28 + $h);
-        $pdf->Cell(6, 4, '', 1, 0, 'L');
+        $pdf->Text(78, 31 + $h,'$ '. number_format($valor['VALOR'], 0, '', '.'));
 
         $pdf->SetXY(20, 33 + $h);
         $pdf->Cell(85, 6, 'BANCO: ' . $valor['NOMBRE_ENTIDAD'], 1, 0, 'L');
@@ -117,7 +114,6 @@
 
     $pdf->SetXY(156, 63 + $h);
     $pdf->Cell(34, 6, '', 1, 0, 'L');
-
 
     $pdf->Output();
     $pdf->Cell($pdf->PageNo());

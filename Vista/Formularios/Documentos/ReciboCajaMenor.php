@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -42,22 +41,16 @@
         else if ($_POST['cmbConcepto'] == '0')
             echo '<script >alert("Debe seleccionar un concepto.")	 </script>';
 
-
         else {
             $Consecutivo = $CajaMenor->_Consecutivo;
             $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'C', $Consecutivo, 0, 0, 'TOTAL', 'D',
-                1, $_POST['txtValor'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Con', $_POST['cmbConcepto'], 0, '', 0, '',
-                $_POST['cmbCiudad'], $_POST['Codigo'], 'RECIBO_CAJA_MENOR');
+                1, $_POST['txtValor'], 0, $_POST['txtDetalle'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Con', $_POST['cmbConcepto'], 0, '', 0, '', $_POST['cmbCiudad']);
 
             $_SESSION['ConsecutivoCM'] = $Consecutivo;
 
             $Documentos->ActualizaConsecutivo($Consecutivo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO_CAJA_MENOR');
 
-            echo '<script >
-          alert("Se creó el recibo correctamente.");
-        window.open("ImpresionReciboCajaMenor.php");
-        self.location = "ReciboCajaMenor.php"	;
-        </script>';
+            echo '<script >alert("Se creó el recibo correctamente.");window.open("ImpresionReciboCajaMenor.php"); self.location = "ReciboCajaMenor.php"	; </script>';
         }
     }
 ?>
@@ -70,8 +63,8 @@
     <link rel="stylesheet" type="text/css" href="../../Css/menu.css"/>
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
-    <?php include '../../Css/css.php' ?>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
+    <?php include '../../Css/css.php' ?>
 </head>
 
 <body>
@@ -89,7 +82,6 @@
         <?= $menu ?>
 
         <div id="main">
-
             <form method="POST">
                 <center>
                     <h3><b>RECIBO CAJA MENOR <?= $CajaMenor->_Consecutivo ?></b></h3><br>
@@ -99,15 +91,29 @@
                             <td style="padding-left: 10px;text-align: left;">
                                 <select id="cmbCiudad" name="cmbCiudad" class="chosen-select" style="width:250px;">
                                     <?= $cmbCiudad; ?>
-
                                 </select>
+                            </td>
+                        </tr>
+                    </table>
+                    <br>
+                    <table style="width: 95%;color: #33373d;">
+                        <tr>
+                            <td style="text-align: right;"><br> Por concepto de</td>
+                            <td style="padding-left: 10px;text-align: left;">
+                                <br>
+                                <select name="cmbConcepto" class="chosen-select" id="cmbConcepto" style="width: 220px;">
+                                    <?= $cmbConcepto; ?>
+                                </select>
+                            </td>
+                            <td style="text-align: right;"> Detalle</td>
+                            <td style="padding-left: 10px;text-align: left;">
+                                <input type="text" style="width:350px;" name="txtDetalle"/>
                             </td>
 
                         </tr>
                     </table>
                     <hr>
-                    <br>
-                    <table style="width: 95%;color: #33373d;">
+                    <table style="width: 100%;color: #33373d;">
                         <tr>
                             <td style="text-align: right;"><br>Pagado a</td>
                             <td style="padding-left: 10px;text-align: left;">
@@ -121,27 +127,9 @@
                                 <br> <input type="text" id="txtValor" name="txtValor" required/>
                             </td>
                         </tr>
-                    </table>
-                    <hr>
-                    <br>
-                    <table style="width: 100%;color: #33373d;">
-                        <tr>
-                            <td style="text-align: right;"><br> Por concepto de</td>
-                            <td style="padding-left: 10px;text-align: left;">
-                                <br>
-                                <select name="cmbConcepto" class="chosen-select" id="cmbConcepto" style="width: 220px;">
-                                    <?= $cmbConcepto; ?>
-                                </select>
-                            </td>
-                            <td style="text-align: right;"><br> Código</td>
-                            <td style="padding-left: 10px;text-align: left;">
-                                <br>
-                                <input type="text" name="Codigo" required/>
-                            </td>
-                        </tr>
+
                         <tr>
                             <td colspan="5" style="text-align: center;"><br><br><br>
-
                                 <ul id="validaciones">
                                     <input type="submit" class="btnAzul" id="btnFinalizar" name="btnFinalizar"
                                            value="FINALIZAR" style="width:200px;"/>

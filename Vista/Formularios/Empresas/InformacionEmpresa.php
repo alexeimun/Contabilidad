@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -17,15 +16,24 @@
     $txtTelefono = '';
     $txtEmail = '';
     $Logo = '';
+   $cmbRegimen='';
+
 
     foreach ($Empresa->TraeDatosEmpresa($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
-        $txtNombre = $valor['NOMBRE'];
+        $txtNombre = $valor['NOMBRE_EMPRESA'];
         $txtNit = $valor['NIT'];
         $txtEmail = $valor['EMAIL'];
         $txtDireccion = $valor['DIRECCION'];
         $txtTelefono = $valor['TELEFONO'];
         $Logo = $valor['LOGO'];
+        $Regimen = $valor['ID_REGIMEN'];
     }
+    foreach ($Empresa->TraeRegimenes() as $llave => $valor) {
+        if($valor['ID_REGIMEN']==$Regimen)
+            $cmbRegimen .= '<option style="text-align:left;" value ="' . $valor['ID_REGIMEN'] . '" selected>' . $valor['NOMBRE'] . '</option>';
+        else  $cmbRegimen .= '<option style="text-align:left;" value ="' . $valor['ID_REGIMEN'] . '">' . $valor['NOMBRE'] . '</option>';
+    }
+
 
     if (isset($_POST['btnGuardar']) != '') {
 
@@ -33,27 +41,22 @@
         if ($_FILES["file"]["name"] == '') {
             $img = $Logo;
         }
-        $Empresa->ActualizaEmpresa($_SESSION['login'][0]["ID_EMPRESA"], $_POST['txtNombre'], $_POST['txtNit'], $_POST['txtDireccion'], $_POST['txtTelefono'], $_POST['txtEmail'], $img);
+        $Empresa->ActualizaEmpresa($_SESSION['login'][0]["ID_EMPRESA"], $_POST['txtNombre'], $_POST['txtNit'], $_POST['txtDireccion'], $_POST['txtTelefono'], $_POST['txtEmail'],$_POST['cmbRegimen'], $img);
 
         move_uploaded_file($_FILES["file"]["tmp_name"], $img);
 
-        echo '<script >
-                    alert("Se modificaron los datos de la empresa correctamente")
-                    self.location = "InformacionEmpresa.php"
-                    </script>';
-
+        echo '<script > alert("Se modificaron los datos de la empresa correctamente"); self.location = "InformacionEmpresa.php"; </script>';
     }
-
 ?>
 <html>
 <head>
     <title>Información de Empresa</title>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../Css/menu.css"/>
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
+    <?php include '../../Css/css.php' ?>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
 
 
@@ -98,7 +101,7 @@
             <form method="post" enctype="multipart/form-data">
                 <center>
                     <h3><b>INFORMACIÓN DE EMPRESA</b></h3><br>
-                    <table style="width: 65%;color: #33373d">
+                    <table style="width: 65%;color: #33373d;">
                         <tr>
                             <td>Nombre:</td>
                             <td style="padding-left: 10px;text-align: center;">
@@ -110,7 +113,7 @@
                             <td><br>Nit:</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <br> <input type="text" id="txtNit" name="txtNit"
-                                            onkeypress="javascript:return validarNro(event)" value="<?= $txtNit; ?>"
+                                            onkeypress="return validarNro(event);" value="<?= $txtNit; ?>"
                                             placeholder="Ingrese el Nit" required>
                             </td>
                         </tr>
@@ -124,40 +127,37 @@
                         <tr>
                             <td><br>Telefono:</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <br><input type="text" id="txtTelefono" name="txtTelefono" value="<?= $txtTelefono; ?>"
-                                           placeholder="Ingrese el telefono" required>
+                                <br><input type="text" id="txtTelefono" name="txtTelefono" value="<?= $txtTelefono; ?>" placeholder="Ingrese el telefono" required>
                             </td>
                         </tr>
                         <tr>
                             <td><br>Correo:</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <br><input type="email" id="txtEmail" name="txtEmail" value="<?= $txtEmail; ?>"
-                                           placeholder="Ingrese el correo" required>
+                                <br><input type="email" id="txtEmail" name="txtEmail" value="<?= $txtEmail; ?>"  placeholder="Ingrese el correo" required>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><br>Tipo de Régimen:</td>
+                            <td style="padding-left: 10px;text-align: center;">
+                                <br>      <select  class="chosen-select" name="cmbRegimen" >
+                                    <?= $cmbRegimen ?>
+                                </select>
                             </td>
                         </tr>
                         <tr>
                             <td>Logo:</td>
-                            <td style="padding-left: 10px;text-align: center;">
+                            <td style="text-align: center;padding: 10px;">
                                 <img style="width: 140px;" src="../../Formularios/Empresas/<?= $Logo; ?>"><br>
                                 <input type="file" name="file" id="file" style="margin-right: 85px;">
                             </td>
                         </tr>
-
                     </table>
                     <br>
-
-                    <input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"
-                           style="width:200px;"/>
-
+                    <input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"  style="width:200px;"/>
                 </center>
-
             </form>
-
-
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

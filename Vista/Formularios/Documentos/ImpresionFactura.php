@@ -92,7 +92,7 @@
     $pdf->Cell(40, 10,strtoupper(utf8_decode($NombreEmpresa)),0,0,'C') . $pdf->Ln(5);
     $pdf->SetFont('Arial', 'I', 9);
     $pdf->SetX(80);
-    $pdf->Cell(40, 10, 'Nit: '. $NitEmpresa.utf8_decode(' - Regimen Común')) . $pdf->Ln(5);
+    $pdf->Cell(40, 10, 'Nit: '. $NitEmpresa.' - '.$_SESSION['login'][0]["NOMBRE_REGIMEN"]) . $pdf->Ln(5);
     $pdf->SetX(80);
     $pdf->Cell(40, 10, $DireccionEmpresa.' - Tel: '. $TelefonoEmpresa) . $pdf->Ln(5);
     $pdf->Ln(14);

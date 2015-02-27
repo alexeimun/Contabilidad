@@ -81,6 +81,11 @@
         if (confirm("Seguro que quieres anular este recibo?"))
             window.location.href = 'AnularFactura.php?tipodoc=R&id=' + id;
     }
+
+    function AnularCM(id) {
+        if (confirm("Seguro que quieres anular este recibo de caja menor?"))
+            window.location.href = 'AnularFactura.php?tipodoc=C&id=' + id;
+    }
 </script>
 
 <body>

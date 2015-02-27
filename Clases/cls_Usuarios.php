@@ -64,6 +64,7 @@
 					t_usuarios.RAIZ,
 					t_empresas.NOMBRE AS NOMBRE_EMPRESA,
 					t_empresas.CANT_USUARIOS,
+					t_regimenes.NOMBRE as NOMBRE_REGIMEN,
 					concat('../../Formularios/Empresas/',t_empresas.LOGO) AS LOGO_EMPRESA,
 					t_empresas.ID_EMPRESA,
 					t_empresas.NIT,
@@ -77,7 +78,8 @@
 					INNER JOIN t_credenciales ON t_credenciales.ID_CREDENCIAL=  t_usuarios.ID_CREDENCIAL
 					INNER JOIN t_empresas ON t_usuarios.ID_EMPRESA = t_empresas.ID_EMPRESA
 		            INNER JOIN t_vendedor ON t_empresas.ID_VENDEDOR= t_vendedor.ID_VENDEDOR
-		
+		            INNER JOIN t_regimenes ON t_regimenes.ID_REGIMEN= t_empresas.ID_REGIMEN
+
 					 WHERE t_usuarios.ID_CREDENCIAL= '" . $credencial[0][0] . "' AND t_usuarios.ESTADO=1 AND t_empresas.ESTADO=1 AND t_vendedor.ESTADO=1";
                         break;
                     case 1 :
@@ -147,12 +149,7 @@
         {
             $query = "UPDATE `t_usuarios` SET `ESTADO`=0 WHERE (`ID_USUARIO`=" . $id . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
-
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TraeUsuariosEmpresa($IdEmpresa)
@@ -192,11 +189,7 @@
      VALUES ('" . $Nombre . "', '" . $Documento . "', " . $IdEmpresa . ",1, now(),
      (SELECT ID_CREDENCIAL FROM t_credenciales WHERE EMAIL='" . $Email . "'))";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function InsertaUsuarioDefault($nitEmpresa, $Clave, $identi)
@@ -433,23 +426,15 @@
 		
 		VALUES ((SELECT ID_USUARIO FROM t_usuarios WHERE DOCUMENTO='" . $doc . "'), '" . $mod . "','" . $per . "','" . $UsrReg . "', now())";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function actualizaPermisos($usu, $mod, $per)
         {
-            $query = "UPDATE  t_permisos SET  SI_O_NO=" . $per . "
+            $query = "UPDATE  t_permisos SET  SI_O_NO=$per
            , FECHA_REGISTRO=now()  WHERE (ID_USUARIO='" . $usu . "' AND ID_MODULO='" . $mod . "')";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+         return $this->_DB->Exec($query) > 0;
         }
 
         public function TienePermiso($nombre, $idUser)

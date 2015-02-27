@@ -60,7 +60,7 @@
         // echo var_dump($_POST['ConsecutivoEgreso'])."TOTAL= ".$_SESSION['TOTAL2']." ABonado= ".$_POST['Abonado'];
         //Debito
         $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, $_POST['Concepto'], 'E', $Egresos->_ConsecutivoEgresos, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
-            1, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'E', $_POST['Concepto'], $_POST['ConsecutivoGastos'], '', 0, '', 0, '', 'EGRESOS', $_SESSION['TOTAL2']);
+            1, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'E', $_POST['Concepto'], $_POST['ConsecutivoGastos'], '', 0, '', 0, $_SESSION['TOTAL2']);
 
 
         $Documentos->ActualizaEgresosAbono($_POST['ConsecutivoGastos'], $_SESSION['login'][0]["ID_EMPRESA"], $_SESSION['TOTAL2'] + $_SESSION['Abonado']);

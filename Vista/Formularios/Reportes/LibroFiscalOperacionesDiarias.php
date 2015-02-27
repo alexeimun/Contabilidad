@@ -12,13 +12,6 @@
 
     $Master = new Master();
     $menu = $Master->Menu();
-    $Parametros = new cls_Parametros();
-    $Documentos = new cls_Documentos();
-    $date = date("t", mktime(0, 0, 0, 12/*mes*/, 1, 2014 /*mes*/));
-    $me = '';
-    $tabs = '';
-    $btnaplicar = '';
-    $formulario = '';
 
     $manual = '<table id="manual" cellpadding="1" cellspacing="1">
             <thead>
@@ -136,9 +129,6 @@
 
 <script>
 
-    function tabing(index) {
-        window.location.href = 'LibroFiscal.php?me=' + index;
-    }
     $(function () {
         $("#tabs").tabs();
     });
@@ -163,7 +153,7 @@
                 <h3><b>LIBRO FISCAL</b></h3><br>
 
                 <form action="">
-                    Mes:<input type="number" name="mes" min="1" max="12" value="<?= date("m") ?>"
+                    Mes:<input type="number" name="mes" min="1" max="12" value="<?= round(date("m")) ?>"
                                style="width: 50px;text-align: center;"/>
 
                     Año:<input type="number" name="ano" min="2000" max="2050"
@@ -268,8 +258,8 @@
 
         function ArmarTabla(tabla) {
             var table = $('#' + tabla).clone();
-            table.find('thead tr:first').prepend('<tr><th></th><th style="border: 1px solid #000;">Mes:' + $('input[name=mes]').val() +
-            '</th><th style="border: 1px solid #000;">Año:' + $('input[name=ano]').val() + '</th></tr>');
+            table.find('thead tr:first').prepend('<tr><th></th><th style="border: 1px solid #000;">Mes: ' + $('input[name=mes]').val() +
+            '</th><th style="border: 1px solid #000;">Año: ' + $('input[name=ano]').val() + '</th></tr>');
 
             var rows = table.find('tbody > tr td > input');
             rows.each(function (index, element) {
@@ -309,8 +299,7 @@
                 + '<td><input readonly></td>'
                 + '<td><input readonly></td>'
                 + '<td><input readonly></td></tr>'
-            );
-        }
+            );}
 
         //EXPORTACIONES A EXCEL
 
@@ -350,7 +339,7 @@
                     }
                 });
 
-                $('table#manual tbody tr:last td:nth-of-type(2) input ').val(venta);
+                $('table#manual tbody tr:last td:nth-of-type(2) input').val(venta);
                 $('table#manual tbody tr:last td:nth-of-type(3) input').val(compra);
                 $('table#manual tbody tr:last td:nth-of-type(4) input').val(pago);
                 $('table#manual tbody tr:last td:nth-of-type(5) input').val(iva);

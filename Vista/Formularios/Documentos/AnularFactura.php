@@ -26,7 +26,6 @@
         case 'E':
             echo '<script>  window.location.href = "ReimpresionDocumentos.php?id=3"</script>';
             break;
-
     }
 
 

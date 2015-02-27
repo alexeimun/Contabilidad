@@ -35,16 +35,16 @@
         $pdf->SetX(30);
         $pdf->SetFont('Arial', 'B', 8);
 
-        $pdf->Cell(150, 6, 'CIUDAD Y FECHA: ' . $valor['NOMBRE_CIUDAD'] . ' ' . $valor['FECHA_REGISTRO'], 1, 0, 'L') . $pdf->Ln();
+        $pdf->Cell(150, 6, 'CIUDAD Y FECHA: ' .ucfirst( strtolower( $valor['NOMBRE_CIUDAD'])) . ' ' . $valor['FECHA_REGISTRO'], 1, 0, 'L') . $pdf->Ln();
         $pdf->SetX(30);
-        $pdf->Cell(100, 6, 'PAGADO A: ' . $valor['NOMBRE1'] . ' ' . $valor['NOMBRE2'] . ' ' . $valor['APELLIDO1'] . ' ' . $valor['APELLIDO2'], 1, 0, 'L');
+        $pdf->Cell(100, 6, 'PAGADO A: ' . $valor['N_COMPLETO'], 1, 0, 'L');
         $pdf->SetFont('Arial', 'B', 9);
         $pdf->SetFillColor(255, 255, 231);//Fill
         $pdf->SetFillColor(255, 255, 231);//Fill
         $pdf->Cell(50, 6, '$ ' . number_format($valor['VALOR'], 0, '', ','), 1, 0, 'L', true) . $pdf->Ln();
         $pdf->SetFont('Arial', 'B', 8);
         $pdf->SetX(30);
-        $pdf->Cell(150, 6, 'POR CONCEPTO DE: ' . $valor['CONCEPTO'], 1, 0, 'L') . $pdf->Ln();
+        $pdf->Cell(150, 6, 'POR CONCEPTO DE: ' . $valor['OBS'], 1, 0, 'L') . $pdf->Ln();
         $pdf->SetX(30);
         $pdf->Cell(150, 6, '', 1, 0, 'L') . $pdf->Ln();
         $pdf->SetX(30);

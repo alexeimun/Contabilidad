@@ -78,17 +78,17 @@
                 $tabla = '<table id="table" class="table" style="width:90%;">
            <thead>
            <tr>
-            <th style="text-align:left;">PAGADO A</th>
             <th style="text-align:left;">CONSECUTIVO</th>
+            <th style="text-align:left;">PAGADO A</th>
             <th style="text-align:left;">CÓDIGO</th>
             <th style="text-align:right;">VALOR</th>
              <th style="text-align:left;">FECHA</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
 
                 foreach ($Documentos->TraeCajaMenorReimpresion($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
-                    $tabla .= '<tr>
-                    <td style="text-align:left;">' . $valor['NOMBRE1'] . ' ' . $valor['NOMBRE2'] . ' ' . $valor['APELLIDO1'] . ' ' . $valor['APELLIDO2'] . '</td>';
+                    $tabla .= '<tr>';
                     $tabla .= '<td style="text-align:left;">' . $valor['CONSECUTIVO'] . '</td>';
+                    $tabla .='<td style="text-align:left;">' . $valor['N_COMPLETO'] . '</td>';
                     $tabla .= '<td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
                     $tabla .= '<td style="text-align:left;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
                     $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
@@ -96,7 +96,7 @@
                     $tabla .= '<a href="ReImprime.php?id=2&consecutivo=' . $valor['CONSECUTIVO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></a>';
 
                     if ($valor['ANULADO'] == 0)
-                        $tabla .= '<a href="" onclick="AnularFactura(' . $valor['CONSECUTIVO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></a></td>';
+                        $tabla .= '<a href="" onclick="AnularCM(' . $valor['CONSECUTIVO'] . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></a></td>';
 
                     $tabla .= '</tr>';
                 }
@@ -110,26 +110,26 @@
            <thead>
            <tr>
            <th style="text-align:left;">CONSECUTIVO</th>
-           <th style="text-align:left;">TERCERO</th>
-            <th style="text-align:left;">ABONADO</th>
+           <th style="text-align:left;">NOMBRE USR REGISTRO</th>
+            <th style="text-align:left;">ENTIDAD</th>
             <th style="text-align:left;">VALOR</th>
+             <th style="text-align:left;">N° CHEQUE</th>
              <th style="text-align:left;">FECHA</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
 
                 foreach ($Documentos->TraeEgresosReimpresion($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
                     $tabla .= '<tr>
-                    <td style="text-align:left;">' . $valor['CONSECUTIVO_GASTOS'] . '</td>';
-                    $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE1'] . ' ' . $valor['NOMBRE2'] . ' ' . $valor['APELLIDO1'] . ' ' . $valor['APELLIDO2'] . '</td>';
-                    $tabla .= '<td style="text-align:left;">' . number_format($valor['ABONADO'], 0, '', ',') . '</td>';
+                    <td style="text-align:left;">' . $valor['CONSECUTIVO'] . '</td>';
+                    $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE_USR']. '</td>';
+                    $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE_ENTIDAD']. '</td>';
                     $tabla .= '<td style="text-align:left;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
+                    $tabla .= '<td style="text-align:left;">' . $valor['NUMERO']. '</td>';
                     $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
                     $tabla .= '<td style="text-align:center;">';
-                    $tabla .= '<a href="ReImprime.php?id=3&consecutivog=' . $valor['CONSECUTIVO_GASTOS'] . '&consecutivoe=' . $valor['CONSECUTIVO_EGRESOS'] . '
-                    &tipo=' . $valor['TIPO_PAGO'] . '"><img src="../../Imagenes/print.png" title="Imprimir"></a>';
+                    $tabla .= '<a href="ReImprime.php?id=3&consecutivog=' . $valor['CONSECUTIVO'] .'"><img src="../../Imagenes/print.png" title="Imprimir"></a>';
 
-                    $doc = $valor['TIPO_DOC'] == 'E' ? 0 : 1;
-                    if ($valor['ANULADO'] == 0)
-                        $tabla .= '<a href="" onclick="AnularEgreso(' . $valor['CONSECUTIVO_GASTOS'] . ',' . $doc . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></a></td>';
+//                    if ($valor['ANULADO'] == 0)
+//                        $tabla .= '<a href="" onclick="AnularEgreso(' . $valor['CONSECUTIVO'] . ',' . '' . ');return false"><img src="../../Imagenes/cancel.png" title="Anular"></a></td>';
 
                     $tabla .= '</tr>';
                 }
@@ -137,7 +137,6 @@
                 $tabla .= '</tbody></table>';
                 break;
         }
-
         echo $tabla;
     }
 ?>
@@ -171,5 +170,4 @@
             }
         });
     });
-
 </script>

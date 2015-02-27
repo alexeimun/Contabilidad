@@ -89,9 +89,8 @@
             foreach ($Parametros->TraeCiudades() as $llave1 => $valor1) {
                 if ($valor1['ID_CIUDAD'] == $ciudadE) {
                     $cmbCiudad .= '<option style="text-align:left;" value ="' . $valor1['ID_CIUDAD'] . '" selected>' . $valor1['NOMBRE'] . '<b>,' . $valor1['DEPARTAMENTO'] . '</b></option>';
-                } else {
+                } else
                     $cmbCiudad .= '<option style="text-align:left;" value ="' . $valor1['ID_CIUDAD'] . '">' . $valor1['NOMBRE'] . '<b>,' . $valor1['DEPARTAMENTO'] . '</b></option>';
-                }
             }
         }
 
@@ -106,14 +105,9 @@
                 $_POST['txtApellido2'], $_POST['rbTipoDoc'], str_replace(".", "", $_POST['txtNumDoc']), $_POST['txtDireccion'],
                 $_POST['txtTelefono'], $_POST['txtCelular'], $_POST['txtEmail'], $_POST['cmbCiudad']);
 
-
             echo '<script >alert("Se modificó el tercero correctamente.");self.location = "Terceros.php";</script>';
         }
-
-
-    } else {
-        echo '<script >self.location = "/";</script>';
-    }
+    } else echo '<script >self.location = "/";</script>';
 ?>
 <html>
 <head>

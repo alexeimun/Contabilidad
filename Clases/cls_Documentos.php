@@ -47,23 +47,23 @@
 
         public function ActualizaConsecutivo($Consecutivo, $idEmpresa, $Tipointerno)
         {
-            $query = "UPDATE `t_documentos` SET `CONSECUTIVO`= $Consecutivo  WHERE (ID_EMPRESA= $idEmpresa  AND TIPO_INTERNO=' $Tipointerno')";
+            $query = "UPDATE `t_documentos` SET `CONSECUTIVO`= $Consecutivo  WHERE (ID_EMPRESA= $idEmpresa  AND TIPO_INTERNO='" . $Tipointerno . "')";
 
             return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaReciboAbono($Consecutivo, $idEmpresa, $Abonado)
         {
-            $query = "UPDATE t_movimiento SET `ABONADO`=" . $Abonado . "
-            WHERE  DESCRIPCION='TOTAL' AND  TIPO_DOC='R' AND  ID_EMPRESA=" . $idEmpresa . " AND DOC_CRUCE=" . $Consecutivo;
+            $query = "UPDATE t_movimiento SET `ABONADO`= $Abonado
+            WHERE  DESCRIPCION='TOTAL' AND  TIPO_DOC='R' AND  ID_EMPRESA=  $idEmpresa  AND DOC_CRUCE= $Consecutivo";
 
             return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaEgresosAbono($Consecutivo, $idEmpresa, $Abonado)
         {
-            $query = "UPDATE t_movimiento SET `ABONADO`=" . $Abonado . "
-            WHERE  DESCRIPCION='TOTAL' AND  TIPO_DOC='E' AND  ID_EMPRESA=" . $idEmpresa . " AND CONSECUTIVO=" . $Consecutivo;
+            $query = "UPDATE t_movimiento SET `ABONADO`= $Abonado
+            WHERE  DESCRIPCION='TOTAL' AND  TIPO_DOC='E' AND  ID_EMPRESA= $idEmpresa  AND CONSECUTIVO= $Consecutivo";
 
             return $this->_DB->Exec($query) > 0;
         }
@@ -117,7 +117,7 @@
 		t_movimiento.TRANSPORTADOR,
 		t_movimiento.ANULADO,
 		t_usuarios.NOMBRE AS NOMBRE_USUARIO,
-		(SELECT LEYENDA FROM t_documentos WHERE TIPO_INTERNO='FACTURA' AND ID_EMPRESA=" . $idEmpresa . ") AS LEYENDA
+		(SELECT LEYENDA FROM t_documentos WHERE TIPO_INTERNO='FACTURA' AND ID_EMPRESA= $idEmpresa ) AS LEYENDA
 		FROM
 		t_movimiento
 		INNER JOIN t_empresas ON t_movimiento.ID_EMPRESA = t_empresas.ID_EMPRESA
@@ -126,7 +126,7 @@
 		INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
 		INNER JOIN t_usuarios ON t_movimiento.USR_REGISTRO = t_usuarios.ID_USUARIO
 		
-		WHERE t_movimiento.TIPO_DOC='F' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.CONSECUTIVO=" . $Consecutivo . " AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+		WHERE t_movimiento.TIPO_DOC='F' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.CONSECUTIVO= $Consecutivo  AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -231,7 +231,7 @@
         t_movimiento
         INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
         INNER JOIN t_empresas ON t_movimiento.ID_EMPRESA = t_empresas.ID_EMPRESA
-        WHERE TIPO_DOC='F' AND t_movimiento.DESCRIPCION='TOTAL'  AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "
+        WHERE TIPO_DOC='F' AND t_movimiento.DESCRIPCION='TOTAL'  AND t_movimiento.ID_EMPRESA = $idEmpresa
         AND t_movimiento.ID_CUENTA_MOV=0";
 
             $resulset = $this->_DB->Query($query);
@@ -245,20 +245,20 @@
 		t_movimiento.VALOR,
 		t_movimiento.CONSECUTIVO,
 		t_movimiento.ANULADO,
+		t_movimiento.OBS,
 		t_movimiento.FECHA_REGISTRO,
-		t_movimiento.CODIGO,
+		t_cuentas.CODIGO,
 		t_ciudades.NOMBRE AS 'NOMBRE_CIUDAD',
-		t_terceros.NOMBRE1,
-		t_terceros.NOMBRE2,
-		t_terceros.APELLIDO1,
-		t_terceros.APELLIDO2
+       concat(t_terceros.NOMBRE1,' ',t_terceros.NOMBRE2,' ',t_terceros.APELLIDO1,' ',t_terceros.APELLIDO2)AS N_COMPLETO
 
 		FROM
 		t_movimiento
 		 INNER JOIN t_ciudades ON t_ciudades.ID_CIUDAD= t_movimiento.ID_CIUDAD
 		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
+		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
+		 INNER JOIN t_cuentas ON t_conceptos.ID_CUENTA = t_cuentas.ID_CUENTA
 
-		WHERE TIPO_DOC='C' AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+		WHERE TIPO_DOC='C' AND t_movimiento.ID_EMPRESA =$idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -267,15 +267,20 @@
         public function TraeEgresosReimpresion($idEmpresa)
         {
             $query = "SELECT DISTINCT
+            t_movimiento.CONSECUTIVO,
             t_movimiento.FECHA_REGISTRO,
             t_movimiento.VALOR,
-            t_movimiento.CONSECUTIVO,
+            t_movimiento.OBS,
+            t_movimiento.NUMERO,
+            t_movimiento.ANULADO,
+            t_entidades.NOMBRE_ENTIDAD,
             t_usuarios.NOMBRE as NOMBRE_USR
 
             FROM
             t_movimiento
 
         INNER JOIN t_usuarios on t_usuarios.ID_USUARIO=t_movimiento.USR_REGISTRO
+        INNER JOIN t_entidades on t_entidades.ID_ENTIDAD=t_movimiento.ID_ENTIDAD
 		WHERE TIPO_DOC='G' AND t_movimiento.DESCRIPCION='TOTAL' AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
@@ -294,7 +299,7 @@
             FROM
             t_movimiento
             WHERE TIPO_DOC='F' AND  t_movimiento.ID_PRODUCTO <> 0 AND t_movimiento.ID_CUENTA_MOV<>0 AND t_movimiento.DOC_CRUCE=0
-            AND t_movimiento.DESCRIPCION<>'TOTAL'
+            AND t_movimiento.DESCRIPCION <> 'TOTAL'
             AND t_movimiento.CONSECUTIVO=$Consecutivo  AND t_movimiento.ID_EMPRESA = $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
@@ -304,15 +309,15 @@
         public function TraeDetalleRecibo($Consecutivo, $idEmpresa, $Tipo)
         {
             $query = "SELECT DISTINCT
-        t_movimiento.DESCRIPCION,
-        t_movimiento.CANTIDAD,
-        t_movimiento.VALOR,
-        t_movimiento.DESCUENTO,
-        IF(t_movimiento.ABONADO IS NULL ,0,t_movimiento.ABONADO) AS  ABONADO
+            t_movimiento.DESCRIPCION,
+            t_movimiento.CANTIDAD,
+            t_movimiento.VALOR,
+            t_movimiento.DESCUENTO,
+            IF(t_movimiento.ABONADO IS NULL ,0,t_movimiento.ABONADO) AS  ABONADO
 
-        FROM
-        t_movimiento
-        WHERE TIPO_DOC='R' AND DESCRIPCION " . ($Tipo == 'ok' ? "=" : "<>") . "'TOTAL' AND t_movimiento.CONSECUTIVO=" . $Consecutivo . " AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
+            FROM
+            t_movimiento
+            WHERE TIPO_DOC='R' AND DESCRIPCION " . ($Tipo == 'ok' ? "=" : "<>") . "'TOTAL' AND t_movimiento.CONSECUTIVO=" . $Consecutivo . " AND t_movimiento.ID_EMPRESA =" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -321,25 +326,23 @@
         public function TraeDetalleCM($Consecutivo, $idEmpresa)
         {
             $query = "SELECT
-		t_terceros.NOMBRE1,
-		t_terceros.NOMBRE2,
-		t_terceros.APELLIDO1,
-		t_terceros.APELLIDO2,
-        t_movimiento.VALOR,
-        t_ciudades.NOMBRE AS 'NOMBRE_CIUDAD',
-        t_movimiento.FECHA_REGISTRO,
-        t_movimiento.CODIGO,
-        t_movimiento.ANULADO,
-        t_movimiento.CONSECUTIVO,
-        t_movimiento.ID_TERCERO,
-       IF (t_conceptos.CONCEPTO= 1,'Ingresos','Gastos') AS CONCEPTO
-		
-		 FROM t_movimiento
-		 INNER JOIN t_ciudades ON t_ciudades.ID_CIUDAD= t_movimiento.ID_CIUDAD
-		 INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
-		 INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
+		  concat(t_terceros.NOMBRE1,' ',t_terceros.NOMBRE2,' ',t_terceros.APELLIDO1,' ',t_terceros.APELLIDO2)AS N_COMPLETO,
+            t_movimiento.VALOR,
+            t_movimiento.OBS,
+            t_ciudades.NOMBRE AS 'NOMBRE_CIUDAD',
+            t_movimiento.FECHA_REGISTRO,
+            t_cuentas.CODIGO,
+            t_movimiento.ANULADO,
+            t_movimiento.CONSECUTIVO,
+           IF (t_conceptos.CONCEPTO= 1,'Ingresos','Gastos') AS CONCEPTO
 
-		 WHERE TIPO_DOC='C' AND t_movimiento.ID_EMPRESA =" . $idEmpresa . "  AND CONSECUTIVO=" . $Consecutivo;
+             FROM t_movimiento
+             INNER JOIN t_ciudades ON t_ciudades.ID_CIUDAD= t_movimiento.ID_CIUDAD
+             INNER JOIN t_terceros ON t_movimiento.ID_TERCERO = t_terceros.ID_TERCERO
+             INNER JOIN t_conceptos ON t_conceptos.ID_CONCEPTO = t_movimiento.ID_CONCEPTO
+             INNER JOIN t_cuentas ON t_conceptos.ID_CUENTA = t_cuentas.ID_CUENTA
+
+             WHERE TIPO_DOC='C' AND t_movimiento.ID_EMPRESA = $idEmpresa AND CONSECUTIVO=$Consecutivo";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -348,16 +351,17 @@
         public function TraeDetalleGastos($Consecutivo, $idEmpresa)
         {
             $query = "SELECT
-       t_movimiento.ABONADO,
-        t_movimiento.FECHA_REGISTRO,
-        t_movimiento.ANULADO,
-        t_movimiento.CONSECUTIVO,
-        t_movimiento.NUMERO,
-        t_entidades.NOMBRE_ENTIDAD
+               t_movimiento.ABONADO,
+                t_movimiento.FECHA_REGISTRO,
+                t_movimiento.ANULADO,
+                t_movimiento.VALOR,
+                t_movimiento.CONSECUTIVO,
+                t_movimiento.NUMERO,
+                t_entidades.NOMBRE_ENTIDAD
 
-		 FROM t_movimiento
-         INNER JOIN t_entidades on t_entidades.ID_ENTIDAD=t_movimiento.ID_ENTIDAD
-		 WHERE TIPO_DOC='G' AND t_movimiento.DESCRIPCION='TOTAL' AND  t_movimiento.ID_EMPRESA = $idEmpresa   AND t_movimiento.CONSECUTIVO= $Consecutivo";
+                 FROM t_movimiento
+                 INNER JOIN t_entidades on t_entidades.ID_ENTIDAD=t_movimiento.ID_ENTIDAD
+                 WHERE TIPO_DOC='G' AND t_movimiento.DESCRIPCION='TOTAL' AND  t_movimiento.ID_EMPRESA = $idEmpresa   AND t_movimiento.CONSECUTIVO= $Consecutivo";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -382,21 +386,19 @@
 
         public function InsertaMovimiento($IdTercero, $IdProducto, $IdCuentaMov, $TipoDoc, $Consecutivo, $IdFormaPago, $Secuencia, $Descripcion, $TipoMov
             , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '', $IdConcepto = 0, $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '',
-                                          $IdCiudad = 0, $Codigo = '', $TipoInterno = '', $TotalPagos = 0, $Transportador = '')
+                                          $IdCiudad = 0, $TotalPagos = 0, $Transportador = '')
         {
             $sub = $IdCuentaMov;
-            if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")"; else
-                if ($Tipo == 'Pa') $sub = "(SELECT ID_CUENTA FROM t_formas_pago WHERE ID_F_PAGO=" . $IdFormaPago . ")";
-//            else $sub = $TipoInterno == ''  ? $IdCuentaMov : "(select ID_CUENTA from t_documentos WHERE TIPO_INTERNO='" . $TipoInterno . "' AND ID_EMPRESA=" . $IdEmpresa . ")";
-
+            if ($Tipo == 'BN' || $Tipo == 'SV') $sub = "(SELECT ID_CUENTA FROM t_conceptos WHERE ID_CONCEPTO=" . $IdCuentaMov . ")";
+            else if ($Tipo == 'Pa') $sub = "(SELECT ID_CUENTA FROM t_formas_pago WHERE ID_F_PAGO=" . $IdFormaPago . ")";
 
             $query = "INSERT INTO  t_movimiento
        (`ID_TERCERO`, `ID_PRODUCTO`, `ID_CUENTA_MOV`, `TIPO_DOC`, `CONSECUTIVO`, `ID_F_PAGO`, `SECUENCIA`,`DESCRIPCION`, 
        `TIPO_MOV`, `CANTIDAD`, `VALOR`,`DESCUENTO`, `ANULADO`, `OBS`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`,`TIPO`,`ID_CONCEPTO`
-       ,`DOC_CRUCE`, `TIPO_PAGO`, `ID_CIUDAD`, `CODIGO`,`ID_ENTIDAD`,`NUMERO`,`ABONADO`,`TRANSPORTADOR`)
+       ,`DOC_CRUCE`, `TIPO_PAGO`, `ID_CIUDAD`,`ID_ENTIDAD`,`NUMERO`,`ABONADO`,`TRANSPORTADOR`)
        VALUES
-       ( $IdTercero ,  $IdProducto,  $sub, ' $TipoDoc',$Consecutivo, ' $IdFormaPago', ' $Secuencia', '$Descripcion', ' $TipoMov ', $Cantidad,  $Valor,$Descuento
-       ,0, ' $Obs',  $UsrReg, now(), $IdEmpresa , '$Tipo',$IdConcepto,$DocCruce,'$Tipopago', $IdCiudad,' $Codigo',$IdEntidad,' $Numero', $TotalPagos,' $Transportador')";
+       ( $IdTercero ,  $IdProducto,  $sub,'" . $TipoDoc . "',$Consecutivo, '" . $IdFormaPago . "',  $Secuencia, '$Descripcion', ' $TipoMov ', $Cantidad,  $Valor,$Descuento
+       ,0, ' $Obs',  $UsrReg, now(), $IdEmpresa , '$Tipo',$IdConcepto,$DocCruce,'$Tipopago', $IdCiudad,$IdEntidad,' $Numero', $TotalPagos,' $Transportador')";
 
             return $this->_DB->Exec($query) > 0;
         }
@@ -518,14 +520,12 @@
 		FROM
 		t_movimiento
 
-
 		INNER JOIN t_formas_pago ON t_movimiento.ID_F_PAGO = t_formas_pago.ID_F_PAGO
 		WHERE t_formas_pago.REQUIERE_ENTIDAD=0 AND TIPO_DOC='$Tipodoc' AND t_movimiento.ID_EMPRESA=$idEmpresa
 		AND t_movimiento.CONSECUTIVO= $Consecutivo";
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
         }
-
 
         public function ActualizaRecibo($Consecutivo, $idEmpresa, $Abono)
         {
