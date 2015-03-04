@@ -385,7 +385,7 @@
         }
 
         public function InsertaMovimiento($IdTercero, $IdProducto, $IdCuentaMov, $TipoDoc, $Consecutivo, $IdFormaPago, $Secuencia, $Descripcion, $TipoMov
-            , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa, $Tipo = '', $IdConcepto = 0, $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '',
+            , $Cantidad, $Valor, $Descuento, $Obs, $UsrReg, $IdEmpresa,$Fecha, $Tipo = '', $IdConcepto = 0, $DocCruce = 0, $Tipopago = '', $IdEntidad = 0, $Numero = '',
                                           $IdCiudad = 0, $TotalPagos = 0, $Transportador = '')
         {
             $sub = $IdCuentaMov;
@@ -394,11 +394,11 @@
 
             $query = "INSERT INTO  t_movimiento
        (`ID_TERCERO`, `ID_PRODUCTO`, `ID_CUENTA_MOV`, `TIPO_DOC`, `CONSECUTIVO`, `ID_F_PAGO`, `SECUENCIA`,`DESCRIPCION`, 
-       `TIPO_MOV`, `CANTIDAD`, `VALOR`,`DESCUENTO`, `ANULADO`, `OBS`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`,`TIPO`,`ID_CONCEPTO`
+       `TIPO_MOV`, `CANTIDAD`, `VALOR`,`DESCUENTO`, `ANULADO`, `OBS`, `USR_REGISTRO`, `ID_EMPRESA`,`FECHA_REGISTRO`,`TIPO`,`ID_CONCEPTO`
        ,`DOC_CRUCE`, `TIPO_PAGO`, `ID_CIUDAD`,`ID_ENTIDAD`,`NUMERO`,`ABONADO`,`TRANSPORTADOR`)
        VALUES
-       ( $IdTercero ,  $IdProducto,  $sub,'" . $TipoDoc . "',$Consecutivo, '" . $IdFormaPago . "',  $Secuencia, '$Descripcion', ' $TipoMov ', $Cantidad,  $Valor,$Descuento
-       ,0, ' $Obs',  $UsrReg, now(), $IdEmpresa , '$Tipo',$IdConcepto,$DocCruce,'$Tipopago', $IdCiudad,$IdEntidad,' $Numero', $TotalPagos,' $Transportador')";
+       ( $IdTercero ,  $IdProducto,  $sub,'" . $TipoDoc . "',$Consecutivo, '" . $IdFormaPago . "',  $Secuencia, '".$Descripcion."', '". $TipoMov ."', $Cantidad,  $Valor,$Descuento
+       ,0, ' ".$Obs."',  $UsrReg, $IdEmpresa ,'".$Fecha."', '".$Tipo."',$IdConcepto, $DocCruce,'".$Tipopago."', $IdCiudad, $IdEntidad,' ".$Numero."', $TotalPagos,'".$Transportador."')";
 
             return $this->_DB->Exec($query) > 0;
         }
@@ -628,6 +628,13 @@
         {
             $query = "SELECT ID_CIUDAD from t_terceros WHERE ID_TERCERO=$IdTercero";
             $resulset = $this->_DB->Query($query);
+            $Escalar = $resulset->fetchAll();
+            return $Escalar[0][0];
+        }
+
+        public function TraeConcepto($IdConcepto)
+        {
+            $resulset = $this->_DB->Query( "SELECT ID_CUENTA from t_conceptos WHERE ID_CONCEPTO=$IdConcepto");
             $Escalar = $resulset->fetchAll();
             return $Escalar[0][0];
         }

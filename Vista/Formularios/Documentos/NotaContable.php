@@ -105,7 +105,7 @@
         var AddButton = $("#AgregarCampo"); //ID del Botón Agregar
 
         //var x = número de campos existentes en el contenedor
-        var x = $("#contenedor div").length;
+        var x = $("#contenedor").find("div").length;
         var FieldCount = x - 1; //para el seguimiento de los campos
 
 
@@ -119,9 +119,13 @@
                 //# Filas
             + ' <div><div  id="fila"   class="btnAzul" style="height: 13px;width: 24px;padding: 6px;">1</div></div>'
 
+            + '<div> <input  type="date"  style="padding-bottom:5px;" name="Fecha[]"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required> </div>'
+
             + '<div> <select id="cmbCuenta" name="cmbCuenta[]"  style="width:200px;" class="chosen-select" >'
             + ' <?=$Cuenta ?> '
             + ' </select></div>'
+
+
 
             + '<div> <select  name="cmbTercero[]" id="cmbTercero" class="chosen-select" style="width:200px;" >'
             + ' <?=$Tercero ?> '
@@ -133,7 +137,6 @@
             + ' </select></div>'
 
             + '<div> <input type="text" name="Valor[]" style="width: 100px;" placeholder="Valor" class="Valor" onkeypress="return validarNro(event)" required/></div>'
-
 
             + ' <div><input type="button" class="eliminar btnAzul"  title="Eliminar campo" value="X"'
             + ' style="width:40px;" style="width: 30px;" >'
@@ -151,6 +154,7 @@
                 ('<div>'
 
                 + ' <div><div id="fila"  class="btnAzul" style="height: 13px;width: 24px;padding: 6px;">' + (x + 1) + '</div></div>'
+                + '<div> <input  type="date"  style="padding-bottom:5px;" name="Fecha[]"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required> </div>'
 
                 + '<div> <select id="cmbCuenta" name="cmbCuenta[]"  class="chosen-select" style="width:200px;">'
                 + ' <?=$Cuenta ?> '
@@ -299,7 +303,7 @@
 </script>
 <style>
     #contenedor {
-        margin-left: 220px;
+        margin-left: 140px;
         width: 940px;
     }
 

@@ -26,7 +26,7 @@
         foreach ($formas as $llave => $valor) {
             $cont ++;
             $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_F_PAGO'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['CODIGO_F_PAGO'] . '</td>';
+            $tabla .= '<td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['REQUIERE_ENTIDAD'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['REQUIERE_NUMERO'] . '</td>';

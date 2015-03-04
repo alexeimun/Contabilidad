@@ -18,7 +18,7 @@
     $Cuenta = '<option value ="0">-- Seleccione Una Cuenta --</option>';
 
     foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave1 => $valor1)
-        $Cuenta .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['CODIGO'] . ' - ' . $valor1['NOMBRE'] . '</option>';
+        $Cuenta .= '<option value ="' . $valor1['ID_CUENTA'] . '" >' . $valor1['CODIGO'] . ' - ' . $valor1['NOMBRE'] . '</option>';
 
 ?>
 <html>
@@ -60,11 +60,11 @@
                         <tr>
                             <td style="text-align: right;">Desde:</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="date" name="desde">
+                                <input type="date" name="desde"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
                             </td>
                             <td style="text-align: right;">Hasta:</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="date" name="hasta">
+                                <input type="date" name="hasta"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
                             </td>
                             <td style="text-align: right;">Cuenta</td>
                             <td style="padding-left: 10px;text-align: left;">

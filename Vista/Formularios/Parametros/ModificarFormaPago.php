@@ -8,38 +8,28 @@
     session_start();
     if (isset($_SESSION['login']) != '') {
 
-        if ($_GET['id'] == "") {
-            echo '<script >
-            self.location = "FormasDePago.php";
-            </script>';
-        }
-
+        if ($_GET['id'] == "")   echo '<script >self.location = "FormasDePago.php";</script>';
 
         $Master = new Master();
         $menu = $Master->Menu();
         $Contabilidad = new cls_Contabilidad();
         $Parametros = new cls_Parametros();
 
-        $txtCodigo = '';
         $txtNombre = '';
         $cmbCtas = '<option value ="0">-- Seleccione --</option>';
         $RequiereNumero = '';
         $RequiereEntidad = '';
 
-
         foreach ($Parametros->TraeDatosFormaPago($_GET['id']) as $llave => $valor) {
-            $txtCodigo = $valor['CODIGO_F_PAGO'];
             $txtNombre = $valor['NOMBRE_F_PAGO'];
             $cta = $valor['ID_CUENTA'];
 
             foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave1 => $valor1) {
-                if ($cta == $valor1['ID_CUENTA']) {
+                if ($cta == $valor1['ID_CUENTA'])
                     $cmbCtas .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['CODIGO'] . ' - ' . $valor1['NOMBRE'] . '</option>';
-                } else {
+                else
                     $cmbCtas .= '<option value ="' . $valor1['ID_CUENTA'] . '">' . $valor1['CODIGO'] . ' - ' . $valor1['NOMBRE'] . '</option>';
-                }
             }
-
 
             if ($valor['REQUIERE_ENTIDAD'] == 1) {
                 $RequiereEntidad = '<input type="checkbox" id="chkRequiereEntidad" checked name="chkRequiereEntidad" onClick="check2();">
@@ -48,7 +38,6 @@
                 $RequiereEntidad = '<input type="checkbox" id="chkRequiereEntidad" name="chkRequiereEntidad" onClick="check2();">
                  <input type="hidden" value="0" id="txtRequiereEntidad" name="txtRequiereEntidad"><br><br>';
             }
-
 
             if ($valor['REQUIERE_NUMERO'] == 1) {
                 $RequiereNumero = '<br><input type="checkbox" checked id="chkRequiereNumero" name="chkRequiereNumero" onClick="check();">
@@ -61,13 +50,10 @@
 
 
         if (!empty($_POST)) {
-            $Parametros->ActualizaFormaPago($_GET['id'], $_POST['txtCodigo'], $_POST['txtNombre'], $_POST['cmbCuenta'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero']);
+            $Parametros->ActualizaFormaPago($_GET['id'], $_POST['txtNombre'], $_POST['cmbCuenta'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero']);
             echo '<script > alert("Se modificó la forma de pago correctamente.");self.location = "FormasDePago.php";</script>';
         }
-
-
     } else  echo '<script > self.location = "/";</script>';
-
 ?>
 <html>
 <head>
@@ -148,14 +134,6 @@
                     <h3><b>CREAR FORMA DE PAGO</b></h3><br>
                     <table style="width: 35%;color: #33373d">
                         <tr>
-                            <td>Código</td>
-                            <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtCodigo" onkeyup="ValidaCodigo();" name="txtCodigo"
-                                       onkeypress="javascript:return validarNro(event);" value="<?= $txtCodigo; ?>"
-                                       placeholder="Ingrese el código" required>
-                                <br><br></td>
-                        </tr>
-                        <tr>
                             <td>Nombre</td>
                             <td style="padding-left: 10px;text-align: right;">
                                 <input type="text" id="txtNombre" name="txtNombre" value="<?= $txtNombre; ?>"
@@ -183,22 +161,14 @@
                                 <?= $RequiereNumero; ?>
                             </td>
                         </tr>
-
-
                     </table>
                     <br>
-
-
-                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
-                                                value="GUARDAR" style="width:200px;"/>
+                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
                     </ul>
                 </center>
-
             </form>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -77,9 +76,7 @@
 <div id="wrap">
     <div id="header">
         <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_VENDEDOR"] ?>"></a>
-
         <h1 id="logo"><span class="gray">Modificar</span></h1>
-
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_VENDEDOR"] ?></span></h3>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
@@ -107,7 +104,6 @@
                                             placeholder="Ingrese el Documento" required>
                             </td>
                         </tr>
-
                         <tr>
                             <td><br>Telefono:</td>
                             <td style="padding-left: 10px;text-align: center;">
@@ -129,20 +125,13 @@
                                 <input type="file" name="file" id="file" style="margin-right: 85px;">
                             </td>
                         </tr>
-
                     </table>
                     <br>
-
-                    <input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"
-                           style="width:200px;"/>
-
+                    <input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
                 </center>
-
             </form>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

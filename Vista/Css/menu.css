@@ -38,6 +38,7 @@ div ul.menu li ul {
     height: 80px;
     background: #5E83A3;
     border-bottom: 5px solid #444;
+    /*margin-top:-18px;*/
 }
 
 #header h1#logo {

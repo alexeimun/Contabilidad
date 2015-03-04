@@ -15,8 +15,8 @@
             $Documentos->TraeParametrosSaldosIniciales($_SESSION['login'][0]["ID_EMPRESA"]);
 
             for ($i = 0; $i < count($_POST['Valor']); $i ++)
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'][$i], 0, $_POST['cmbCuenta'][$i], 'S', $Documentos->_ConsecutivoSaldosIniciales, 0, $i + 1, '', $_POST['cmbTipoMov'][$i], 0,
-                    $_POST['Valor'][$i], 0, 0, $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'S');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero' ][$i], 0, $_POST['cmbCuenta'][$i], 'S', $Documentos->_ConsecutivoSaldosIniciales, 0, $i + 1, '', $_POST['cmbTipoMov'][$i], 0,
+                    $_POST['Valor'][$i], 0, 0, $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'][$i],'S');
             echo 'Se han agregado los campos correctamentos...';
         } catch (Exception $ex) {
             echo 'Ha ocurrido un error...';
@@ -29,7 +29,7 @@
 
             for ($i = 0; $i < count($_POST['Valor']); $i ++)
                 $Documentos->InsertaMovimiento($_POST['cmbTercero'][$i], 0, $_POST['cmbCuenta'][$i], 'N', $Documentos->_ConsecutivoNotaContable, 0, $i + 1, '', $_POST['cmbTipoMov'][$i], 0,
-                    $_POST['Valor'][$i], 0, 0, $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'S');
+                    $_POST['Valor'][$i], 0, 0, $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],  $_POST['Fecha'][$i],'S');
             echo 'Se han agregado los campos correctamentos...';
         } catch (Exception $ex) {
             echo 'Ha ocurrido un error...';

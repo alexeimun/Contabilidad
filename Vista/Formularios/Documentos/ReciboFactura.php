@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -52,11 +51,11 @@
         foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Secuencia ++;
             $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'R', $_POST['ConsecutivoFactura'], $valor['ID_F_PAGO'], $Secuencia, "ABONO FACT" . $ConsecutivoRecibo, 'D',
-                1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
+                1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
         }
 
-        $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'R', $ConsecutivoRecibo, $_POST['cmbfPago'], 0, '', '', 1, $_SESSION['valor'],
-            0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'R', 0, $_POST['ConsecutivoFactura'], '', 0, '', 0, $_SESSION['TOTAL2']);
+        $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'R', $ConsecutivoRecibo, $_POST['cmbfPago'], 0, 'C', '', 1, $_SESSION['valor'],
+            0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'R', 0, $_POST['ConsecutivoFactura'], '', 0, '', 0, $_SESSION['TOTAL2']);
 
         $_SESSION['ConsecutivoRECIBO'] = $ConsecutivoRecibo;
         $_SESSION['Pagos'] = $_POST['ConsecutivoFactura'];

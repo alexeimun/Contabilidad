@@ -21,6 +21,15 @@
             <th style="text-align:left;">MANEJA DOCUMENTO CRUCE</th>
             <th style="text-align:left;">NATURALEZA</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
+
+    $tablaExp = '<table id="Texp" class="table"  style="display: none;">
+        <thead><tr>
+           <tr> <th style="text-align:center;font-weight: bold;" colspan="5">'.strtoupper($_SESSION['login'][0]["NOMBRE_EMPRESA"]).' </th></tr>
+            <th style="text-align:left;">CÓDIGO</th>
+            <th style="text-align:left;">NOMBRE</th>
+            <th style="text-align:left;">MANEJA TERCERO</th>
+            <th style="text-align:left;">MANEJA DOCUMENTO CRUCE</th>
+            <th style="text-align:left;">NATURALEZA</th></tr></thead><tbody>';
     $cont = 0;
 
     foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
@@ -34,14 +43,22 @@
         $tabla .= '<td style="text-align:center;">
            <a href="CrearCuenta.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
           <a href="ModificarCuenta.php?id=' . $valor['ID_CUENTA'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
-          <a onclick="EliminarCuenta(' . $valor['ID_CUENTA'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
+          <a onclick="EliminarCuenta(' . $valor['ID_CUENTA'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
+
+        $tablaExp .= '<tr><td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
+        $tablaExp .= '<td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
+        $tablaExp .= '<td style="text-align:left;">' . $valor['MANEJA_TERCERO'] . '</td>';
+        $tablaExp .= '<td style="text-align:left;">' . $valor['MANEJA_DOC_CRUCE'] . '</td>';
+        $tablaExp .= '<td style="text-align:left;">' . $valor['NATURALEZA'] . '</td>';
+
     }
-    if ($cont == 0) {
+    if ($cont == 0)
         $tabla .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearCuenta.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
-    }
+
 
     $tabla .= '</tbody></table>';
+    $tablaExp .= '</tbody></table>';
 
 ?>
 <html>
@@ -55,6 +72,7 @@
     <script src="../../Js/menu.js"></script>
     <script type="text/javascript" language="javascript" src="../../Js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="../../Js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="../../Js/Excel/jquery.battatech.excelexport.js"></script>
 
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
 </head>
@@ -90,7 +108,6 @@
                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-
             }
         });
     });
@@ -116,11 +133,22 @@
         <?= $menu ?>
         <div id="main">
             <center>
-                <h3><b>PLAN DE CUENTAS</b></h3><br>
+                <h3><b>PLAN DE CUENTAS</b></h3>
+                <input type="button" value="Exportar" class="btnAzul"/>
                 <?= $tabla ?>
             </center>
+            <div id="Exp" style="display:none;">
+                <?=$tablaExp ?>
+            </div>
         </div>
     </div>
 </div>
 </body>
+    <script>
+        $('input[value=Exportar]').on('click', function () {
+            $("#temp").battatech_excelexport({
+                containerid: "Exp", datatype: 'table'
+            });
+        });
+    </script>
 </html>

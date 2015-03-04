@@ -98,7 +98,6 @@
             $query = "SELECT
 		t_formas_pago.ID_F_PAGO,
 		t_formas_pago.ID_CUENTA,
-		t_formas_pago.CODIGO_F_PAGO,
 		t_formas_pago.NOMBRE_F_PAGO,
 		t_formas_pago.ESTADO,
 		t_formas_pago.FECHA_REGISTRO,
@@ -106,6 +105,7 @@
 		t_formas_pago.ID_EMPRESA,
 		if(t_formas_pago.REQUIERE_ENTIDAD=1,'SI','NO') AS REQUIERE_ENTIDAD,
 		if(t_formas_pago.REQUIERE_NUMERO=1,'SI','NO') AS REQUIERE_NUMERO,
+		t_cuentas.CODIGO,
 		t_cuentas.NOMBRE
 		FROM
 		t_formas_pago
@@ -120,23 +120,14 @@
         {
             $query = "UPDATE `t_terceros` SET `ESTADO`=0 WHERE (`ID_TERCERO`=" . $id . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
-
+           return $this->_DB->Exec($query) > 0;
         }
 
         public function EliminarFormaPago($id)
         {
             $query = "UPDATE `t_formas_pago` SET `ESTADO`=0 WHERE (`ID_F_PAGO`=" . $id . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query);
 
         }
 
@@ -172,11 +163,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
        `NOMBRE_IMPRESO`='" . $NombreImpreso . "', `CONSECUTIVO`=" . $Consecutivo . ",`ID_CUENTA`=" . $cta . ", `LEYENDA`='" . $leyenda . "',`USR_REGISTRO`=" . $Usreg . ", `FECHA_REGISTRO`=now()
         WHERE (`ID_DOCUMENTO`=" . $id . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+           return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaDocGastos($cta1, $cta2, $IdEmpresa)
@@ -184,24 +171,17 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
             $query = "UPDATE `t_documentos` SET ID_CUENTA=" . $cta1 . " WHERE TIPO_INTERNO='IMPUESTO_CONSUMO' AND ID_EMPRESA=" . $IdEmpresa . "
             ;UPDATE `t_documentos` SET ID_CUENTA=" . $cta2 . " WHERE TIPO_INTERNO='CXP' AND ID_EMPRESA=" . $IdEmpresa;
 
-            if ($this->_DB->Exec($query) > 0)
-                return true;
-            else
-                return false;
+            return $this->_DB->Exec($query) > 0;
         }
 
 
-        public function ActualizaFormaPago($id, $Codigo, $Nombre, $cta, $RequiereEntidad, $RequiereNumero)
+        public function ActualizaFormaPago($id, $Nombre, $cta, $RequiereEntidad, $RequiereNumero)
         {
             $query = "UPDATE `t_formas_pago`
-        SET `CODIGO_F_PAGO`='" . $Codigo . "', `NOMBRE_F_PAGO`='" . $Nombre . "',`ID_CUENTA`=" . $cta . ",
-         `REQUIERE_ENTIDAD`=" . $RequiereEntidad . ", `REQUIERE_NUMERO`=" . $RequiereNumero . " WHERE (`ID_F_PAGO`=" . $id . ")";
+        SET  `NOMBRE_F_PAGO`='" . $Nombre . "',`ID_CUENTA`=$cta ,
+         `REQUIERE_ENTIDAD`= $RequiereEntidad, `REQUIERE_NUMERO`= $RequiereNumero  WHERE (`ID_F_PAGO`= $id )";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function InsertaGrupos($Nombre, $ctaInventario, $ctaVentas, $ctaCosto, $ctaDevoluciones, $UsrReg, $IdEmpresa)
@@ -209,28 +189,20 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
             $query = "INSERT INTO `t_grupos`
        (`NOMBRE`, `CTA_INVENTARIO`, `CTA_VENTAS`, `CTA_COSTO`, `CTA_DEVOLUCIONES`, `ESTADO`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`)
        VALUES
-       ('" . $Nombre . "', " . $ctaInventario . ", " . $ctaVentas . ", " . $ctaCosto . ", " . $ctaDevoluciones . ",1," . $UsrReg . ",now()," . $IdEmpresa . ")";
+       ('" . $Nombre . "',  $ctaInventario, " . $ctaVentas . ", " . $ctaCosto . ",  $ctaDevoluciones ,1,$UsrReg ,now()," . $IdEmpresa . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query) > 0;
         }
 
-        public function InsertaFormaPago($Codigo, $Nombre, $cta, $RequiereEntidad, $RequiereNumero, $UsrReg, $IdEmpresa)
+        public function InsertaFormaPago($cta,$Nombre, $RequiereEntidad, $RequiereNumero, $UsrReg, $IdEmpresa)
         {
             $query = "INSERT INTO `t_formas_pago`
-       (`ID_CUENTA`, `CODIGO_F_PAGO`, `NOMBRE_F_PAGO`, `ESTADO`, `FECHA_REGISTRO`,
+       (`ID_CUENTA`, `NOMBRE_F_PAGO`, `ESTADO`, `FECHA_REGISTRO`,
         `USR_REGISTRO`,`ID_EMPRESA`, `REQUIERE_ENTIDAD`, `REQUIERE_NUMERO`)
          VALUES
-        (" . $cta . ", '" . $Codigo . "', '" . $Nombre . "',1, now(), " . $UsrReg . ", " . $IdEmpresa . "," . $RequiereEntidad . ", " . $RequiereNumero . ")";
+        ( $cta , '" . $Nombre . "',1, now(), $UsrReg ,  $IdEmpresa ,$RequiereEntidad ,  $RequiereNumero )";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaGrupo($id, $Nombre, $ctaInventario, $ctaVentas, $ctaCosto, $ctaDevoluciones)
@@ -239,29 +211,25 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
        SET `NOMBRE`='" . $Nombre . "',`CTA_INVENTARIO`='" . $ctaInventario . "', `CTA_VENTAS`=" . $ctaVentas . ",`CTA_COSTO`=" . $ctaCosto . "
         ,`CTA_DEVOLUCIONES`='" . $ctaDevoluciones . "'  WHERE (`ID_GRUPO`=" . $id . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query);
         }
 
         public function TraeDatosGrupo($id)
         {
             $query = "SELECT
-t_grupos.ID_GRUPO,
-t_grupos.NOMBRE,
-t_grupos.CTA_INVENTARIO,
-t_grupos.CTA_VENTAS,
-t_grupos.CTA_COSTO,
-t_grupos.CTA_DEVOLUCIONES,
-t_grupos.ESTADO,
-t_grupos.USR_REGISTRO,
-t_grupos.FECHA_REGISTRO,
-t_grupos.ID_EMPRESA
-FROM
-t_grupos
-WHERE t_grupos.ID_GRUPO=" . $id;
+            t_grupos.ID_GRUPO,
+            t_grupos.NOMBRE,
+            t_grupos.CTA_INVENTARIO,
+            t_grupos.CTA_VENTAS,
+            t_grupos.CTA_COSTO,
+            t_grupos.CTA_DEVOLUCIONES,
+            t_grupos.ESTADO,
+            t_grupos.USR_REGISTRO,
+            t_grupos.FECHA_REGISTRO,
+            t_grupos.ID_EMPRESA
+            FROM
+            t_grupos
+            WHERE t_grupos.ID_GRUPO=" . $id;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -270,19 +238,18 @@ WHERE t_grupos.ID_GRUPO=" . $id;
         public function TraeDatosFormaPago($id)
         {
             $query = "SELECT
-t_formas_pago.ID_F_PAGO,
-t_formas_pago.ID_CUENTA,
-t_formas_pago.CODIGO_F_PAGO,
-t_formas_pago.NOMBRE_F_PAGO,
-t_formas_pago.REQUIERE_ENTIDAD,
-t_formas_pago.REQUIERE_NUMERO,
-t_formas_pago.ESTADO,
-t_formas_pago.FECHA_REGISTRO,
-t_formas_pago.USR_REGISTRO,
-t_formas_pago.ID_EMPRESA
-FROM
-t_formas_pago
-WHERE t_formas_pago.ID_F_PAGO=" . $id;
+            t_formas_pago.ID_F_PAGO,
+            t_formas_pago.ID_CUENTA,
+            t_formas_pago.NOMBRE_F_PAGO,
+            t_formas_pago.REQUIERE_ENTIDAD,
+            t_formas_pago.REQUIERE_NUMERO,
+            t_formas_pago.ESTADO,
+            t_formas_pago.FECHA_REGISTRO,
+            t_formas_pago.USR_REGISTRO,
+            t_formas_pago.ID_EMPRESA
+            FROM
+            t_formas_pago
+            WHERE t_formas_pago.ID_F_PAGO=" . $id;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -292,29 +259,24 @@ WHERE t_formas_pago.ID_F_PAGO=" . $id;
         {
             $query = "UPDATE `t_grupos` SET `ESTADO`=0 WHERE (`ID_GRUPO`=" . $id . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
-
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TraeDatosProducto($id)
         {
             $query = "SELECT t_productos.ID_PRODUCTO,
-t_productos.TIPO,
-t_productos.CODIGO,
-t_productos.DESCRIPCION,
-t_productos.PRECIO,
-t_productos.ID_GRUPO,
-t_productos.ESTADO,
-t_productos.USR_REGISTRO,
-t_productos.FECHA_REGISTRO,
-t_productos.ID_EMPRESA
-FROM
-t_productos
-WHERE t_productos.ID_PRODUCTO=" . $id;
+            t_productos.TIPO,
+            t_productos.CODIGO,
+            t_productos.DESCRIPCION,
+            t_productos.PRECIO,
+            t_productos.ID_GRUPO,
+            t_productos.ESTADO,
+            t_productos.USR_REGISTRO,
+            t_productos.FECHA_REGISTRO,
+            t_productos.ID_EMPRESA
+            FROM
+            t_productos
+            WHERE t_productos.ID_PRODUCTO=" . $id;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -324,36 +286,31 @@ WHERE t_productos.ID_PRODUCTO=" . $id;
         {
             $query = "UPDATE `t_productos` SET `ESTADO`=0 WHERE (`ID_PRODUCTO`=" . $id . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
-
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TraeDatosTercero($id)
         {
             $query = "SELECT
-t_terceros.ID_TERCERO,
-t_terceros.NOMBRE1,
-t_terceros.NOMBRE2,
-t_terceros.APELLIDO1,
-t_terceros.APELLIDO2,
-t_terceros.TIPO_DOCUMENTO,
-t_terceros.NUM_DOCUMENTO,
-t_terceros.DIRECCION,
-t_terceros.TELEFONO,
-t_terceros.CELULAR,
-t_terceros.EMAIL,
-t_terceros.ID_CIUDAD,
-t_terceros.USR_REGISTRO,
-t_terceros.FECHA_REGISTRO,
-t_terceros.ID_EMPRESA,
-t_terceros.ESTADO
-FROM
-t_terceros
-WHERE t_terceros.ID_TERCERO=" . $id;
+            t_terceros.ID_TERCERO,
+            t_terceros.NOMBRE1,
+            t_terceros.NOMBRE2,
+            t_terceros.APELLIDO1,
+            t_terceros.APELLIDO2,
+            t_terceros.TIPO_DOCUMENTO,
+            t_terceros.NUM_DOCUMENTO,
+            t_terceros.DIRECCION,
+            t_terceros.TELEFONO,
+            t_terceros.CELULAR,
+            t_terceros.EMAIL,
+            t_terceros.ID_CIUDAD,
+            t_terceros.USR_REGISTRO,
+            t_terceros.FECHA_REGISTRO,
+            t_terceros.ID_EMPRESA,
+            t_terceros.ESTADO
+            FROM
+            t_terceros
+            WHERE t_terceros.ID_TERCERO=" . $id;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -387,21 +344,21 @@ WHERE t_terceros.ID_TERCERO=" . $id;
         public function TraeProductos($idEmpresa)
         {
             $query = "SELECT
-t_productos.ID_PRODUCTO,
-t_productos.TIPO,
-t_productos.CODIGO,
-t_productos.DESCRIPCION,
-t_productos.PRECIO,
-t_productos.ID_GRUPO,
-t_productos.ESTADO,
-t_productos.USR_REGISTRO,
-t_productos.FECHA_REGISTRO,
-t_productos.ID_EMPRESA,
-t_grupos.NOMBRE AS NOMBRE_GRUPO
-FROM
-t_productos
-INNER JOIN t_grupos ON t_productos.ID_GRUPO = t_grupos.ID_GRUPO
-WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa;
+            t_productos.ID_PRODUCTO,
+            t_productos.TIPO,
+            t_productos.CODIGO,
+            t_productos.DESCRIPCION,
+            t_productos.PRECIO,
+            t_productos.ID_GRUPO,
+            t_productos.ESTADO,
+            t_productos.USR_REGISTRO,
+            t_productos.FECHA_REGISTRO,
+            t_productos.ID_EMPRESA,
+            t_grupos.NOMBRE AS NOMBRE_GRUPO
+            FROM
+            t_productos
+            INNER JOIN t_grupos ON t_productos.ID_GRUPO = t_grupos.ID_GRUPO
+            WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -444,10 +401,8 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa;
 
         public function ValidaCodigoProducto($Cod, $IdEmpresa)
         {
-
             $query = "SELECT CASE WHEN(SELECT CODIGO
-		FROM
-		t_productos WHERE CODIGO='" . $Cod . "' AND ID_EMPRESA=" . $IdEmpresa . ")IS NULL THEN ('0') ELSE ('1') END";
+	     	FROM t_productos WHERE CODIGO='" . $Cod . "' AND ID_EMPRESA=" . $IdEmpresa . ")IS NULL THEN ('0') ELSE ('1') END";
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
@@ -461,7 +416,6 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa;
 
         public function ValidaNitEmpresa($Cod)
         {
-
             $query = "SELECT CASE WHEN(SELECT NIT
         FROM
         t_empresas WHERE NIT='" . $Cod . "')IS NULL THEN ('0') ELSE ('1') END";
@@ -478,7 +432,6 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa;
 
         public function ValidaDocVendedor($Cod)
         {
-
             $query = "SELECT CASE WHEN(SELECT Documento
         FROM
         t_vendedor WHERE DOCUMENTO='" . $Cod . "')IS NULL THEN ('0') ELSE ('1') END";
@@ -495,7 +448,6 @@ WHERE t_productos.ESTADO=1 AND t_productos.ID_EMPRESA=" . $idEmpresa;
 
         public function ValidaCodigoProductoEditar($Cod, $id)
         {
-
             $query = "SELECT CASE WHEN(SELECT CODIGO
 		FROM
 		t_productos WHERE CODIGO='" . $Cod . "' AND ID_PRODUCTO <> " . $id . ")IS NULL THEN ('0') ELSE ('1') END";

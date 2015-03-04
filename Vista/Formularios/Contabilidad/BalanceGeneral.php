@@ -42,6 +42,7 @@
             <center>
                 <h3><b>BALANCE GENERAL</b></h3><br>
 
+<!--                <input type="button" value="Balance" onclick="document.location.href='ImprimeBalanceGeneral.php';">-->
 
             </center>
         </div>

@@ -11,7 +11,6 @@
     //************************************************************
     //*********************Informe************************
     //*************************************************************
-
     $pdf = new FPDF();
     $Documentos = new cls_Documentos();
     $NombreEmpresa = '';
@@ -19,7 +18,7 @@
     $DireccionEmpresa = '';
     $TelefonoEmpresa = '';
     $EmailEmpresa = '';
-    $Transportador='';
+    $Transportador = '';
     $NombreTercero = '';
     $DocumentoTercero = '';
     $DireccionTercero = '';
@@ -51,14 +50,14 @@
         $DireccionTercero = $valor['DIRECCION'];
         $TelefonoTercero = $valor['TELEFONO'];
         $FechaDoc = $valor['FECHA_REGISTRO'];
-        $TipoPago=$valor['TIPO_PAGO'];
+        $TipoPago = $valor['TIPO_PAGO'];
 
         $FechaVence = $valor['FECHA_REGISTRO'];
 
         $Transportador = $valor['TRANSPORTADOR'];
 
         $Anulado = $valor['ANULADO'];
-        $Ciudad=$valor['CIUDAD'];
+        $Ciudad = $valor['CIUDAD'];
         $Obs = $valor['OBS'];
         $Leyenda = $valor['LEYENDA'];
     }
@@ -72,8 +71,8 @@
     $pdf->Ln(4);
     $pdf->SetX(130);
     $pdf->Cell(55, 12, '', 1, 0, 'C', FALSE);
-    $pdf->Text(132,28,'FACTURA');
-    $pdf->Text(132,34,utf8_decode('N°  ') . $Consecutivo);
+    $pdf->Text(132, 28, 'FACTURA');
+    $pdf->Text(132, 34, utf8_decode('N°  ') . $Consecutivo);
     $pdf->Ln(7);
     $pdf->SetX(147);
     $pdf->SetFont('Arial', 'BI', 10);
@@ -89,51 +88,51 @@
     $pdf->SetFont('Arial', 'B', 9);
     $pdf->SetX(80);
 
-    $pdf->Cell(40, 10,strtoupper(utf8_decode($NombreEmpresa)),0,0,'C') . $pdf->Ln(5);
+    $pdf->Cell(40, 10, strtoupper(utf8_decode($NombreEmpresa)), 0, 0, 'C') . $pdf->Ln(5);
     $pdf->SetFont('Arial', 'I', 9);
     $pdf->SetX(80);
-    $pdf->Cell(40, 10, 'Nit: '. $NitEmpresa.' - '.$_SESSION['login'][0]["NOMBRE_REGIMEN"]) . $pdf->Ln(5);
+    $pdf->Cell(40, 10, 'Nit: ' . $NitEmpresa . ' - ' . utf8_decode($_SESSION['login'][0]["NOMBRE_REGIMEN"])) . $pdf->Ln(5);
     $pdf->SetX(80);
-    $pdf->Cell(40, 10, $DireccionEmpresa.' - Tel: '. $TelefonoEmpresa) . $pdf->Ln(5);
+    $pdf->Cell(40, 10, $DireccionEmpresa . ' - Tel: ' . $TelefonoEmpresa) . $pdf->Ln(5);
     $pdf->Ln(14);
     //***************DATOS DE TERCERO
 
     $pdf->SetFont('Arial', '', 9);
     $pdf->SetX(20);
-    $pdf->Cell(165,20,'',1);
+    $pdf->Cell(165, 20, '', 1);
 
     $pdf->SetX(20);
-    $pdf->Cell(115,15,'',1);
+    $pdf->Cell(115, 15, '', 1);
 
     $pdf->SetX(20);
-    $pdf->Cell(65,15,'',1);
+    $pdf->Cell(65, 15, '', 1);
 
-    $pdf->Text(22,41,utf8_decode('Vendido a: '.$NombreTercero));
-    $pdf->Text(22,50,'C.C. o NIT: '.$NitEmpresa);
-    $pdf->Text(22,55,utf8_decode('Direccción a Despachar: '.$DireccionTercero));
-    $pdf->SetXY(85,37);
-    $pdf->Cell(100,5,utf8_decode('Ciudad: '.ucfirst(strtolower($Ciudad))),1);
+    $pdf->Text(22, 41, utf8_decode('Vendido a: ' . $NombreTercero));
+    $pdf->Text(22, 50, 'C.C. o NIT: ' . $NitEmpresa);
+    $pdf->Text(22, 55, utf8_decode('Direccción a Despachar: ' . $DireccionTercero));
+    $pdf->SetXY(85, 37);
+    $pdf->Cell(100, 5, utf8_decode('Ciudad: ' . ucfirst(strtolower($Ciudad))), 1);
 
-    $pdf->SetXY(85,42);
-    $pdf->Cell(100,5,'Orden del cliente No.',1);
+    $pdf->SetXY(85, 42);
+    $pdf->Cell(100, 5, 'Orden del cliente No.', 1);
 
-    $pdf->SetXY(85,47);
-    $pdf->Cell(100,5,utf8_decode('Vendedor: '.$Elaboro),1);
+    $pdf->SetXY(85, 47);
+    $pdf->Cell(100, 5, utf8_decode('Vendedor: ' . $Elaboro), 1);
 
-    $pdf->Text(136,41,'Fecha');
+    $pdf->Text(136, 41, 'Fecha');
 
-    $pdf->SetXY(150,37);
-    $pdf->Cell(12,5,substr($FechaDoc, 8, 2),1,0,'C');
+    $pdf->SetXY(150, 37);
+    $pdf->Cell(12, 5, substr($FechaDoc, 8, 2), 1, 0, 'C');
 
-    $pdf->SetXY(162,37);
-    $pdf->Cell(12,5, substr($FechaDoc, 5, 2),1,0,'C');
+    $pdf->SetXY(162, 37);
+    $pdf->Cell(12, 5, substr($FechaDoc, 5, 2), 1, 0, 'C');
 
-    $pdf->SetXY(174,37);
-    $pdf->Cell(11,5,substr($FechaDoc, 0, 4),1,0,'C');
+    $pdf->SetXY(174, 37);
+    $pdf->Cell(11, 5, substr($FechaDoc, 0, 4), 1, 0, 'C');
 
 
-    $pdf->Text(136,45,utf8_decode('Forma de pago: '.$TipoPago));
-    $pdf->Text(136,50,utf8_decode('Transportador: '.$Transportador));
+    $pdf->Text(136, 45, utf8_decode('Forma de pago: ' . $TipoPago));
+    $pdf->Text(136, 50, utf8_decode('Transportador: ' . $Transportador));
 
 
     $pdf->Ln(22);
@@ -162,65 +161,17 @@
         $descuento += $valor['DESCUENTO'];
     }
     $pdf->TablaFactura($Datos);
-$pdf->Ln(2);
+    $pdf->Ln(2);
     $pdf->SetX(20);
     $pdf->Cell(165, 6, number_format($total, 0, '', ','), 1, 0, 'R');
 
     $pdf->SetX(20);
     $pdf->Cell(115, 6, 'TOTAL $', 1, 0, 'R') . $pdf->Ln();
 
-
-
     $pdf->SetX(20);
     $pdf->Cell(165, 6, "FORMAS DE PAGO", 0, 1, 'C', FALSE);
     $pdf->TraePagos($Consecutivo, 'CXC FACT', 'F');
 
-
-//    $pdf->Ln(1);
-//    $yyy = $pdf->GetY();
-//    $pdf->SetX(20);
-//    $pdf->SetFont('Arial', 'B', 9);
-//    $pdf->Cell(115, 6, "Observaciones", 0, 1, 'L', true);
-//    $pdf->SetX(20);
-//    $pdf->SetFont('Arial', '', 9);
-//    $pdf->MultiCell(115, 4, utf8_decode($Obs), 0, 'J', true);
-//
-//
-//    $pdf->SetY($yyy);
-//    $pdf->SetFont('Arial', 'B', 9);
-//    $pdf->SetX(135);
-//    $pdf->Cell(25, 6, 'Valor Bruto:', 0, 0, 'R', true);
-//    $pdf->SetFont('Arial', '', 10);
-//    $pdf->Cell(25, 6, '$ ' . number_format($total, 0, '', ','), 0, 0, 'R', true) . $pdf->Ln();
-//    $pdf->SetX(135);
-//    $pdf->SetFont('Arial', 'B', 9);
-//    $pdf->Cell(25, 6, 'Descuento:', 0, 0, 'R', true);
-//    $pdf->SetFont('Arial', '', 10);
-//    $pdf->Cell(25, 6, '$ ' . number_format($descuento, 0, '', ','), 0, 0, 'R', true) . $pdf->Ln();
-//    $pdf->SetX(135);
-//    $pdf->SetFont('Arial', 'B', 9);
-//    $pdf->Cell(25, 6, 'Valor Neto:', 0, 0, 'R', true);
-//    $pdf->SetFont('Arial', '', 10);
-//    $pdf->Cell(25, 6, '$ ' . number_format(($total - $descuento), 0, '', ','), 0, 0, 'R', true) . $pdf->Ln();
-//    $pdf->Ln(2);
-//    $pdf->SetX(20);
-//
-//    $pdf->SetFont('Arial', '', 9);
-//    $pdf->MultiCell(165, 5, utf8_decode($Leyenda), 0, 'J', FALSE);
-
-//
-//    $pdf->Ln();
-//    $pdf->SetX(20);
-//    $pdf->Cell(60, 8, utf8_decode('Elaboró: ') . $Elaboro, 1, 0, 'L', false);
-//    $pdf->Cell(50, 8, utf8_decode('Aprobó: '), 1, 0, 'L', false);
-//    $pdf->Cell(55, 8, utf8_decode('Recibí Conforme: '), 1, 0, 'L', false);
-//    $pdf->Ln();
-//    $pdf->SetX(20);
-//    $pdf->Cell(165, 0, '', 'T');
-
-
     $pdf->Output();
 
     $pdf->Cell($pdf->PageNo());
-
-    include '../../View/Formularios/Informes/vw_Informes.php';

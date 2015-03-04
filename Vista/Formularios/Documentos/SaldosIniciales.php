@@ -119,9 +119,13 @@
                 //# Filas
             + ' <div><div  id="fila"   class="btnAzul" style="height: 13px;width: 24px;padding: 6px;">1</div></div>'
 
+            + '<div> <input  type="date"  style="padding-bottom:5px;" name="Fecha[]"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required> </div>'
+
             + '<div> <select id="cmbCuenta" name="cmbCuenta[]"  style="width:200px;" class="chosen-select" >'
             + ' <?=$Cuenta ?> '
             + ' </select></div>'
+
+
 
             + '<div> <select  name="cmbTercero[]" id="cmbTercero" class="chosen-select" style="width:200px;" >'
             + ' <?=$Tercero ?> '
@@ -148,7 +152,10 @@
                 //agregar campo
                 $(contenedor).append
                 ('<div>'
+
                 + ' <div><div id="fila"  class="btnAzul" style="height: 13px;width: 24px;padding: 6px;">' + (x + 1) + '</div></div>'
+                + '<div> <input  type="date"  style="padding-bottom:5px;" name="Fecha[]"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required> </div>'
+
                 + '<div> <select id="cmbCuenta" name="cmbCuenta[]"  class="chosen-select" style="width:200px;">'
                 + ' <?=$Cuenta ?> '
                 + ' </select></div>'
@@ -296,7 +303,7 @@
 </script>
 <style>
     #contenedor {
-        margin-left: 220px;
+        margin-left: 140px;
         width: 940px;
     }
 

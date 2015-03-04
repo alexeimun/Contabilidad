@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -24,19 +23,12 @@
 
             $Parametros->InsertaProducto($_POST['txtCodigo'], $_POST['txtNombre'], $_POST['rbTipo'], str_replace(".", "", $_POST['txtPrecio']), $_POST['cmbGrupo'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
-            echo '<script >
-                    alert("Se creó el producto correctamente.")
-                    self.location = "ProductosServiciosGrupos.php?me=1"
-                    </script>';
-
+            echo '<script > alert("Se creó el producto correctamente.");self.location = "ProductosServiciosGrupos.php?me=1"</script>';
         }
 
 
-    } else {
-        echo '<script >
-        self.location = "/"
-	</script>';
-    }
+    } else echo '<script >self.location = "/"</script>';
+
 ?>
 <html>
 <head>
@@ -69,7 +61,7 @@
 
     input[type='checkbox'] {
         width: 20px;
-        height: 20px
+        height: 20px;
     }
 </style>
 
@@ -97,12 +89,11 @@
             <form method="POST">
                 <center>
                     <h3><b>CREAR PRODUCTO</b></h3><br>
-                    <table style="width: 35%;color: #33373d">
-                        <tr>
+                    <table style="width: 35%;color: #33373d;">
                         <tr>
                             <td>Código</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <input type="text" id="txtCodigo" onkeyup="ValidaCodigo()" name="txtCodigo" value=""
+                                <input type="text" id="txtCodigo" onkeyup="ValidaCodigo();" name="txtCodigo" value=""
                                        placeholder="Ingrese el código" required>
                                 <br><br></td>
                         </tr>
@@ -117,7 +108,7 @@
                             <td>Precio</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <input type="text" id="txtPrecio" name="txtPrecio"
-                                       onkeypress="javascript:return validarNro(event)" onkeyup="format(this)" value=""
+                                       onkeypress="return validarNro(event);" onkeyup="format(this);" value=""
                                        placeholder="Ingrese el precio" required>
                                 <br><br></td>
                         </tr>
@@ -132,12 +123,10 @@
                             <td>Grupo</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <select class="chosen-select" id="cmbGrupo" name="cmbGrupo">
-                                    <?php echo $cmbGrupo; ?>
+                                    <?= $cmbGrupo; ?>
                                 </select><br><br>
                             </td>
                         </tr>
-
-
                     </table>
                     <br>
 

@@ -299,7 +299,8 @@
                 + '<td><input readonly></td>'
                 + '<td><input readonly></td>'
                 + '<td><input readonly></td></tr>'
-            );}
+            );
+        }
 
         //EXPORTACIONES A EXCEL
 

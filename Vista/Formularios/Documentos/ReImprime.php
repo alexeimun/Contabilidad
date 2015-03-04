@@ -2,6 +2,7 @@
     session_start();
     switch ($_GET['id']) {
         case 0:
+            $_SESSION['Total'] ='ok';
             $_SESSION['ConsecutivoFACT'] = $_GET['consecutivo'];
             echo '<script > window.open("ImpresionFactura.php");self.location = "ReimpresionDocumentos.php?id=0" </script>';
             break;

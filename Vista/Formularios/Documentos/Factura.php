@@ -62,24 +62,24 @@
                 $Valor = $valor['PRECIO'] * $valor['CANTIDAD'];
                 $Des = $valor['PRECIO'] * ($valor['DESCUENTO'] / 100);
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_COSTO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], ($Valor / $valor['CANTIDAD']), $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'P');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_COSTO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'D', $valor['CANTIDAD'], ($Valor / $valor['CANTIDAD']), $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P');
 
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_INVENTARIO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], ($Valor / $valor['CANTIDAD']), $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'P');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_INVENTARIO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], ($Valor / $valor['CANTIDAD']), $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P');
 
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_VENTAS'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'D', $valor['CANTIDAD'], ($Valor / $valor['CANTIDAD']), $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'P');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_VENTAS'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], ($Valor / $valor['CANTIDAD']), $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'],'P');
 
                 $Total += $Valor;
                 $Descuento += $Des;
-            }
+        }
 
             $TotalPagos = 0;
             //FORMAS DE PAGO
-            foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT" . $Consecutivo, 'D',
-                    1, $valor['VALOR'], 0, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, 0, '', $valor['ID_ENTIDAD']
-                    , $valor['NUMERO']);
+            foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor)
+            {
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT" . $Consecutivo, 'D', 1, $valor['VALOR'], 0,
+                    $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
                 $TotalPagos += $valor['VALOR'];
             }
 
@@ -88,7 +88,7 @@
             //TOTAL PAGOS
 
             $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, 0, ++ $Secuencia, "TOTAL", '', 0, $Total, 0
-                , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', 0, 0, $_POST['cmbTipoPago'], 0, '',
+                , $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], '', 0, 0, $_POST['cmbTipoPago'], 0, '',
                 $IdCiudad, $TotalPagos, $_POST['txtTransportador']);
 
             //Si es a crédito se genera Recibo
@@ -97,7 +97,7 @@
                 $Factura->TraeParametrosRecibo($_SESSION['login'][0]["ID_EMPRESA"]);
                 //Inserto el Total del recibo
                 $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'R', $Factura->_ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', '',
-                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], '', 0, $Consecutivo, $_POST['cmbTipoPago'], 0, '', $IdCiudad,
+                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], '', 0, $Consecutivo, $_POST['cmbTipoPago'], 0, '', $IdCiudad,
                     $_SESSION['TOTAL2'], $_POST['txtTransportador']);
 
                 $Documentos->ActualizaConsecutivo($Factura->_ConsecutivoRecibo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO');
@@ -227,15 +227,17 @@
 
     <div id="content-wrap">
         <?= $menu ?>
-
         <div id="main">
             <form method="POST">
                 <center>
                     <h3><b>FACTURA NÚMERO <?= $Factura->_Consecutivo ?></b></h3><br>
+                   Fecha <input type="date" name="Fecha"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
+                    <br><br>
+
                     <table style="width: 85%;color: #33373d;">
                         <tr>
                             <td style="text-align: right;">Tercero</td>
-                            <td style="padding-left: 10px;text-align: left;">
+                            <td style="padding-left: 10px;text-align: left;" >
                                 <select id="cmbTercero" name="cmbTercero" class="chosen-select" style="width:260px;"
                                         required>
                                     <?= $cmbTercero; ?>
@@ -256,7 +258,7 @@
                         </tr>
                     </table>
                     <hr>
-                    <br>
+
                     <table style="width: 95%;color: #33373d;">
                         <tr>
                             <td style="text-align: right;"><br>Producto</td>
@@ -272,15 +274,14 @@
                             <td style="text-align: right;"><br>Descuento</td>
 
                             <td style="padding-left: 10px;text-align: left;">
-                                <br> <input type="number" id="txtDescuento" name="txtDescuento" max="100" min="0"value="0" required/> %
+                                <br> <input type="number" id="txtDescuento" name="txtDescuento" max="100" min="0" value="0" required/> %
                             </td>
                         </tr>
 
                     </table>
 
-                    <br><br>
-                    <input type="button" id="btnAgregar" class="btnAzul" onclick="agregar();" name="btnAgregar"
-                           value="Agregar" style="width:100px;"/>
+                    <br>
+                    <input type="button" id="btnAgregar" class="btnAzul" onclick="agregar();" name="btnAgregar" value="Agregar" style="width:100px;"/>
                     <br><br>
 
                     <div style="width: 95%;">

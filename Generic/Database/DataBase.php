@@ -4,7 +4,6 @@
     {
         private static $_driver = DRIVER;
         private static $_server = SERVER;
-        private static $_port = PORT;
         private static $_user = USER;
         private static $_passwd = PASSWD;
         private static $_dbname = DBNAME;
@@ -15,7 +14,7 @@
          */
         public static function Connection()
         {
-            $dns = self::$_driver . ":host=" . self::$_server . ":" . self::$_port . ";dbname=" . self::$_dbname;
+            $dns = self::$_driver . ":host=" . self::$_server . ";dbname=" . self::$_dbname;
 
             if (!isset (self::$_connect)) {
                 self::$_connect = new PDO($dns, self::$_user, self::$_passwd, [PDO:: ATTR_PERSISTENT => TRUE]);

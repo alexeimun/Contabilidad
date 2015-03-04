@@ -108,7 +108,7 @@
                             <td>Cta Inventario</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <select id="cmbCtaInventario" class="chosen-select" name="cmbCtaInventario">
-                                    <?php echo $cmbCtas; ?>
+                                    <?= $cmbCtas; ?>
                                 </select><br><br>
                             </td>
                         </tr>
@@ -116,7 +116,7 @@
                             <td>Cta Ventas</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <select id="cmbCtaVentas" class="chosen-select" name="cmbCtaVentas">
-                                    <?php echo $cmbCtas; ?>
+                                    <?= $cmbCtas; ?>
                                 </select><br><br>
                             </td>
                         </tr>
@@ -124,7 +124,7 @@
                             <td>Cta Costo</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <select id="cmbCtaCosto" name="cmbCtaCosto" class="chosen-select">
-                                    <?php echo $cmbCtas; ?>
+                                    <?= $cmbCtas; ?>
                                 </select><br><br>
                             </td>
                         </tr>
@@ -132,7 +132,7 @@
                             <td>Cta Devoluciones</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <select id="cmbCtaDevoluciones" name="cmbCtaDevoluciones" class="chosen-select">
-                                    <?php echo $cmbCtas; ?>
+                                    <?= $cmbCtas; ?>
                                 </select><br><br>
                             </td>
                         </tr>

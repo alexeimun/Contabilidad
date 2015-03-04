@@ -32,19 +32,20 @@
 
     $CajaMenor->TraeParametrosCajaMenor($_SESSION['login'][0]["ID_EMPRESA"]);
 
-    if (isset($_POST['btnFinalizar']) != '') {
+    if (!empty($_POST)) {
 
         if ($_POST['cmbCiudad'] == '0')
             echo '<script >alert("Debe seleccionar una ciudad.")	 </script>';
         else if ($_POST['cmbTercero'] == '0')
             echo '<script >alert("Debe elecccionar un tercero.")	 </script>';
         else if ($_POST['cmbConcepto'] == '0')
-            echo '<script >alert("Debe seleccionar un concepto.")	 </script>';
+            echo '<script >alert("Debe seleccionar un concepto.") </script>';
 
         else {
             $Consecutivo = $CajaMenor->_Consecutivo;
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'C', $Consecutivo, 0, 0, 'TOTAL', 'D',
-                1, $_POST['txtValor'], 0, $_POST['txtDetalle'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Con', $_POST['cmbConcepto'], 0, '', 0, '', $_POST['cmbCiudad']);
+
+            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $Documentos->TraeConcepto($_POST['cmbConcepto']), 'C', $Consecutivo, 0, 0, 'TOTAL', 'D',
+                1, $_POST['txtValor'], 0, $_POST['txtDetalle'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'CM', $_POST['cmbConcepto'], 0, '', 0, '', $_POST['cmbCiudad']);
 
             $_SESSION['ConsecutivoCM'] = $Consecutivo;
 
@@ -85,13 +86,17 @@
             <form method="POST">
                 <center>
                     <h3><b>RECIBO CAJA MENOR <?= $CajaMenor->_Consecutivo ?></b></h3><br>
-                    <table style="width: 30%;color: #33373d;">
+                    <table style="width: 90%;color: #33373d;">
                         <tr>
                             <td style="text-align: right;">Ciudad</td>
                             <td style="padding-left: 10px;text-align: left;">
                                 <select id="cmbCiudad" name="cmbCiudad" class="chosen-select" style="width:250px;">
                                     <?= $cmbCiudad; ?>
                                 </select>
+                            </td>
+                            <td style="text-align: right;">Fecha</td>
+                            <td style="padding-left: 10px;text-align: left;">
+                                <input type="date" name="Fecha"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
                             </td>
                         </tr>
                     </table>

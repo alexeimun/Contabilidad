@@ -38,12 +38,14 @@
 		<td style="font-weight: bold;"> Factura No. ' . $_GET['id'] . '</td>
 		<td style="font-weight: bold;"> Abonado: ' . number_format($_GET['abonado'], 0, '', ',') . ' $</td>
 		<td style="font-weight: bold;"> Total a pagar: ' . number_format($_GET['valor'], 0, '', ',') . ' $</td></tr>
+
          <input type="hidden" value="' . $_GET['id'] . ' " name="ConsecutivoFactura">
                   <tr> <td  colspan="3" style="text-align: center;">
                  <br>  <select style="width: 220px;"  id="cmbfPago" class="chosen-select" name="cmbfPago" onchange="Change();" >
                       ' . $cmbfPago . '
-                 </select> <label style="color:#5E83A3;font-weight: bold;" ></label>
+                 </select> <label style="color:#5E83A3;font-weight: bold;" >
              </td>
+              <td colspan="2">  Fecha <input type="date" name="Fecha"  value="'. date("Y").'-'.date("m").'-'.date("d").'" required></td>
             </tr>
 
       </table>

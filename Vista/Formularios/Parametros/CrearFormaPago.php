@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -28,27 +27,15 @@
 
         if (isset($_POST['btnGuardar']) != '') {
 
-            $Parametros->InsertaFormaPago($_POST['txtCodigo'], $_POST['txtNombre'], $_POST['cmbCuenta'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
+            $Parametros->InsertaFormaPago( $_POST['cmbCuenta'],$_POST['txtNombre'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
-            echo '<script >
-                    alert("Se creó la forma de pago correctamente.");
-                    self.location = "FormasDePago.php";
-                    </script>';
-
+            echo '<script> alert("Se creó la forma de pago correctamente."); self.location = "FormasDePago.php"; </script>';
         }
-
-
-    } else {
-        echo '<script >
-        self.location = "/";
-	</script>';
-    }
+    } else echo '<script> self.location = "/";</script>';
 ?>
 <html>
 <head>
     <title>Crear Forma de Pago</title>
-
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../Css/menu.css"/>
@@ -76,32 +63,25 @@
 
     input[type='checkbox'] {
         width: 20px;
-        height: 20px
+        height: 20px;
     }
 </style>
 
 <script>
-
     function ValidaCodigo() {
         $("#botones").load("Validaciones.php?action=insertarformapago&txtCodigo=" + document.getElementById('txtCodigo').value);
-
     }
-
-
     function check() {
         document.getElementById('txtRequiereNumero').value = "0";
         if (document.getElementById('chkRequiereNumero').checked) {
             document.getElementById('txtRequiereNumero').value = "1";
         }
-
     }
-
     function check2() {
         document.getElementById('txtRequiereEntidad').value = "0";
         if (document.getElementById('chkRequiereEntidad').checked) {
             document.getElementById('txtRequiereEntidad').value = "1";
         }
-
     }
 </script>
 
@@ -109,9 +89,7 @@
 <div id="wrap">
     <div id="header">
         <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
-
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
-
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_USUARIO"] ?></span></h3>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
@@ -123,25 +101,16 @@
             <form method="POST">
                 <center>
                     <h3><b>CREAR FORMA DE PAGO</b></h3><br>
-                    <table style="width: 35%;color: #33373d">
-                        <tr>
-                            <td>Código</td>
-                            <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtCodigo" onkeyup="ValidaCodigo();" name="txtCodigo"
-                                       onkeypress="return validarNro(event);" value=""
-                                       placeholder="Ingrese el código" required>
-                                <br><br></td>
-                        </tr>
+                    <table style="width: 35%;color: #33373d;">
                         <tr>
                             <td>Nombre</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtNombre" name="txtNombre" value=""
-                                       placeholder="Ingrese el nombre " required>
+                                <input type="text" id="txtNombre" name="txtNombre" placeholder="Ingrese un nombre" required>
                                 <br><br></td>
                         </tr>
                         <tr>
                             <td>Cuenta</td>
-                            <td style="padding-left: 10px;text-align: right;">
+                            <td style="padding-left: 10px;text-align: center;">
                                 <select id="cmbCuenta" class="chosen-select" name="cmbCuenta">
                                     <?= $cmbCtas; ?>
                                 </select><br><br>
@@ -152,12 +121,10 @@
                             <td style="padding-left: 10px;text-align: center;">
                                 <input type="checkbox" id="chkRequiereEntidad" name="chkRequiereEntidad"
                                        onClick="check2();">
-                                <input type="hidden" value="0" id="txtRequiereEntidad"
-                                       name="txtRequiereEntidad"><br><br>
+                                <input type="hidden" value="0" id="txtRequiereEntidad" name="txtRequiereEntidad"><br><br>
                             </td>
                         </tr>
                         <tr>
-
                             <td>Requiere Número</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <br><input type="checkbox" id="chkRequiereNumero" name="chkRequiereNumero"
@@ -165,22 +132,14 @@
                                 <input type="hidden" value="0" id="txtRequiereNumero" name="txtRequiereNumero"><br><br>
                             </td>
                         </tr>
-
-
                     </table>
                     <br>
-
-
-                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
-                                                value="GUARDAR" style="width:200px;"/>
+                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
                     </ul>
                 </center>
-
             </form>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

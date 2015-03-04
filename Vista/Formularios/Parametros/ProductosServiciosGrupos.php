@@ -15,7 +15,7 @@
 
     $me = '';
 
-    $tablaProductos = '<table id="table" class="table" style="width:90%;">
+    $tablaProductos = '<table id="table" class="table" style="width:95%;">
             <thead><tr>
             <th style="text-align:left;">CÓDIGO</th>
             <th style="text-align:left;">NOMBRE PRODUCTO</th>
@@ -24,7 +24,7 @@
             <th style="text-align:left;">GRUPO</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead>';
 
-    $tablaGrupos = '<table id="table1" class="table" style="width:90%;">
+    $tablaGrupos = '<table id="table1" class="table" style="width:95%;">
             <thead><tr>
             <th style="text-align:left;">NOMBRE GRUPO</th>
             <th style="text-align:left;">CTA INVENTARIO</th>
@@ -110,7 +110,6 @@
             <br><br><br>
             ' . $tablaGrupos . '
         </div>';
-
     }
 
 ?>

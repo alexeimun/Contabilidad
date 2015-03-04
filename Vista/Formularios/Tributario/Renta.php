@@ -94,7 +94,7 @@
     $pdf->Cell(5, 3, '', 1, 0, 'L', false);
 
     $pdf->SetXY(140, 25);
-    $pdf->Cell(65, 5, 'Cambio titular inversión extranjera (Marque"X")', 1, 0, 'L', false);
+    $pdf->Cell(65, 5, utf8_decode('Cambio titular inversión extranjera (Marque"X")'), 1, 0, 'L', false);
 
     $pdf->SetXY(188, 26);
     $pdf->Cell(5, 3, '', 1, 0, 'L', false);
