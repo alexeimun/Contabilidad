@@ -1,15 +1,31 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
     include '../../../Clases/cls_Parametros.php';
+    include '../../../Clases/cls_Contabilidad.php';
+
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script > self.location = "/"</script>';
 
     $Master = new Master();
     $menu = $Master->Menu();
+    $Contabilidad = new cls_Contabilidad();
+    $Cuentas = $Contabilidad->TraeCodigos();
+    $Codigos = [];
+    $i = 0;
+    $j = 0;
+    for ($i = 0; $i < count($Cuentas[0][0]); $i ++) {
+        if (count($Codigos) > 0) {
+            for ($j = 0; $j < count($Codigos); $j ++) {
+
+            }
+        } else {
+            array_push($Codigos, $Cuentas[0][0]);
+        }
+    }
+
 
 ?>
 <html>
@@ -42,13 +58,11 @@
             <center>
                 <h3><b>BALANCE GENERAL</b></h3><br>
 
-<!--                <input type="button" value="Balance" onclick="document.location.href='ImprimeBalanceGeneral.php';">-->
+                <!--                <input type="button" value="Balance" onclick="document.location.href='ImprimeBalanceGeneral.php';">-->
 
             </center>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

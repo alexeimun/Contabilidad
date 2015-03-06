@@ -1,5 +1,4 @@
 <?php
-
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/cls_Documentos.php';

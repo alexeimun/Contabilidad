@@ -139,8 +139,7 @@
                             </td>
                             <td style="text-align: right;">Concepto</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <select id="cmbConcepto" class="chosen-select" name="cmbConcepto"
-                                        style="width: 210px;">
+                                <select id="cmbConcepto" class="chosen-select" name="cmbConcepto" style="width: 210px;">
                                     <?= $cmbConcepto ?>
                                 </select>
                             </td>

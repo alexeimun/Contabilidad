@@ -76,9 +76,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
 </head>
-<style type="text/css">
 
-</style>
 
 <script>
 

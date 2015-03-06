@@ -36,7 +36,7 @@
             t_cuentas.FECHA_REGISTRO,
             t_cuentas.ID_EMPRESA
             FROM
-            t_cuentas WHERE t_cuentas.ESTADO=1 AND t_cuentas.ID_EMPRESA=" . $idEmpresa . "";
+            t_cuentas WHERE t_cuentas.ESTADO=1 AND t_cuentas.ID_EMPRESA= $idEmpresa ";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -49,56 +49,48 @@
        VALUES
        ('" . $Codigo . "','" . $Nombre . "'," . $ManejaTer . "," . $ManejaDocCruce . ",'" . $Naturaleza . "',1," . $UsrReg . ",now()," . $IdEmpresa . ")";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+           return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaCuenta($id, $Codigo, $Nombre, $ManejaTer, $ManejaDocCruce, $Naturaleza)
         {
             $query = "UPDATE `t_cuentas`
-       SET `CODIGO`='" . $Codigo . "',`NOMBRE`='" . $Nombre . "', `MANEJA_TERCERO`=" . $ManejaTer . ",`MANEJA_DOC_CRUCE`=" . $ManejaDocCruce . "
-        ,`NATURALEZA`='" . $Naturaleza . "'  WHERE (`ID_CUENTA`=" . $id . ")";
+       SET `CODIGO`='" . $Codigo . "',`NOMBRE`='" . $Nombre . "', `MANEJA_TERCERO`= $ManejaTer,`MANEJA_DOC_CRUCE`= $ManejaDocCruce
+        ,`NATURALEZA`='" . $Naturaleza . "'  WHERE (`ID_CUENTA`= $id )";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TraeDatosCuenta($id)
         {
             $query = "SELECT
-t_cuentas.ID_CUENTA,
-t_cuentas.CODIGO,
-t_cuentas.NOMBRE,
-t_cuentas.MANEJA_TERCERO,
-t_cuentas.MANEJA_DOC_CRUCE,
-t_cuentas.NATURALEZA,
-t_cuentas.ESTADO,
-t_cuentas.USR_REGISTRO,
-t_cuentas.FECHA_REGISTRO,
-t_cuentas.ID_EMPRESA
-FROM
-t_cuentas WHERE t_cuentas.ID_CUENTA=" . $id . "";
+            t_cuentas.ID_CUENTA,
+            t_cuentas.CODIGO,
+            t_cuentas.NOMBRE,
+            t_cuentas.MANEJA_TERCERO,
+            t_cuentas.MANEJA_DOC_CRUCE,
+            t_cuentas.NATURALEZA,
+            t_cuentas.ESTADO,
+            t_cuentas.USR_REGISTRO,
+            t_cuentas.FECHA_REGISTRO,
+            t_cuentas.ID_EMPRESA
+            FROM
+            t_cuentas WHERE t_cuentas.ID_CUENTA=$id ";
 
             $resulset = $this->_DB->Query($query);
+            return $resulset->fetchAll();
+        }
+        public function TraeCodigos()
+        {
+            $resulset = $this->_DB->Query("SELECT t_cuentas.CODIGO from t_cuentas");
             return $resulset->fetchAll();
         }
 
         public function EliminarCuenta($id)
         {
-            $query = "UPDATE `t_cuentas` SET `ESTADO`=0 WHERE (`ID_CUENTA`=" . $id . ")";
+            $query = "UPDATE `t_cuentas` SET `ESTADO`=0 WHERE (`ID_CUENTA`= $id )";
 
-            if ($this->_DB->Exec($query) > 0) {
-                return true;
-            } else {
-                return false;
-            }
-
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function ValidaCodigo($Cod)
@@ -114,7 +106,6 @@ t_cuentas WHERE t_cuentas.ID_CUENTA=" . $id . "";
             }
             // var_dump($datos);
             return $datos;
-            return $resulset->fetchAll();
         }
 
         public function ValidaCodigoEditar($Cod, $Id)
@@ -132,10 +123,5 @@ t_cuentas WHERE t_cuentas.ID_CUENTA=" . $id . "";
             }
             // var_dump($datos);
             return $datos;
-            return $resulset->fetchAll();
         }
-
-
     }
-
-?>
