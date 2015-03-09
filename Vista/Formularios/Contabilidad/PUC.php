@@ -1,9 +1,9 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
     include '../../../Clases/cls_Contabilidad.php';
+    include '../../../Clases/Componentes.php';
     session_start();
 
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
@@ -12,6 +12,7 @@
     $Master = new Master();
     $menu = $Master->Menu();
     $Contabilidad = new cls_Contabilidad();
+    $Componenetes = new Componentes();
 
     $tabla = '<table id="table" class="table" style="width:93%;">
         <thead><tr>
@@ -24,33 +25,38 @@
 
     $tablaExp = '<table id="Texp" class="table"  style="display: none;">
         <thead><tr>
-           <tr> <th style="text-align:center;font-weight: bold;" colspan="5">'.strtoupper($_SESSION['login'][0]["NOMBRE_EMPRESA"]).' </th></tr>
+           <tr> <th style="text-align:center;font-weight: bold;" colspan="5">' . strtoupper($_SESSION['login'][0]["NOMBRE_EMPRESA"]) . ' </th></tr>
             <th style="text-align:left;">CÓDIGO</th>
             <th style="text-align:left;">NOMBRE</th>
             <th style="text-align:left;">MANEJA TERCERO</th>
             <th style="text-align:left;">MANEJA DOCUMENTO CRUCE</th>
             <th style="text-align:left;">NATURALEZA</th></tr></thead><tbody>';
     $cont = 0;
+    $Cuentas = [];
 
-    foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
+    foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
+        $Cuentas[] = $valor;
+
+    $Componenetes->OrdenaCuentas($Cuentas);
+
+    for ($i = 0; $i < count($Cuentas); $i ++) {
         $cont ++;
-        $idEmpresa = $valor['ID_EMPRESA'];
-        $tabla .= '<tr><td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
-        $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
-        $tabla .= '<td style="text-align:left;">' . $valor['MANEJA_TERCERO'] . '</td>';
-        $tabla .= '<td style="text-align:left;">' . $valor['MANEJA_DOC_CRUCE'] . '</td>';
-        $tabla .= '<td style="text-align:left;">' . $valor['NATURALEZA'] . '</td>';
+        $tabla .= '<tr><td style="text-align:left;">' . $Cuentas[$i]['CODIGO'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $Cuentas[$i]['NOMBRE'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $Cuentas[$i]['MANEJA_TERCERO'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $Cuentas[$i]['MANEJA_DOC_CRUCE'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $Cuentas[$i]['NATURALEZA'] . '</td>';
         $tabla .= '<td style="text-align:center;">
            <a href="CrearCuenta.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
-          <a href="ModificarCuenta.php?id=' . $valor['ID_CUENTA'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
-          <a onclick="EliminarCuenta(' . $valor['ID_CUENTA'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
+          <a href="ModificarCuenta.php?id=' . $Cuentas[$i]['ID_CUENTA'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarCuenta(' . $Cuentas[$i]['ID_CUENTA'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
 
-        $tablaExp .= '<tr><td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
-        $tablaExp .= '<td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
-        $tablaExp .= '<td style="text-align:left;">' . $valor['MANEJA_TERCERO'] . '</td>';
-        $tablaExp .= '<td style="text-align:left;">' . $valor['MANEJA_DOC_CRUCE'] . '</td>';
-        $tablaExp .= '<td style="text-align:left;">' . $valor['NATURALEZA'] . '</td>';
+        $tablaExp .= '<tr><td style="text-align:left;">' . $Cuentas[$i]['CODIGO'] . '</td>';
+        $tablaExp .= '<td style="text-align:left;">' . $Cuentas[$i]['NOMBRE'] . '</td>';
+        $tablaExp .= '<td style="text-align:left;">' . $Cuentas[$i]['MANEJA_TERCERO'] . '</td>';
+        $tablaExp .= '<td style="text-align:left;">' . $Cuentas[$i]['MANEJA_DOC_CRUCE'] . '</td>';
+        $tablaExp .= '<td style="text-align:left;">' . $Cuentas[$i]['NATURALEZA'] . '</td>';
 
     }
     if ($cont == 0)
@@ -83,6 +89,7 @@
     $(document).ready(function () {
 
         $('#table').dataTable({
+            "aaSorting": [],
             "language": {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ registros",
@@ -136,17 +143,17 @@
                 <?= $tabla ?>
             </center>
             <div id="Exp" style="display:none;">
-                <?=$tablaExp ?>
+                <?= $tablaExp ?>
             </div>
         </div>
     </div>
 </div>
 </body>
-    <script>
-        $('input[value=Exportar]').on('click', function () {
-            $("#temp").battatech_excelexport({
-                containerid: "Exp", datatype: 'table'
-            });
+<script>
+    $('input[value=Exportar]').on('click', function () {
+        $("#temp").battatech_excelexport({
+            containerid: "Exp", datatype: 'table'
         });
-    </script>
+    });
+</script>
 </html>

@@ -4,6 +4,7 @@
     include '../../../Clases/Master.php';
     include '../../../Clases/cls_Parametros.php';
     include '../../../Clases/cls_Contabilidad.php';
+    include '../../../Clases/Componentes.php';
 
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
@@ -12,20 +13,25 @@
     $Master = new Master();
     $menu = $Master->Menu();
     $Contabilidad = new cls_Contabilidad();
-    $Cuentas = $Contabilidad->TraeCodigos();
-    $Codigos = [];
-    $i = 0;
-    $j = 0;
-    for ($i = 0; $i < count($Cuentas[0][0]); $i ++) {
-        if (count($Codigos) > 0) {
-            for ($j = 0; $j < count($Codigos); $j ++) {
+    $Componenetes = new Componentes();
 
-            }
-        } else {
-            array_push($Codigos, $Cuentas[0][0]);
-        }
+    $tabla = '<table id="table" class="table" style="width:93%;">
+        <thead><tr>
+            <th style="text-align:left;">CÓDIGO</th>
+            <th style="text-align:left;">NOMBRE</th>
+            <th style="text-align:left;">SALDO</th></tr></thead><tbody>';
+
+    $Cuentas=[];
+
+    foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
+        $codigo=$valor['CODIGO'];
+        if ($codigo[0]==1 ||$codigo[0]==2 ||$codigo[0]==3 )
+            $Cuentas[] = $valor;
     }
 
+    $Componenetes->OrdenaCuentas($Cuentas);
+
+//    echo var_dump($Cuentas[230]); exit;
 
 ?>
 <html>
@@ -58,7 +64,7 @@
             <center>
                 <h3><b>BALANCE GENERAL</b></h3><br>
 
-                <!--                <input type="button" value="Balance" onclick="document.location.href='ImprimeBalanceGeneral.php';">-->
+                <!--   <input type="button" value="Balance" onclick="document.location.href='ImprimeBalanceGeneral.php';">-->
 
             </center>
         </div>

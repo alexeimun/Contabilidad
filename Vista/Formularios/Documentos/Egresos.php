@@ -53,7 +53,7 @@
 
         foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Secuencia ++;
-            $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'G', $_POST['ConsecutivoGastos'], $valor['ID_F_PAGO'], $Secuencia, "ABONO GASTOS" . $Egresos->_ConsecutivoEgresos,
+            $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, $valor['ID_CUENTA'], 'G', $_POST['ConsecutivoGastos'], $valor['ID_F_PAGO'], $Secuencia, "ABONO GASTOS" . $Egresos->_ConsecutivoEgresos,
                 'D', 1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
         }
         //Consultar que ID_CUENTA_MOV le paso

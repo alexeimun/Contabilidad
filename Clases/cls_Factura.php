@@ -190,14 +190,15 @@
             VALOR,
             NUMERO,
             t_entidades.NOMBRE_ENTIDAD,
-            t_formas_pago.NOMBRE_F_PAGO
+            t_formas_pago.NOMBRE_F_PAGO,
+            t_formas_pago.ID_CUENTA
            FROM
             t_pagos_t
             INNER JOIN t_entidades ON t_entidades.ID_ENTIDAD = t_pagos_t.ID_ENTIDAD
             INNER JOIN t_formas_pago ON t_formas_pago.ID_F_PAGO = t_pagos_t.ID_F_PAGO
             WHERE
                 t_pagos_t.ESTADO = 1 AND t_formas_pago.REQUIERE_ENTIDAD=1
-            AND t_pagos_t.ID_USUARIO = " . $Idusuario . "
+            AND t_pagos_t.ID_USUARIO =  $Idusuario
 
             UNION
             #SIN ENTIDADES
@@ -208,13 +209,14 @@
                 VALOR,
                 NUMERO,
                 '' AS NOMBRE_ENTIDAD,
-                t_formas_pago.NOMBRE_F_PAGO
+                t_formas_pago.NOMBRE_F_PAGO,
+                 t_formas_pago.ID_CUENTA
             FROM
                 t_pagos_t
             INNER JOIN t_formas_pago ON t_formas_pago.ID_F_PAGO = t_pagos_t.ID_F_PAGO
             WHERE
                 t_pagos_t.ESTADO = 1 AND t_formas_pago.REQUIERE_ENTIDAD=0
-            AND t_pagos_t.ID_USUARIO = " . $Idusuario . ")";
+            AND t_pagos_t.ID_USUARIO =  $Idusuario )";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();

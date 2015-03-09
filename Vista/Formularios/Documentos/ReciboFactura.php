@@ -50,7 +50,7 @@
         $Secuencia = 0;
         foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Secuencia ++;
-            $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'R', $_POST['ConsecutivoFactura'], $valor['ID_F_PAGO'], $Secuencia, "ABONO FACT" . $ConsecutivoRecibo, 'D',
+            $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, $valor['ID_CUENTA'], 'R', $_POST['ConsecutivoFactura'], $valor['ID_F_PAGO'], $Secuencia, "ABONO FACT" . $ConsecutivoRecibo, 'D',
                 1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
         }
 

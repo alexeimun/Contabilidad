@@ -97,7 +97,7 @@
 
         public function EliminarPagoTemporal($id)
         {
-            return $this->_DB->Exec("DELETE FROM `t_pagos_t` WHERE (`ID_PAGO_T`= $id") > 0;
+            return $this->_DB->Exec("DELETE FROM `t_pagos_t` WHERE `ID_PAGO_T`= $id") > 0;
         }
 
         public function  ValidaAgregaPago($idPago, $Valor, $IdEntidad, $Numero, $Idusuario)
@@ -162,30 +162,157 @@
             return $this->_DB->Exec($query) > 0;
         }
 
-        #ASIGNACIÓN DE PERMISOS
-
-
-        /**
-         * Genera los permsos del sistema
-         * @return array
-         */
-        public function Permisos()
+        public function OrdenaCuentas(&$Cuentas = [])
         {
-            return [['url' => '../Documentos/Factura.php', 'nombre' => 'Factura'],
-                ['url' => '../Documentos/ReciboFactura.php', 'nombre' => 'Recibo (Factura)'],
-                ['url' => '../Documentos/ReciboCajaMenor.php', 'nombre' => 'Recibo Caja Menor'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],
-                ['url' => 'url', 'nombre' => 'nombre'],];
+            $Tam = count($Cuentas);
+
+            for ($i = 0; $i < $Tam; $i ++) {
+                for ($j = 0; $j < $Tam - 1 - $i; $j ++) {
+
+                    $C1 = $Cuentas[$j + 1]['CODIGO'] . '';
+                    $C2 = $Cuentas[$j]['CODIGO'] . '';
+
+                    $Clase1 = strlen($C1) >= 1 ? $C1[0] : '';
+                    $Clase2 = strlen($C2) >= 1 ? $C2[0] : '';
+
+                    $Grupo1 = strlen($C1) >= 2 ? $C1[1] : '';
+                    $Grupo2 = strlen($C2) >= 2 ? $C2[1] : '';
+
+                    $Cuenta1 = strlen($C1) >= 4 ? $C1[2] . $C1[3] : '';
+                    $Cuenta2 = strlen($C2) >= 4 ? $C2[2] . $C2[3] : '';
+
+                    $SubCuenta1 = strlen($C1) >= 6 ? $C1[4] . $C1[5] : '';
+                    $SubCuenta2 = strlen($C2) >= 6 ? $C2[4] . $C2[5] : '';
+
+                    $Auxiliar1 = strlen($C1) >= 8 ? $C1[6] . $C1[7] : '';
+                    $Auxiliar2 = strlen($C2) >= 8 ? $C2[6] . $C2[7] : '';
+
+                    $SubAuxiliar1 = strlen($C1) == 10 ? $C1[8] . $C1[9] : '';
+                    $SubAuxiliar2 = strlen($C2) == 10 ? $C2[8] . $C2[9] : '';
+
+                    if ($Clase1 != '' && $Clase2 != '') {
+                        if ($Clase1 <= $Clase2) {
+                            if ($Clase1 < $Clase2) $this->swap($Cuentas, $j);
+
+                            else {
+                                if ($Grupo1 != '' && $Grupo2 != '') {
+                                    if ($Grupo1 <= $Grupo2) {
+
+                                        if ($Grupo1 < $Grupo2) $this->swap($Cuentas, $j);
+
+                                        else {
+                                            if ($Cuenta1 != '' && $Cuenta2 != '') {
+                                                if ($Cuenta1 <= $Cuenta2) {
+
+                                                    if ($Cuenta1 < $Cuenta2) $this->swap($Cuentas, $j);
+
+                                                    else {
+                                                        if ($SubCuenta1 != '' && $SubCuenta2 != '') {
+                                                            if ($SubCuenta1 <= $SubCuenta2) {
+
+                                                                if ($SubCuenta1 < $SubCuenta2) $this->swap($Cuentas, $j);
+
+                                                                else {
+                                                                    if ($Auxiliar1 != '' && $Auxiliar2 != '') {
+
+                                                                        if ($Auxiliar1 <= $Auxiliar2) {
+                                                                            if ($Auxiliar1 < $Auxiliar2) $this->swap($Cuentas, $j);
+
+                                                                            else {
+                                                                                if ($SubAuxiliar1 != '' && $SubAuxiliar2 != '') {
+
+                                                                                    if ($SubAuxiliar1 < $SubAuxiliar2) $this->swap($Cuentas, $j);
+
+                                                                                } else if ($SubAuxiliar1 == '') $this->swap($Cuentas, $j);
+                                                                            }
+                                                                        }
+                                                                    } else if ($Auxiliar1 == '') $this->swap($Cuentas, $j);
+                                                                }
+                                                            }
+                                                        } else if ($SubCuenta1 == '') $this->swap($Cuentas, $j);
+                                                    }
+                                                }
+                                            } else if ($Cuenta1 == '') $this->swap($Cuentas, $j);
+                                        }
+                                    }
+                                } else if ($Grupo1 == '') $this->swap($Cuentas, $j);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        public function TraeBalanceGeneral($Cuentas = [])
+        {
+            $Tam = count($Cuentas);
+            $Ctas = [];
+            $pos = 0;
+
+            for ($i = $Tam - 1; $i > - 1; $i --) {
+
+                $fsubaux = false;
+                $faux = false;
+                $fsubcuenta = false;
+                $fsubcuenta = false;
+                $fcuenta = false;
+                $fgrupo = false;
+                $fclase = false;
+                $totalaux = 0;
+                $totalaux = 0;
+                $totalaux = 0;
+                $totalaux = 0;
+                $totalaux = 0;
+
+                $C = $Cuentas[$i]['CODIGO'] . '';
+
+                $Clase = strlen($C) >= 1 ? $C[0] : '';
+
+                $Grupo = strlen($C) >= 2 ? $C[1] : '';
+
+                $Cuenta = strlen($C) >= 4 ? $C[2] . $C[3] : '';
+
+                $SubCuenta = strlen($C) >= 6 ? $C[4] . $C[5] : '';
+
+                $Auxiliar = strlen($C) >= 8 ? $C[6] . $C[7] : '';
+
+                $SubAuxiliar = strlen($C) == 10 ? $C[8] . $C[9] : '';
+
+                if ($SubAuxiliar != '') {
+                    $Ctas[$pos]['CODIGO'] = $SubAuxiliar;
+                    $Ctas[$pos]['SALDO'] = $this->TraeCuenta($Cuentas[$i]['ID_CUENTA']);
+                    $valor += $Ctas[$pos]['SALDO'];
+                    $fsubaux = true;
+                    $pos ++;
+                }
+                else if ($Auxiliar != '') {
+                    $Ctas[$pos]['CODIGO'] = $C;
+
+                    $Ctas[$pos]['SALDO'] = $valor;
+                    $faux = true;
+                    $pos ++;
+                }
+            }
+        }
+
+
+        private function TraeCuenta($IdCuenta)
+        {
+            $IdEmpresa = $_SESSION['login'][0]['ID_EMPRESA'];
+            $query = "SELECT
+     (SELECT sum(VALOR) FROM t_movimiento WHERE  ID_CUENTA_MOV=$IdCuenta AND TIPO_MOV='C' AND ID_EMPRESA=" . $IdEmpresa . ")-
+     (SELECT sum(VALOR) FROM t_movimiento WHERE  ID_CUENTA_MOV=$IdCuenta AND TIPO_MOV='D' AND ID_EMPRESA=" . $IdEmpresa . ") AS SALDO";
+
+            $resulset = $this->_DB->Query($query);
+            $saldo = $resulset->fetchAll();
+            return $saldo[0][0];
+        }
+
+        private function swap(&$arr, $a)
+        {
+            $tmp = $arr[$a];
+            $arr[$a] = $arr[$a + 1];
+            $arr[$a + 1] = $tmp;
         }
     }

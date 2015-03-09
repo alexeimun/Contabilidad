@@ -61,10 +61,10 @@
                 $Valor = $valor['PRECIO'] * $valor['CANTIDAD'];
                 $Des = $valor['PRECIO'] * ($valor['DESCUENTO'] / 100);
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_COSTO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'D', $valor['CANTIDAD'], 0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_COSTO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'D', $valor['CANTIDAD'], 0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P');
 
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_INVENTARIO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'],0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_INVENTARIO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'],0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P');
 
                 $Secuencia ++;
                 $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_VENTAS'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], $Valor, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'],'P');
@@ -77,7 +77,7 @@
             //FORMAS DE PAGO
             foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor)
             {
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT" . $Consecutivo, 'D', 1, $valor['VALOR'], 0,
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['ID_CUENTA'], 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT" . $Consecutivo, 'D', 1, $valor['VALOR'], 0,
                     $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
                 $TotalPagos += $valor['VALOR'];
             }
