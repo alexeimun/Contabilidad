@@ -249,53 +249,228 @@
             $Tam = count($Cuentas);
             $Ctas = [];
             $pos = 0;
+            $tclase= 0;
+            $tgrupo= 0;
+            $tcta= 0;
+            $tsubcta= 0;
+            $taux= 0;
+            $tsubaux= 0;
 
-            for ($i = $Tam - 1; $i > - 1; $i --) {
+            for ($i = $Tam - 2; $i > - 1; $i --) {
 
-                $fsubaux = false;
-                $faux = false;
-                $fsubcuenta = false;
-                $fsubcuenta = false;
-                $fcuenta = false;
-                $fgrupo = false;
-                $fclase = false;
-                $totalaux = 0;
-                $totalaux = 0;
-                $totalaux = 0;
-                $totalaux = 0;
-                $totalaux = 0;
+                if (isset($Cuentas[$i - 1]))
+                    $C1 = $Cuentas[$i - 1]['CODIGO'] . '';
+                else $C1 = '';
 
-                $C = $Cuentas[$i]['CODIGO'] . '';
+                $C2 = $Cuentas[$i]['CODIGO'] . '';
 
-                $Clase = strlen($C) >= 1 ? $C[0] : '';
+                if (isset($Cuentas[$i + 1]))
+                    $C3 = $Cuentas[$i + 1]['CODIGO'] . '';
+                else $C3 = '';
+/*
+                $Clase1 = strlen($C1) >= 1 ? $C1[1] : '';
 
-                $Grupo = strlen($C) >= 2 ? $C[1] : '';
+                $Grupo1 = strlen($C1) >= 2 ? $C1[1] : '';
+                $Grupo2 = strlen($C2) >= 2 ? $C2[1] : '';
+                $Grupo3 = strlen($C3) >= 2 ? $C3[1] : '';
 
-                $Cuenta = strlen($C) >= 4 ? $C[2] . $C[3] : '';
+                $Cuenta1 = strlen($C1) >= 4 ? $C1[2] . $C1[3] : '';
+                $Cuenta2 = strlen($C2) >= 4 ? $C2[2] . $C2[3] : '';
+                $Cuenta3 = strlen($C3) >= 4 ? $C3[2] . $C3[3] : '';
 
-                $SubCuenta = strlen($C) >= 6 ? $C[4] . $C[5] : '';
+                $SubCuenta1 = strlen($C1) >= 6 ? $C1[4] . $C1[5] : '';
+                $SubCuenta2 = strlen($C2) >= 6 ? $C2[4] . $C2[5] : '';
+                $SubCuenta3 = strlen($C3) >= 6 ? $C3[4] . $C3[5] : '';
 
-                $Auxiliar = strlen($C) >= 8 ? $C[6] . $C[7] : '';
+                $Auxiliar1 = strlen($C1) >= 8 ? $C1[6] . $C1[7] : '';
+                $Auxiliar2 = strlen($C2) >= 8 ? $C2[6] . $C2[7] : '';
+                $Auxiliar3 = strlen($C3) >= 8 ? $C3[6] . $C3[7] : '';
 
-                $SubAuxiliar = strlen($C) == 10 ? $C[8] . $C[9] : '';
+                $SubAuxiliar = strlen($C1) == 10 ? $C1[8] . $C1[9] : '';
+                $SubAuxiliar2 = strlen($C2) == 10 ? $C2[8] . $C2[9] : '';
+                $SubAuxiliar3 = strlen($C3) == 10 ? $C3[8] . $C3[9] : '';
+               */
 
-                if ($SubAuxiliar != '') {
-                    $Ctas[$pos]['CODIGO'] = $SubAuxiliar;
+                #Inicio desede abajo,sólo tengo un hermano mayor
+                if ($C3 == '' && strlen($C2) == strlen($C1)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
                     $Ctas[$pos]['SALDO'] = $this->TraeCuenta($Cuentas[$i]['ID_CUENTA']);
-                    $valor += $Ctas[$pos]['SALDO'];
-                    $fsubaux = true;
-                    $pos ++;
-                }
-                else if ($Auxiliar != '') {
-                    $Ctas[$pos]['CODIGO'] = $C;
 
-                    $Ctas[$pos]['SALDO'] = $valor;
-                    $faux = true;
-                    $pos ++;
+                    switch(strlen($C2))
+                    {
+                        case 6:
+                            $tsubcta+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 8:
+                            $taux+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 10:
+                            $tsubaux+=$Ctas[$pos]['SALDO'];
+                            break;
+                    }
+                    $pos++;
+                }
+                  #Inicio desde abajo, sólo tengo un padre arriba
+                else if ($C3 == '' && strlen($C2) > strlen($C1)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
+                    $Ctas[$pos]['SALDO'] = $this->TraeCuenta($Cuentas[$i]['ID_CUENTA']);
+
+                    switch(strlen($C2))
+                    {
+                        case 6:
+                            $tsubcta+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 8:
+                            $taux+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 10:
+                            $tsubaux+=$Ctas[$pos]['SALDO'];
+                            break;
+                    }
+                    $pos++;
+                }
+                #Llego y tengo un hijo
+                else if ($C1 == '' && strlen($C2) < strlen($C3)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
+                    $Ctas[$pos]['SALDO'] = $tclase;
+                    if(strlen($C2)==1) {$tclase+=$tgrupo;$tgrupo=0;}
+                }
+                #Tengo hermano mayor y menor
+                else if (strlen($C2) == strlen($C3) && strlen($C2) == strlen($C1)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
+                    $Ctas[$pos]['SALDO'] = $this->TraeCuenta($Cuentas[$i]['ID_CUENTA']);
+
+                    switch(strlen($C2))
+                    {
+                        case 6:
+                            $tsubcta+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 8:
+                            $taux+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 10:
+                            $tsubaux+=$Ctas[$pos]['SALDO'];
+                            break;
+                    }
+                    $pos++;
+                }
+                #Tengo sólo hermano menor y un padre
+                else if (strlen($C2) == strlen($C3) && strlen($C2) > strlen($C1)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
+                    $Ctas[$pos]['SALDO'] = $this->TraeCuenta($Cuentas[$i]['ID_CUENTA']);
+
+                    switch(strlen($C2))
+                    {
+                        case 6:
+                            $tsubcta+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 8:
+                            $taux+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 10:
+                            $tsubaux+=$Ctas[$pos]['SALDO'];
+                            break;
+                    }
+                    $pos++;
+                }
+                #Tengo un hijo menor y un vecino arriba
+                else if (strlen($C2) < strlen($C3) && strlen($C2) < strlen($C1)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
+
+                    switch(strlen($C2))
+                    {
+                        case 2:
+                            $tgrupo+=$tcta;
+                            $tcta=$tsubcta=$taux=$tsubaux=0;
+                            $Ctas[$pos]['SALDO'] =$tgrupo;
+                            break;
+                        case 4:
+                            $tcta+=$tsubcta;
+                            $tsubcta=$taux=$tsubaux=0;
+                            $Ctas[$pos]['SALDO'] =$tcta;
+                            break;
+                        case 6:
+                            $tsubcta+=$taux;
+                            $taux=$tsubaux=0;
+                            $Ctas[$pos]['SALDO']=$tsubcta;
+                            break;
+                        case 8:
+                            $taux+=$tsubaux;
+                            $tsubaux=0;
+                            $Ctas[$pos]['SALDO']=$taux;
+                            break;
+                    }
+                    $pos++;
+                }
+                #Tengo un vecino abajo y un hermano mayor
+                else if (strlen($C2) > strlen($C3) && strlen($C2) == strlen($C1)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
+                    $Ctas[$pos]['SALDO'] = $this->TraeCuenta($Cuentas[$i]['ID_CUENTA']);
+
+                    switch(strlen($C2))
+                    {
+                        case 6:
+                            $tsubcta+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 8:
+                            $taux+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 10:
+                            $tsubaux+=$Ctas[$pos]['SALDO'];
+                            break;
+                    }
+                    $pos++;
+                }
+                #Tengo un vecino abajo y un padre arriba
+                else if (strlen($C2) > strlen($C3) && strlen($C2) > strlen($C1)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
+                    $Ctas[$pos]['SALDO'] = $this->TraeCuenta($Cuentas[$i]['ID_CUENTA']);
+
+                    switch(strlen($C2))
+                    {
+                        case 6:
+                            $tsubcta+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 8:
+                            $taux+=$Ctas[$pos]['SALDO'];
+                            break;
+                        case 10:
+                            $tsubaux+=$Ctas[$pos]['SALDO'];
+                            break;
+                    }
+                    $pos++;
+                }
+                #Tengo padre arriba y un hijo abajo
+                else if (strlen($C2) < strlen($C3) && strlen($C2) > strlen($C1)) {
+                    $Ctas[$pos]['CODIGO'] = $C2;
+
+                    switch(strlen($C2))
+                    {
+                        case 2:
+                            $tgrupo+=$tcta;
+                            $tcta=$tsubcta=$taux=$tsubaux=0;
+                            $Ctas[$pos]['SALDO'] =$tgrupo;
+                            break;
+                        case 4:
+                            $tcta+=$tsubcta;
+                            $tsubcta=$taux=$tsubaux=0;
+                            $Ctas[$pos]['SALDO'] =$tcta;
+                            break;
+                        case 6:
+                            $tsubcta+=$taux;
+                            $taux=$tsubaux=0;
+                            $Ctas[$pos]['SALDO']=$tsubcta;
+                            break;
+                        case 8:
+                            $taux+=$tsubaux;
+                            $tsubaux=0;
+                            $Ctas[$pos]['SALDO']=$taux;
+                            break;
+                    }
+                    $pos++;
                 }
             }
         }
-
 
         private function TraeCuenta($IdCuenta)
         {
