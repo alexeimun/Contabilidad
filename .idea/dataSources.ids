@@ -30,6 +30,7 @@
       <column name="ID_CUENTA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="ID_EMPRESA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="USR_REGISTRO" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="TIPO_CONCEPTO" sqlType="TINYINT" precision="3" scale="0" nullable="true" jdbcType="-6"/>
       <column name="CONCEPTO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="ESTADO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="FECHA_REGISTRO" sqlType="DATE" precision="10" scale="0" nullable="true" jdbcType="91"/>
@@ -129,7 +130,6 @@
     <table name="t_formas_pago" schema="" catalog="contasistin" type="TABLE">
       <column name="ID_F_PAGO" sqlType="BIGINT" precision="19" scale="0" nullable="false" jdbcType="-5" autoIncrement="true"/>
       <column name="ID_CUENTA" sqlType="BIGINT" precision="19" scale="0" nullable="true" jdbcType="-5"/>
-      <column name="CODIGO_F_PAGO" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
       <column name="NOMBRE_F_PAGO" sqlType="VARCHAR" precision="50" scale="0" nullable="true" jdbcType="12"/>
       <column name="REQUIERE_ENTIDAD" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>
       <column name="REQUIERE_NUMERO" sqlType="BINARY" precision="1" scale="0" nullable="true" jdbcType="-2"/>

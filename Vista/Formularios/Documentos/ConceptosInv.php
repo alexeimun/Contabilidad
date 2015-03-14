@@ -1,4 +1,3 @@
-
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -8,7 +7,7 @@
     include '../../../Clases/Componentes.php';
 
     session_start();
-    if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
+    if (isset($_SESSION['login']) == '' )
         echo '<script > self.location = "/"</script>';
 
     $Master = new Master();
@@ -16,12 +15,11 @@
     $Parametros = new cls_Parametros();
     $Contabilidad = new cls_Contabilidad();
 
-
     $Cuenta = '<option value ="0" selected>-- Seleccione Una Cuenta --</option>';
     $Tercero = '<option value ="0" selected>-- Seleccione Un Tercero --</option>';
 
     foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave1 => $valor1)
-        $Cuenta .= '<option value ="' . $valor1['ID_CUENTA'] . '" >' . $valor1['CODIGO'] . ' - ' . $valor1['NOMBRE'] . '</option>';
+        $Cuenta .= '<option value ="' . $valor1['ID_CUENTA'] . '">' . $valor1['CODIGO'] . ' - ' . $valor1['NOMBRE'] . '</option>';
 
     foreach ($Parametros->TraeTerceros($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
         $Tercero .= '<option style="text-align:left;" value ="' . $valor['ID_TERCERO'] . '">' . $valor['N_COMPLETO'] . '</option>';
@@ -29,7 +27,7 @@
 ?>
 <html>
 <head>
-    <title>Nota Contable</title>
+    <title>Saldos Iniciales</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -56,14 +54,14 @@
 
         <div id="main">
             <center>
-                <h3><b>NOTA CONTABLE</b></h3><br>
+                <h3><b>SALDOS INICIALES</b></h3><br>
 
 
                 <input type="button" id="AgregarCampo" class="btnAzul" value="Agregar Campo" style="width:160px;">
 
                 <form action="">
                     <div id="contenedor"></div>
-                    <input type="hidden" name="saldos">
+                    <input type="hidden" name="inventario">
                 </form>
 
         </div>
@@ -79,7 +77,7 @@
 <script>
     $(document).ready(function () {
 
-        $('body').on('change', '#contenedor div div select#cmbCuenta', function () {
+        $('body').on('change', '#contenedor div div select#cmbConcepto', function () {
             var obj = $(this);
             if ($(this).val() > 0) {
                 $.ajax({
@@ -121,17 +119,20 @@
 
             + '<div> <input  type="date"  style="padding-bottom:5px;" name="Fecha[]"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required> </div>'
 
-            + '<div> <select id="cmbCuenta" name="cmbCuenta[]"  style="width:200px;" class="chosen-select" >'
-            + ' <?=$Cuenta ?> '
-            + ' </select></div>'
-
-
+            + '<div ><select class="chosen-select" name="cmbConcepto[]" style="width: 200px;">'
+        +' <option value="0">--Seleccione un concepto</option>'
+        +' <option value="2">Inventario Inicial</option>'
+        +' <option value="3">Inventario Final</option>'
+        +' <option value="4">Compras</option>'
+        +' <option value="5">Devoluciones Compras</option>'
+        +' <option value="6">Descuentos Compras</option>'
+        +'</select></div>'
 
             + '<div> <select  name="cmbTercero[]" id="cmbTercero" class="chosen-select" style="width:200px;" >'
             + ' <?=$Tercero ?> '
             + '</select></div>'
 
-            + '<div> <select  name="cmbTipoMov[]" class="chosen-select" id="cmbTipoMov" style="width:100px;">'
+            + '<div> <select id="cmbTipoMov"  name="cmbTipoMov[]" class="chosen-select"  style="width:100px;">'
             + ' <option value="D" selected>DEBITO</option>'
             + ' <option value="C">CREDITO</option>'
             + ' </select></div>'
@@ -144,7 +145,6 @@
             x++; //text box increment
         }
 
-
         $(AddButton).click(function () {
             if (x <= MaxInputs) //max input box allowed
             {
@@ -152,13 +152,17 @@
                 //agregar campo
                 $(contenedor).append
                 ('<div>'
-
                 + ' <div><div id="fila"  class="btnAzul" style="height: 13px;width: 24px;padding: 6px;">' + (x + 1) + '</div></div>'
                 + '<div> <input  type="date"  style="padding-bottom:5px;" name="Fecha[]"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required> </div>'
 
-                + '<div> <select id="cmbCuenta" name="cmbCuenta[]"  class="chosen-select" style="width:200px;">'
-                + ' <?=$Cuenta ?> '
-                + ' </select></div>'
+                + '<div ><select class="chosen-select" name="cmbConcepto[]" style="width: 200px;">'
+                +' <option value="0">--Seleccione un concepto</option>'
+                +' <option value="2">Inventario Inicial</option>'
+                +' <option value="3">Inventario Final</option>'
+                +' <option value="4">Compras</option>'
+                +' <option value="5">Devoluciones Compras</option>'
+                +' <option value="6">Descuentos Compras</option>'
+                +'</select></div>'
 
                 + '<div> <select  name="cmbTercero[]" id="cmbTercero" class="chosen-select" style="width:200px;">'
                 + ' <?=$Tercero ?> '
@@ -221,7 +225,7 @@
                 find2 = $(element).find('input.Valor');
 
                 //Validaciones
-                if ($(element).find('select#cmbCuenta').val() == 0) {
+                if ($(element).find('select#cmbConcepto').val() == 0) {
                     erCuenta = true;
                     return false;
                 }

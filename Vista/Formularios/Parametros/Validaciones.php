@@ -16,22 +16,10 @@
 
         if ($Parametros->_ExisteCodigo == 1) {
             echo '<span id="lblError" class="Error">Este codigo Ya existe</span><br><br>
-               <input type="button"  class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"  style="width:200px; background-color: #A9A9A9;cursor: auto" readonly/>';
+               <input type="button"  class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"  style="width:200px; background-color: #A9A9A9;cursor: auto;" readonly/>';
         } else {
             echo '<span id="lblError" class="Error"></span><br>
             <input type="submit"  class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"  style="width:200px;"/>';
-        }
-
-    } else if ($_GET['action'] == 'editarformapago') {
-
-        $Parametros->ValidaCodigoFormaPagoEditar($_GET['txtCodigo'], $_SESSION['login'][0]["ID_EMPRESA"], $_GET['id']);
-
-        if ($Parametros->_ExisteCodigo == 1) {
-            echo '<span id="lblError" class="Error">Este codigo Ya existe</span><br><br>
-             <input type="button"  class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"  style="width:200px; background-color: #A9A9A9; cursor: auto;" readonly/>';
-        } else {
-            echo '<span id="lblError" class="Error"></span><br>
-          <input type="submit"  class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"  style="width:200px;"/>';
         }
 
     } else if ($_GET['action'] == 'insertarusuario') {

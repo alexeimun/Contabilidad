@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -92,17 +92,11 @@
 
 <script>
 
-    function ValidaCodigo() {
-        $("#botones").load("Validaciones.php?action=editarformapago&txtCodigo=" + document.getElementById('txtCodigo').value + "&id=" +<?= $_GET['id'] ?>);
-    }
-
-
     function check() {
         document.getElementById('txtRequiereNumero').value = "0";
         if (document.getElementById('chkRequiereNumero').checked) {
             document.getElementById('txtRequiereNumero').value = "1";
         }
-
     }
 
     function check2() {

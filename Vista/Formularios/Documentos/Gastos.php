@@ -207,7 +207,6 @@
                         </tr>
                         </table>
                     <br/>
-
                     <div id="formas"></div>
                     <br>
                     <input type="submit" id="finalizar" value="FINALIZAR" style="width: 200px;" class="btnAzul"/>

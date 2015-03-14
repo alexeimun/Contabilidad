@@ -61,13 +61,13 @@
                 $Valor = $valor['PRECIO'] * $valor['CANTIDAD'];
                 $Des = $valor['PRECIO'] * ($valor['DESCUENTO'] / 100);
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_COSTO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'D', $valor['CANTIDAD'], 0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_COSTO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'D', $valor['CANTIDAD'], 0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P',0,0,$_POST['cmbTipoPago']);
 
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_INVENTARIO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'],0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_INVENTARIO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'],0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P',0,0,$_POST['cmbTipoPago']);
 
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_VENTAS'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], $Valor, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'],'P');
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_VENTAS'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], $Valor, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'],'P',0,0,$_POST['cmbTipoPago']);
 
                 $Total += $Valor;
                 $Descuento += $Des;
@@ -150,7 +150,6 @@
     #wrapper {
         height: 150%;
     }
-
 
 </style>
 <script>

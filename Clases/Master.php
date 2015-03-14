@@ -29,6 +29,7 @@
                     $menu .= '<li ><a href="../Documentos/NotaContable.php">Nota Contable</a></li>';
                 if ($valor[6][1] == 1)
                     $menu .= '<li ><a href="../Documentos/SaldosIniciales.php">Saldos Iniciales</a></li>';
+                    $menu .= '<li ><a href="../Documentos/ConceptosInv.php">Saldos</a></li>';
                 $menu .= ' <li ><a href="../Documentos/ReimpresionDocumentos.php?id=0">Reimpresión Documentos</a></li>
             </ul>
         </li>
@@ -46,9 +47,6 @@
                     $menu .= '<li ><a href="../Contabilidad/EstadoResultado.php">Estado de Resultado</a></li>';
                 if ($valor[14][1] == 1)
                     $menu .= '<li ><a href="../Contabilidad/BalanceGeneral.php">Balance General</a></li>';
-                if ($valor[15][1] == 1)
-                    $menu .= '<li ><a href="../Contabilidad/LibroDiario.php">Libro Diario</a></li>';
-
                 $menu .= '
               <!--<li ><a href="#">Automatic Fails <span>2</span></a></li>--> 
             </ul>
@@ -65,7 +63,6 @@
         </li>
         <li class="item4"><a href="#">Inventario</a>
             <ul>';
-
                 if ($valor[18][1] == 1)
                     $menu .= '<li ><a href="../Inventario/InventarioInicial.php">Inventario Inicial</a></li>';
                 if ($valor[19][1] == 1)
@@ -76,8 +73,6 @@
                     $menu .= '<li ><a href="../Inventario/DevolucionesCompras.php">Devoluciones Compras</a></li>';
                 if ($valor[22][1] == 1)
                     $menu .= '<li ><a href="../Inventario/DescuentosCompras.php">Descuentos Compras</a></li>';
-                if ($valor[23][1] == 1)
-                    $menu .= '<li ><a href="../Inventario/CostoVenta.php">Costo de Venta</a></li>';
                 $menu .= '
              </ul>
         </li>
@@ -110,7 +105,8 @@
                     $menu .= '<li ><a href="../Parametros/ProductosServiciosGrupos.php?me=1">Poductos y Servicios</a></li>
                      <li ><a href="../Parametros/FormasDePago.php">Formas de Pago</a></li>';
                 $menu .= '<li ><a href="../Parametros/Entidades.php">Entidades</a></li>';
-                $menu .= '<li ><a href="../Parametros/Conceptos.php">Conceptos</a></li>';
+                $menu .= '<li ><a href="../Parametros/ConceptosGI.php">Conceptos Gastos/Ingresos</a></li>';
+                $menu .= '<li ><a href="../Parametros/ConceptosInventario.php">Conceptos Inventarios</a></li>';
                 $menu .= '
             </ul>
         </li>

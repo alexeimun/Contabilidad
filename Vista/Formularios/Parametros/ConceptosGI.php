@@ -1,57 +1,48 @@
-
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
     include '../../../Clases/cls_Parametros.php';
     session_start();
-    if (isset($_SESSION['login']) != '') {
-        $Master = new Master();
-        $menu = $Master->Menu();
-        $Parametros = new cls_Parametros();
 
-        $tabla = '<table id="table" class="table" style="width:90%;">
-        <thead><tr>
-            <th style="text-align:left;">NOMBRE</th>
-            <th style="text-align:left;">TIPO DOC.</th>
-            <th style="text-align:left;">DOC. IDENTIDAD</th>
-            <th style="text-align:left;">DIRECCIÓN</th>
-            <th style="text-align:left;">TELEFONO</th>
-            <th style="text-align:left;">CELULAR</th>
-            <th style="text-align:left;">E-MAIL</th>
-            <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
-
-        $cont = 0;
-
-        foreach ($Parametros->TraeTerceros($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
-            $cont ++;
-            $tabla .= '<tr><td style="text-align:left;">' . $valor['N_COMPLETO'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['TIPO_DOCUMENTO'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['NUM_DOCUMENTO'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['DIRECCION'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['TELEFONO'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['CELULAR'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['EMAIL'] . '</td>';
-            $tabla .= '<td style="text-align:center;">
-           <a href="CrearTercero.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
-          <a href="ModificarTercero.php?id=' . $valor['ID_TERCERO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
-          <a onclick="EliminarTercero(' . $valor['ID_TERCERO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
-                </td></tr>';
-        }
-
-        if ($cont == 0) {
-            $tabla .= '<tr><td colspan=8 style="text-align:center;"><a href="CrearTercero.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
-        }
-
-        $tabla .= '</tbody></table>';
-
-    } else {
+    if (isset($_SESSION['login']) == '')
         echo '<script > self.location = "/"</script>';
+
+    $Master = new Master();
+    $menu = $Master->Menu();
+    $Parametros = new cls_Parametros();
+
+    $tabla = '<table id="table" class="table" style="width:90%;">    
+        <thead><tr>
+            <th style="text-align:left;">CÓDIGO</th>
+            <th style="text-align:left;">CONCEPTO</th>
+            <th style="text-align:left;">CUENTA</th>
+            <th style="text-align:left;">FECHA REGISTRO</th>
+            <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
+    $cont = 0;
+
+    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"],0) as $llave => $valor) {
+        $cont ++;
+        $tabla .= '<tr><td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . ($valor['CONCEPTO']==0?'Gastos':'Ingresos') . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE_CUENTA'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
+        $tabla .= '<td style="text-align:right;">
+           <a href="CrearConceptoGI.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarConceptoCI.php?id=' . $valor['ID_CONCEPTO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarConcepto(' . $valor['ID_CONCEPTO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
+                </td></tr>';
     }
+    if ($cont == 0) {
+        $tabla .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearConceptoGI.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
+    }
+
+    $tabla .= '</tbody></table>';
+
 ?>
 <html>
 <head>
-    <title>Terceros</title>
+    <title>Conceptos Gastos/Ingresos</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -60,6 +51,7 @@
     <script src="../../Js/menu.js"></script>
     <script type="text/javascript" language="javascript" src="../../Js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="../../Js/jquery.dataTables.js"></script>
+
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
 </head>
 <style type="text/css">
@@ -67,9 +59,7 @@
 </style>
 
 <script>
-
     $(document).ready(function () {
-
         $('#table').dataTable({
             "language": {
                 "sProcessing": "Procesando...",
@@ -94,15 +84,13 @@
                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-
             }
         });
     });
 
-
-    function EliminarTercero(id) {
-        if (confirm("Seguro que quieres eliminar este tercero?")) {
-            document.location.href = 'EliminarTercero.php?id=' + id;
+    function EliminarConcepto(id) {
+        if (confirm("Seguro que quieres eliminar este concepto ?")) {
+            window.location.href = 'EliminarConceptoGI.php?id=' + id;
         }
     }
 </script>
@@ -123,14 +111,11 @@
 
         <div id="main">
             <center>
-                <h3><b>TERCEROS</b></h3><br>
+                <h3><b>CONCEPTOS GASTOS/INGRESOS</b></h3><br>
                 <?= $tabla ?>
-
             </center>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

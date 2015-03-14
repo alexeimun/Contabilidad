@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -22,20 +21,37 @@
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
     $cont = 0;
 
-    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
+    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"], 1) as $llave => $valor) {
         $cont ++;
         $tabla .= '<tr><td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
-        $tabla .= '<td style="text-align:left;">' . $valor['CONCEPTO'] . '</td>';
+        switch ($valor['CONCEPTO']) {
+            case 2:
+                $tabla .= '<td style="text-align:left;">Inventario Inicial</td>';
+                break;
+            case 3:
+                $tabla .= '<td style="text-align:left;">Inventario Final</td>';
+                break;
+            case 4:
+                $tabla .= '<td style="text-align:left;">Compras </td>';
+                break;
+            case 5:
+                $tabla .= '<td style="text-align:left;">Devoluciones Compras</td>';
+                break;
+            case 6:
+                $tabla .= '<td style="text-align:left;">Descuentos Compras</td>';
+                break;
+        }
+
         $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE_CUENTA'] . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
         $tabla .= '<td style="text-align:right;">
-           <a href="CrearConcepto.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
-          <a href="ModificarConcepto.php?id=' . $valor['ID_CONCEPTO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
-          <a onclick="EliminarConcepto(' . $valor['ID_CONCEPTO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
+           <a href="CrearConceptoInventario.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarConceptoInventario.php?id=' . $valor['ID_CONCEPTO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarConcepto(' . $valor['ID_CONCEPTO'] . '); return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
     }
     if ($cont == 0) {
-        $tabla .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearConcepto.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
+        $tabla .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearConceptoInventario.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
     }
 
     $tabla .= '</tbody></table>';
@@ -43,7 +59,7 @@
 ?>
 <html>
 <head>
-    <title>Conceptos</title>
+    <title>Conceptos Inventario</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -60,7 +76,6 @@
 </style>
 
 <script>
-
     $(document).ready(function () {
         $('#table').dataTable({
             "language": {
@@ -92,9 +107,9 @@
     });
 
     function EliminarConcepto(id) {
-        if (confirm("Seguro que quieres eliminar este concepto ?")) {
-            window.location.href = 'EliminarConcepto.php?id=' + id;
-        }
+        if (confirm("Seguro que quieres eliminar este concepto ?"))
+            window.location.href = 'EliminarConceptoInventario.php?id=' + id;
+
     }
 </script>
 
@@ -108,20 +123,15 @@
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_USUARIO"] ?></span></h3>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
-
     <div id="content-wrap">
         <?= $menu ?>
-
         <div id="main">
             <center>
-                <h3><b>CONCEPTOS</b></h3><br>
+                <h3><b>CONCEPTOS INVENTARIO</b></h3><br>
                 <?= $tabla ?>
-
             </center>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

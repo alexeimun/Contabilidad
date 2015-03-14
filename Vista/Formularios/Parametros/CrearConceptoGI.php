@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -8,8 +7,6 @@
     session_start();
     if (isset($_SESSION['login']) != '') {
 
-        if ($_GET['id'] == "")
-            echo '<script >self.location = "Conceptos.php"  </script>';
 
         $Master = new Master();
         $menu = $Master->Menu();
@@ -18,39 +15,26 @@
         $Contabilidad = new cls_Contabilidad();
         $options = '<option value ="0">-- Seleccione Una Cuenta --</option>';
 
-        foreach ($Parametros->TraeConcepto($_GET['id']) as $llave => $valor) {
-            $cmbconcepto = '';
-            $txtComentarios = $valor['DESCRIPCION'];
+        foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
+            $options .= '<option value="' . $valor['ID_CUENTA'] . '"  style="text-align=left;">'  . $valor['CODIGO'] ." - ".$valor['NOMBRE'] .'</option>';
 
-            if ($valor['CONCEPTO'] == "0")
-                $cmbconcepto .= '<option value="0" selected>Gastos</option> <option value="1">Ingresos</option>';
-            else $cmbconcepto .= '<option value="0">Gastos</option> <option value="1" selected>Ingresos</option>';
 
-            foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave1 => $valor1) {
-                if ($valor['ID_CUENTA'] == $valor1['ID_CUENTA']) {
-                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['CODIGO'] ." - ".$valor1['NOMBRE'] .'</option>';
-                } else {
-                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '">' . $valor1['CODIGO']  ." - ".$valor1['NOMBRE'] . '</option>';
-                }
-            }
-        }
-
-        if (isset($_POST['btnGuardar']) != '') {
+        if (!empty($_POST) != '') {
             if ($_POST['txtCuenta'] != 0) {
 
-                $Parametros->ActualizaConcepto( $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
-                    $_SESSION['login'][0]["ID_USUARIO"], $_GET['id']);
+                $Parametros->InsertaConcepto( $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
+                    $_SESSION['login'][0]["ID_USUARIO"],0, $_SESSION['login'][0]["ID_EMPRESA"]);
 
-                echo '<script > alert("Se modificó el concepto correctamente.");self.location = "Conceptos.php" </script>';
+                echo '<script > alert("Se creó el concepto correctamente.");self.location = "ConceptosGI.php" </script>';
 
-            } else echo '<script >alert("Debe seleccionar una cuenta."); self.location = "ModificarConcepto.php" </script>';
+            } else echo '<script >alert("Debe seleccionar una cuenta."); self.location = "CrearConceptoGI.php" </script>';
         }
     } else echo '<script >self.location = "/" </script>';
 
 ?>
 <html>
 <head>
-    <title>Modificar Concepto</title>
+    <title>Crear Concepto</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -58,12 +42,11 @@
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
-    <?php include '../../Css/css.php'; ?>
+    <?php include '../../Css/css.php' ?>
 </head>
 <style type="text/css">
     select {
         width: 300px;
-
     }
 
     input[type='text'] {
@@ -81,7 +64,7 @@
 
 <script>
     function Validar() {
-        $("#botones").load("CrearConcepto.php?action=validarcuenta");
+        $("#botones").load("CrearConceptoGI.php?action=validarcuenta");
     }
 
 </script>
@@ -103,20 +86,21 @@
         <div id="main">
             <form method="POST">
                 <center>
-                    <h3><b>MODIFICAR CONCEPTO</b></h3><br>
+                    <h3><b>CREAR CONCEPTO</b></h3><br>
                     <table style="width: 35%;color: #33373d">
                         <tr>
                             <td><br>Concepto</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><select name="txtConcepto" class="chosen-select" style="width: 290px;">
-                                    <?= $cmbconcepto; ?>
+                                <br><select class="chosen-select" name="txtConcepto" style="width: 290px;">
+                                    <option value="0">Gastos</option>
+                                    <option value="1">Ingresos</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td><br>Cuenta</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><select name="txtCuenta" class="chosen-select" style="width: 290px;">
+                                <br><select class="chosen-select" name="txtCuenta" style="width: 290px;">
                                     <?= $options; ?>
                                 </select>
                             </td>
@@ -125,7 +109,7 @@
                             <td><br>Decripción</td>
                             <td style="padding-left: 10px;text-align: right;">
                                 <br><textarea style="width: 290px;" name="txtDescripcion" maxlength="500"
-                                              placeholder="Ingrese los comentarios"><?= $txtComentarios; ?></textarea>
+                                              placeholder="Ingrese los comentarios"></textarea>
                                 <br> Máximo 500 caracteres
                             </td>
                         </tr>

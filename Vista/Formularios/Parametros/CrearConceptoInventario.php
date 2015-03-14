@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -22,20 +21,19 @@
 
         if (isset($_POST['btnGuardar']) != '') {
             if ($_POST['txtCuenta'] != 0) {
-
                 $Parametros->InsertaConcepto( $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
-                    $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
+                    $_SESSION['login'][0]["ID_USUARIO"],1, $_SESSION['login'][0]["ID_EMPRESA"]);
 
-                echo '<script > alert("Se creó el concepto correctamente.");self.location = "Conceptos.php" </script>';
+                echo '<script > alert("Se creó el concepto correctamente.");self.location = "ConceptosInventario.php" </script>';
 
-            } else echo '<script >alert("Debe seleccionar una cuenta."); self.location = "CrearConcepto.php" </script>';
+            } else echo '<script >alert("Debe seleccionar una cuenta."); self.location = "CrearConceptoInventario.php" </script>';
         }
     } else echo '<script >self.location = "/" </script>';
 
 ?>
 <html>
 <head>
-    <title>Crear Concepto</title>
+    <title>Crear Concepto Inventario</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -63,12 +61,6 @@
     }
 </style>
 
-<script>
-    function Validar() {
-        $("#botones").load("CrearConcepto.php?action=validarcuenta");
-    }
-
-</script>
 
 <body>
 <div id="wrap">
@@ -88,19 +80,22 @@
             <form method="POST">
                 <center>
                     <h3><b>CREAR CONCEPTO</b></h3><br>
-                    <table style="width: 35%;color: #33373d">
+                    <table style="width: 35%;color: #33373d;">
                         <tr>
                             <td><br>Concepto</td>
-                            <td style="padding-left: 10px;text-align: right;">
-                                <br><select class="chosen-select" name="txtConcepto" style="width: 290px;">
-                                    <option value="0">Gastos</option>
-                                    <option value="1">Ingresos</option>
+                            <td style="padding-left: 10px;text-align: center;">
+                                <br><select class="chosen-select" name="txtConcepto" style="">
+                                    <option value="2">Inventario Inicial</option>
+                                    <option value="3">Inventario Final</option>
+                                    <option value="4">Compras</option>
+                                    <option value="5">Devoluciones Compras</option>
+                                    <option value="6">Descuentos Compras</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td><br>Cuenta</td>
-                            <td style="padding-left: 10px;text-align: right;">
+                            <td style="padding-left: 10px;text-align: center;">
                                 <br><select class="chosen-select" name="txtCuenta" style="width: 290px;">
                                     <?= $options; ?>
                                 </select>
@@ -109,16 +104,14 @@
                         <tr>
                             <td><br>Decripción</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><textarea style="width: 290px;" name="txtDescripcion" maxlength="500"
-                                              placeholder="Ingrese los comentarios"></textarea>
+                                <br><textarea style="width: 290px;" name="txtDescripcion" maxlength="500" placeholder="Ingrese los comentarios"></textarea>
                                 <br> Máximo 500 caracteres
                             </td>
                         </tr>
                     </table>
                     <br>
 
-                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
-                                                value="GUARDAR" style="width:200px;"/>
+                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
                     </ul>
                 </center>
 
