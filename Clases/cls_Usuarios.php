@@ -2,6 +2,7 @@
 
     class cls_Usuarios
     {
+
         public $_prueba;
         public $_ExisteCorreo;
         public $_ExisteDocumento;
@@ -52,7 +53,7 @@
             $credencial = $resulset->fetchAll();
 
             if (isset($credencial[0])) {
-                switch ($credencial[0][3]) { #Usario
+                switch ($credencial[0][3]) {
                     case 0 :
                         $query = "SELECT  t_usuarios.ID_USUARIO,
 					t_usuarios.NOMBRE AS NOMBRE_USUARIO,
@@ -63,7 +64,7 @@
 					t_usuarios.RAIZ,
 					t_empresas.NOMBRE AS NOMBRE_EMPRESA,
 					t_empresas.CANT_USUARIOS,
-					t_regimenes.NOMBRE as NOMBRE_REGIMEN,
+					t_regimenes.NOMBRE AS NOMBRE_REGIMEN,
 					concat('../../Formularios/Empresas/',t_empresas.LOGO) AS LOGO_EMPRESA,
 					t_empresas.ID_EMPRESA,
 					t_empresas.NIT,
@@ -81,7 +82,7 @@
 
 					 WHERE t_usuarios.ID_CREDENCIAL= '" . $credencial[0][0] . "' AND t_usuarios.ESTADO=1 AND t_empresas.ESTADO=1 AND t_vendedor.ESTADO=1";
                         break;
-                    case 1 : #Cliente
+                    case 1 :
                         $query = "SELECT
                      t_credenciales.EMAIL AS EMAIL,
 					t_credenciales.PASSWORD AS PASS,
@@ -99,7 +100,7 @@
 
                         break;
 
-                    case 2 : #Admin
+                    case 2 :
                         $query = "SELECT
                       t_admin.ID_ADMIN,
                       t_admin.ID_CREDENCIAL,
@@ -125,9 +126,9 @@
                 $_SESSION['login'] = $array;
 
                 return true;
-            } else
+            } else {
                 return FALSE;
-
+            }
         }
 
         public function TraeDatosUsuarios($IdUsuario)
@@ -240,6 +241,7 @@
 
         public function ValidaCorreo($Email)
         {
+
             $query = "SELECT CASE WHEN(SELECT EMAIL
 		FROM t_credenciales WHERE EMAIL='" . $Email . "')IS NULL THEN ('0') ELSE ('1') END";
 
@@ -254,6 +256,7 @@
 
         public function CantidadUsuarios($IdEmpresa)
         {
+
             $query = "SELECT COUNT(*) FROM t_credenciales
         INNER JOIN t_usuarios ON t_usuarios.ID_CREDENCIAL=t_credenciales.ID_CREDENCIAL
          WHERE t_usuarios.ID_EMPRESA=" . $IdEmpresa;
@@ -282,14 +285,15 @@
             $Campos = $resulset->fetchAll();
             $datos = '';
 
-            foreach ($Campos as $key => $datos)
-                $this->_ExisteCorreo = $datos[0];
-
+            foreach ($Campos as $key => $datos) {
+                $this->_ExisteCorreo = ($datos[0]);
+            }
             return $datos;
         }
 
         public function ValidaDocumento($Doc)
         {
+
             $query = "SELECT CASE WHEN( SELECT DOCUMENTO
         FROM t_usuarios WHERE DOCUMENTO='" . $Doc . "')
         IS NULL THEN ('0') ELSE ('1') END";
@@ -389,7 +393,7 @@
                 FROM
                 t_permisos
                 INNER JOIN t_modulo ON t_modulo.ID_MODULO = t_permisos.ID_MODULO
-                WHERE t_permisos.ID_USUARIO='" . $identi . "' AND   VISIBLE= 1 ORDER BY ID_MODULO";
+                WHERE t_permisos.ID_USUARIO='" . $identi . "' AND   VISIBLE=1 ORDER BY ID_MODULO";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
@@ -430,7 +434,7 @@
             $query = "UPDATE  t_permisos SET  SI_O_NO=$per
            , FECHA_REGISTRO=now()  WHERE (ID_USUARIO='" . $usu . "' AND ID_MODULO='" . $mod . "')";
 
-         return $this->_DB->Exec($query) > 0;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TienePermiso($nombre, $idUser)

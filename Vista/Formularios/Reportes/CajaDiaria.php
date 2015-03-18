@@ -1,4 +1,3 @@
-
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -11,10 +10,24 @@
     $Master = new Master();
     $menu = $Master->Menu();
 
+    $Desde = date("Y") . '-' . date("m") . '-' . date("d");
+    $Hasta = date("Y") . '-' . date("m") . '-' . date("d");
+
+    if (isset($_POST['btnGenerar']) != '') {
+
+        $_SESSION['DESDE_CUADRE_CAJA'] = $_POST['txtDesde'];
+        $_SESSION['HASTA_CUADRE_CAJA'] = $_POST['txtHasta'];
+
+        $Desde = $_POST['txtDesde'];
+        $Hasta = $_POST['txtHasta'];
+
+        echo '<script >window.open("ImpresionCajaDiaria.php"); </script>';
+    }
+
 ?>
 <html>
 <head>
-    <title>Caja Menor</title>
+    <title>Libro Diario</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
@@ -39,15 +52,20 @@
         <?= $menu ?>
 
         <div id="main">
-            <center>
-                <h3><b>CAJA MENOR</b></h3><br>
+            <form method="POST">
+                <center>
+                    <h3><b>CAJA DIARIA </b></h3><br>
 
-
-            </center>
+                    Desde <input type="date" id="txtDesde" name="txtDesde" value="<?= $Desde; ?>" required>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Hasta <input type="date" id="txtHasta" name="txtHasta" value="<?= $Hasta; ?>" required>
+                    <br><br><br>
+                    <input type="submit" id="btnGenerar" class="btnAzul" name="btnGenerar" value="Generar"
+                           style="width:100px;"/>
+                </center>
+            </form>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

@@ -118,7 +118,7 @@
         $tabla1 .= '</tbody></table>';
         $tabla2 .= '</tbody></table>';
 
-        $Exportar .= '<th>TOTAL ACTIVOS: $ '.number_format($activos, 2, ',', '.').'</th><th></th><th>TOTAL PASIVOS + PATRIMONIO: $ '.number_format($pasivos + $patrimonio, 2, ',', '.').'</th>';
+        $Exportar .= '<th>TOTAL ACTIVOS: $ ' . number_format($activos, 2, ',', '.') . '</th><th></th><th>TOTAL PASIVOS + PATRIMONIO: $ ' . number_format($pasivos + $patrimonio, 2, ',', '.') . '</th>';
         $Exportar .= '</tbody></table>';
     }
 ?>
@@ -218,14 +218,15 @@
                 <h3><b>BALANCE GENERAL</b></h3>
 
                 <form method="post">
-                  Fecha: <input type="date" name="fecha" value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>"
-                           required>
+                    Fecha: <input type="date" name="fecha" value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>"
+                                  required>
                     <input type="submit" value="Generar" class="btnAzul"/>
                     <input type="button" value="Exportar" class="btnAzul"/>
                 </form>
 
                 <br><br>
-              <span style="font-size: 15pt; color:lightslategrey;">Activos = $ <?= number_format($activos, 2, ',', '.') ?></span>
+                <span
+                    style="font-size: 15pt; color:lightslategrey;">Activos = $ <?= number_format($activos, 2, ',', '.') ?></span>
                 <hr/>
                 <?= $tabla1 ?>
                 <!--   PASIVOS-->
@@ -244,7 +245,7 @@
 
     $('input[value=Exportar]').on('click', function () {
         $("#temp").battatech_excelexport({
-            containerid: "exportar", datatype: 'table', worksheetName: 'Balance General'
+            containerid: "exportar", datatype: 'table', worksheetName: 'Balance General (<?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?>)'
         });
     });
 </script>

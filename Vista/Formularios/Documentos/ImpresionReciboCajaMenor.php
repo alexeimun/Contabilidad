@@ -35,7 +35,7 @@
         $pdf->SetX(30);
         $pdf->SetFont('Arial', 'B', 8);
 
-        $pdf->Cell(150, 6, 'CIUDAD Y FECHA: ' .ucfirst( strtolower( $valor['NOMBRE_CIUDAD'])) . ' ' . $valor['FECHA_REGISTRO'], 1, 0, 'L') . $pdf->Ln();
+        $pdf->Cell(150, 6, 'CIUDAD Y FECHA: ' . ucfirst(strtolower($valor['NOMBRE_CIUDAD'])) . ' ' . $valor['FECHA_REGISTRO'], 1, 0, 'L') . $pdf->Ln();
         $pdf->SetX(30);
         $pdf->Cell(100, 6, 'PAGADO A: ' . $valor['N_COMPLETO'], 1, 0, 'L');
         $pdf->SetFont('Arial', 'B', 9);

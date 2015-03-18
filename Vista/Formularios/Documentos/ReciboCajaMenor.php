@@ -27,11 +27,12 @@
     foreach ($Parametros->TraeCiudades() as $llave => $valor)
         $cmbCiudad .= '<option style="text-align:left;" value ="' . $valor['ID_CIUDAD'] . '">' . $valor['NOMBRE'] . ',&nbsp;&nbsp;' . $valor['DEPARTAMENTO'] . '</option>';
 
-    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
+    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"], 0) as $llave => $valor)
         $cmbConcepto .= '<option style="text-align:left;" value ="' . $valor['ID_CONCEPTO'] . '">' . $valor['CODIGO'] . " - " . $valor['CONCEPTO'] . " - " . $valor['NOMBRE_CUENTA'] . '</option>';
 
     $CajaMenor->TraeParametrosCajaMenor($_SESSION['login'][0]["ID_EMPRESA"]);
 
+    $Documentos->_IdParam = $CajaMenor->_IdParam;
     if (!empty($_POST)) {
 
         if ($_POST['cmbCiudad'] == '0')
@@ -44,8 +45,8 @@
         else {
             $Consecutivo = $CajaMenor->_Consecutivo;
 
-            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $Documentos->TraeConcepto($_POST['cmbConcepto']), 'C', $Consecutivo, 0, 0, 'TOTAL', 'D',
-                1, $_POST['txtValor'], 0, $_POST['txtDetalle'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'CM', $_POST['cmbConcepto'], 0, '', 0, '', $_POST['cmbCiudad']);
+            $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $Documentos->TraeCuentaConcepto($_POST['cmbConcepto']), 'C', $Consecutivo, 0, 1, 'TOTAL', 'D',
+                1, $_POST['txtValor'], 0, $_POST['txtDetalle'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], 'CM', $_POST['cmbConcepto'], 0, '', 0, '', $_POST['cmbCiudad']);
 
             $_SESSION['ConsecutivoCM'] = $Consecutivo;
 
@@ -96,7 +97,8 @@
                             </td>
                             <td style="text-align: right;">Fecha</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="date" name="Fecha"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
+                                <input type="date" name="Fecha"
+                                       value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>" required>
                             </td>
                         </tr>
                     </table>

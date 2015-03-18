@@ -21,6 +21,7 @@
     $cmbTercero = '<option value ="0">-- Seleccione Un Tercero --</option>';
     $cmbfPago = '<option value ="0">-- Seleccione Forma de Pago --</option>';
 
+
     $Egresos->TraeConsecutivoGastos($_SESSION['login'][0]["ID_EMPRESA"]);
 
     foreach ($Parametros->TraeFormasPago($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
@@ -29,16 +30,18 @@
     foreach ($Parametros->TraeTerceros($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
         $cmbTercero .= '<option style="text-align:left;" value ="' . $valor['ID_TERCERO'] . '">' . $valor['N_COMPLETO'] . '</option>';
 
-    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
+    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"], 0) as $llave => $valor)
         $cmbConcepto .= '<option style="text-align:left;" value ="' . $valor['ID_CONCEPTO'] . '">' . $valor['CODIGO'] . " - " . $valor['CONCEPTO'] . " - " . $valor['NOMBRE_CUENTA'] . '</option>';
 
     $Master = new Master();
     $menu = $Master->Menu();
 
+    $Documentos->_IdParam = $Egresos->_IdParam;
+
     if (!empty($_POST)) {
         if ($Egresos->TraeCantidadEgresosTemp($_SESSION['login'][0]["ID_USUARIO"]) == 0)
             echo '<script> alert("No se han agregados gastos a la tabla.") </script>';
-         else {
+        else {
             $Secuencia = 0;
             $Egresos->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]);
             $_SESSION['ReciboEgresos'] = 'no';
@@ -52,22 +55,22 @@
                 $p ++;
                 //Ingreso del valor base
                 $Documentos->InsertaMovimiento(0, 0, 0, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                    1, $valor['VALOR_BASE'], 0, $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'],$_POST['txtPor'], $valor['ID_CONCEPTO'], 0, $valor['FORMA_PAGO']);
+                    1, $valor['VALOR_BASE'], 0, $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], $_POST['txtPor'], $valor['ID_CONCEPTO'], 0, $valor['FORMA_PAGO']);
 
                 //Ingreso del IVA
                 $Documentos->InsertaMovimiento(0, 0, $Egresos->_IdCuentaGastos, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                    1, $valor['IVA'], 0, $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'],'I', 0, 0, $valor['FORMA_PAGO']);
+                    1, $valor['IVA'], 0, $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], 'I', 0, 0, $valor['FORMA_PAGO']);
 
                 //Ingreso del Consumo
                 $Documentos->InsertaMovimiento(0, 0, $Egresos->_IdCuentaConsumo, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, '', 'C',
-                    1, $valor['IMPU_CONSUMO'], 0, $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'Com', 0, 0, $valor['FORMA_PAGO']);
+                    1, $valor['IMPU_CONSUMO'], 0, $valor['DETALLE'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], 'Com', 0, 0, $valor['FORMA_PAGO']);
 
                 $Documentos->InsertaMovimiento(0, 0, 0, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, 'SUBTOTAL', '', 1, $Valor, 0, $valor['DETALLE'],
-                    $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], '', $valor['ID_CONCEPTO'], $Egresos->_ConsecutivoGastos, $valor['FORMA_PAGO']);
+                    $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], '', $valor['ID_CONCEPTO'], $Egresos->_ConsecutivoGastos, $valor['FORMA_PAGO']);
             }
 
             $Documentos->InsertaMovimiento(0, 0, 0, 'G', $Egresos->_ConsecutivoGastos, 0, ++ $Secuencia, 'TOTAL', '', 1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"],
-                $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], '', 0, 0, 0, $_POST['cmbEntidad'], isset($_POST['txtCheque'])?$_POST['txtCheque']:'', 0, $_POST['txtValor']);
+                $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], '', 0, 0, 0, $_POST['cmbEntidad'], isset($_POST['txtNumero']) ? $_POST['txtNumero'] : '', 0, $_POST['txtValor']);
 
             $Documentos->ActualizaConsecutivo($Egresos->_ConsecutivoGastos + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'GASTOS');
             $_SESSION['ConsecutivoGastos'] = $Egresos->_ConsecutivoGastos;
@@ -115,19 +118,6 @@
                 <h3><b>GASTOS NÚMERO <?= $Egresos->_ConsecutivoGastos ?></b></h3><br>
 
                 <form method="POST">
-                    <table style="width: 80%;">
-                        <tr>
-                            <!--                            <td style="text-align: right;">Tercero</td>-->
-                            <!--                            <td style="padding-left: 10px;text-align: left;">-->
-                            <!--                                <select id="cmbTercero" name="cmbTercero" class="chosen-select"-->
-                            <!--                                        style="width: 250px;">-->
-                            <!--                                    --><? //= $cmbTercero; ?>
-                            <!--                                </select>-->
-                            <!--                            </td>-->
-
-                        </tr>
-                    </table>
-
                     <table style="width: 90%;">
                         <tr>
                             <td style="text-align: right;">Forma de Pago</td>
@@ -145,7 +135,7 @@
                             </td>
                             <td style="text-align: right;">Fecha</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="date" name="Fecha"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
+                                <input type="date" name="Fecha" value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>" required>
                             </td>
 
                         </tr>
@@ -196,19 +186,28 @@
                     <div id="frame"></div>
                     <hr>
                     <br> <br>
-                    <table style="width: 30%;">
+                    <table style="width: 40%;">
                         <tr>
                             <td style="text-align: right;">Forma de pago</td>
                             <td>
                                 <select class="chosen-select" id="formaPago">
-                                    <option value="0">Efectivo</option>
-                                    <option value="1">Cheque</option>
+                                    <?= $cmbfPago ?>
                                 </select></td>
                         </tr>
-                        </table>
+                    </table>
                     <br/>
-                    <div id="formas"></div>
-                    <br>
+                    <ul id="botones"> </ul>
+                    <table>
+                        <tr>
+                            <td colspan="2" style="text-align: center;"><br>
+                                <ul id="validaciones"></ul>
+                            </td>
+                        </tr>
+                        <tr></td><br>
+                            <ul id="pagos"></ul>
+                            <br></tr>
+                    </table>
+
                     <input type="submit" id="finalizar" value="FINALIZAR" style="width: 200px;" class="btnAzul"/>
                     <br><br>
 
@@ -219,27 +218,25 @@
     </div>
 </div>
 <script>
-    $(document).on('ready', function () {
-        $('#frame').load('ProcesaGastos.php?action=frame');
-        $('#formas').load('ProcesaGastos.php?action=formas0');
-    });
 
     $('#formaPago').change(function () {
         console.log($(this).val());
-        $('#formas').load('ProcesaGastos.php?action=formas'+$(this).val());
-
+        $("#botones").load("procesaProductosFactura.php?action=consultafpago&id=" +$(this).val());
     });
 
+    $(document).on('ready', function () {
+        $('#frame').load('ProcesaGastos.php?action=frame');
+    });
 
     $('form').submit(function () {
         if ($('#cmbEntidad').val() == 0) {
             event.preventDefault();
             $('#val1').html('<span style="color:#ff0000;">DEBE SELECCIONAR UNA ENTIDAD</span><br> <br>');
         }
-        else if ($('input[name=txtCheque]').val() == '') {
+        else if ($('input[name=txtNumero]').val() == '') {
             event.preventDefault();
             $('#val1').html('<span style="color:#ff0000;">DEBE INGRESAR UN NUMERO DE CHEQUE</span><br> <br>');
-            $('input[name=txtCheque]').css('border', '1px solid red');
+            $('input[name=txtNumero]').css('border', '1px solid red');
         }
         else if ($('input[name=txtValor]').val() == '') {
             event.preventDefault();
@@ -314,21 +311,14 @@
         }
     }
     function ValidarValor() {
-        if (validarNro(event)) return true;
-        else return false;
+        return validarNro(event);
     }
 
     function EliminarGasto(id) {
         $("#frame").load("ProcesaGastos.php?action=eliminarpago&id=" + id, function () {
         });
     }
-    function Change() {
-        $("#botones").load("procesaProductosFactura.php?action=consultafpago&id=" + document.getElementById('cmbfPago').value);
-    }
 
-    $(document).ready(function () {
-        //    $("#pagos").load("procesaProductosFactura.php?action=listarpagos", function () {
-    });
 </script>
 </body>
 </html>

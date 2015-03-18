@@ -16,14 +16,14 @@
         $options = '<option value ="0">-- Seleccione Una Cuenta --</option>';
 
         foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
-            $options .= '<option value="' . $valor['ID_CUENTA'] . '"  style="text-align=left;">'  . $valor['CODIGO'] ." - ".$valor['NOMBRE'] .'</option>';
+            $options .= '<option value="' . $valor['ID_CUENTA'] . '"  style="text-align=left;">' . $valor['CODIGO'] . " - " . $valor['NOMBRE'] . '</option>';
 
 
         if (!empty($_POST) != '') {
             if ($_POST['txtCuenta'] != 0) {
 
-                $Parametros->InsertaConcepto( $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
-                    $_SESSION['login'][0]["ID_USUARIO"],0, $_SESSION['login'][0]["ID_EMPRESA"]);
+                $Parametros->InsertaConcepto($_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
+                    $_SESSION['login'][0]["ID_USUARIO"], 0, $_SESSION['login'][0]["ID_EMPRESA"]);
 
                 echo '<script > alert("Se creó el concepto correctamente.");self.location = "ConceptosGI.php" </script>';
 

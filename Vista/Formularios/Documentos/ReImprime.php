@@ -2,7 +2,7 @@
     session_start();
     switch ($_GET['id']) {
         case 0:
-            $_SESSION['Total'] ='ok';
+            $_SESSION['Total'] = 'ok';
             $_SESSION['ConsecutivoFACT'] = $_GET['consecutivo'];
             echo '<script > window.open("ImpresionFactura.php");self.location = "ReimpresionDocumentos.php?id=0" </script>';
             break;
@@ -10,7 +10,7 @@
         case 1:
             $_SESSION['ConsecutivoRECIBO'] = $_GET['consecutivo'];
             $_SESSION['Pagos'] = $_GET['pagos'];
-            $_SESSION['Total'] = 'ok';
+            $_SESSION['Total'] = 'no';
             echo '<script > window.open("ImpresionRecibo.php");self.location = "ReimpresionDocumentos.php?id=1" </script>';
             break;
 

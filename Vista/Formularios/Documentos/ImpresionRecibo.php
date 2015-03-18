@@ -165,6 +165,7 @@
 
     $total = 0;
     $descuento = 0;
+    $DESCRIP = '';
     foreach ($Documentos->TraeDetalleRecibo($Consecutivo, $_SESSION['login'][0]["ID_EMPRESA"], $_SESSION['Total']) as $llave => $valor) {
         $pdf->SetFont('Arial', 'I', 7);
         $Datos [$llave][0] = $valor['DESCRIPCION'];
@@ -174,7 +175,9 @@
         $total += ($valor['VALOR'] * $valor['CANTIDAD']);
         $descuento += $valor['DESCUENTO'];
     }
-    $pdf->TraePagos($_SESSION['Pagos'], 'ABONO FACT', 'F', $_SESSION['ConsecutivoRECIBO']);
+
+
+    $pdf->TraePagos($Consecutivo, 'ABONO FACT', 'R', $_SESSION['Pagos']);
 
     $pdf->Ln(1);
     $yyy = $pdf->GetY();

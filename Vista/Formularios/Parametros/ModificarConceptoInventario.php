@@ -123,7 +123,8 @@
                         </tr>
                     </table>
                     <br>
-                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/></ul>
+                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
+                                                value="GUARDAR" style="width:200px;"/></ul>
                 </center>
 
             </form>

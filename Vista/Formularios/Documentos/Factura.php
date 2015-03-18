@@ -55,34 +55,32 @@
             $Total = 0;
             $Valor = 0;
 //            $IdFormaPago = $_POST['cmbfPago'];
-
+            $Documentos->_IdParam = $Factura->_IdParam;
             foreach ($Documentos->TraeProductosFinal($_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
-
                 $Valor = $valor['PRECIO'] * $valor['CANTIDAD'];
                 $Des = $valor['PRECIO'] * ($valor['DESCUENTO'] / 100);
-                $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_COSTO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'D', $valor['CANTIDAD'], 0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P',0,0,$_POST['cmbTipoPago']);
+//                $Secuencia ++;
+//                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_COSTO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'D', $valor['CANTIDAD'], 0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P',0,0,$_POST['cmbTipoPago']);
+//
+//                $Secuencia ++;
+//                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_INVENTARIO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'],0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P',0,0,$_POST['cmbTipoPago']);
 
                 $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['CTA_INVENTARIO'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'],0, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'P',0,0,$_POST['cmbTipoPago']);
-
-                $Secuencia ++;
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_VENTAS'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], $Valor, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'],'P',0,0,$_POST['cmbTipoPago']);
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], $valor['ID_PRODUCTO'], $valor['CTA_VENTAS'], 'F', $Consecutivo, 0, $Secuencia, $valor['DESCRIPCION'], 'C', $valor['CANTIDAD'], $Valor, $Des, $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], 'P', 0, 0, $_POST['cmbTipoPago']);
 
                 $Total += $Valor;
                 $Descuento += $Des;
-        }
+            }
 
             $TotalPagos = 0;
             //FORMAS DE PAGO
-            foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor)
-            {
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['ID_CUENTA'], 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT" . $Consecutivo, 'D', 1, $valor['VALOR'], 0,
-                    $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
+            foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, $valor['ID_CUENTA'], 'F', $Consecutivo, $valor['ID_F_PAGO'], ++ $Secuencia, "CXC FACT " . $Consecutivo, 'D', 1, $valor['VALOR'], 0,
+                    $_POST['txtComentarios'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
                 $TotalPagos += $valor['VALOR'];
             }
 
-            $IdCiudad=$Documentos->TraeCiudadTercero($_POST['cmbTercero']);
+            $IdCiudad = $Documentos->TraeCiudadTercero($_POST['cmbTercero']);
 
             //TOTAL PAGOS
 
@@ -93,14 +91,16 @@
             //Si es a crédito se genera Recibo
             if ($_POST['cmbTipoPago'] == 'CR') {
 
-                $Factura->TraeParametrosRecibo($_SESSION['login'][0]["ID_EMPRESA"]);
+//                $Factura->TraeParametrosRecibo($_SESSION['login'][0]["ID_EMPRESA"]);
                 //Inserto el Total del recibo
-                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'R', $Factura->_ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', '',
-                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], '', 0, $Consecutivo, $_POST['cmbTipoPago'], 0, '', $IdCiudad,
-                    $_SESSION['TOTAL2'], $_POST['txtTransportador']);
+//                $Factura->_ConsecutivoRecibo
+                $Documentos->InsertaMovimiento($_POST['cmbTercero'], 0, 0, 'R', 0, $_POST['cmbfPago'], ++ $Secuencia, 'TOTAL', '',
+                    1, $Total, 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], '', 0, $Consecutivo, $_POST['cmbTipoPago'], 0, '', $IdCiudad,
+                    $_SESSION['TOTAL2'], $_POST['txtTransportador'], "F");
 
-                $Documentos->ActualizaConsecutivo($Factura->_ConsecutivoRecibo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO');
+//                $Documentos->ActualizaConsecutivo($Factura->_ConsecutivoRecibo + 1, $_SESSION['login'][0]["ID_EMPRESA"], 'RECIBO');
             }
+
 
             $_SESSION['Total'] = 'no';
             $_SESSION['ConsecutivoFACT'] = $Consecutivo;
@@ -150,6 +150,7 @@
     #wrapper {
         height: 150%;
     }
+
 
 </style>
 <script>
@@ -216,8 +217,10 @@
 <div id="wrap">
     <div id="header">
         <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"/></a>
+
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span>
         </h1>
+
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_USUARIO"] ?></span></h3>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
@@ -228,13 +231,15 @@
             <form method="POST">
                 <center>
                     <h3><b>FACTURA NÚMERO <?= $Factura->_Consecutivo ?></b></h3><br>
-                   Fecha <input type="date" name="Fecha"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
+                    Fecha <input type="date" name="Fecha" value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>"
+                                 required>
                     <br><br>
                     <table style="width: 85%;color: #33373d;">
                         <tr>
                             <td style="text-align: right;">Tercero</td>
-                            <td style="padding-left: 10px;text-align: left;" >
-                                <select id="cmbTercero" name="cmbTercero" class="chosen-select" style="width:260px;" required>
+                            <td style="padding-left: 10px;text-align: left;">
+                                <select id="cmbTercero" name="cmbTercero" class="chosen-select" style="width:260px;"
+                                        required>
                                     <?= $cmbTercero; ?>
                                 </select>
                             </td>
@@ -258,25 +263,29 @@
                         <tr>
                             <td style="text-align: right;"><br>Producto</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <br> <select id="cmbProducto" name="cmbProducto" class="chosen-select" onchange="Precio();">
+                                <br> <select id="cmbProducto" name="cmbProducto" class="chosen-select"
+                                             onchange="Precio();">
                                     <?= $cmbProducto; ?>
                                 </select> <label style="color:#5E83A3;font-weight: bold;" id="LblPrecio"></label>
                             </td>
                             <td style="text-align: right;"><br>Cantidad</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <br> <input type="number" id="txtCantidad" name="txtCantidad" value="1" max="9999" min="1" required/>
+                                <br> <input type="number" id="txtCantidad" name="txtCantidad" value="1" max="9999"
+                                            min="1" required/>
                             </td>
                             <td style="text-align: right;"><br>Descuento</td>
 
                             <td style="padding-left: 10px;text-align: left;">
-                                <br> <input type="number" id="txtDescuento" name="txtDescuento" max="100" min="0" value="0" required/> %
+                                <br> <input type="number" id="txtDescuento" name="txtDescuento" max="100" min="0"
+                                            value="0" required/> %
                             </td>
                         </tr>
 
                     </table>
 
                     <br>
-                    <input type="button" id="btnAgregar" class="btnAzul" onclick="agregar();" name="btnAgregar" value="Agregar" style="width:100px;"/>
+                    <input type="button" id="btnAgregar" class="btnAzul" onclick="agregar();" name="btnAgregar"
+                           value="Agregar" style="width:100px;"/>
                     <br><br>
 
                     <div style="width: 95%;">
@@ -309,7 +318,9 @@
                                 <td>Observaciones</td>
                                 <td style="padding-left: 15px;text-align: right;">
                                     <textarea id="txtComentarios" name="txtComentarios" cols="6"
-                                              placeholder="Ingrese los comentarios" title="Texto" maxlength="500" rows="8" style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
+                                              placeholder="Ingrese los comentarios" title="Texto" maxlength="500"
+                                              rows="8"
+                                              style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
                                     <br> Máximo 500 caracteres
                                 </td>
                             </tr>

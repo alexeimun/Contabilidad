@@ -1,9 +1,8 @@
-
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
-    include '../../../Clases/cls_Parametros.php';
+    include '../../../Clases/cls_Inventario.php';
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script > self.location = "/"</script>';
@@ -37,17 +36,39 @@
 
     <div id="content-wrap">
         <?= $menu ?>
-
         <div id="main">
             <center>
                 <h3><b>COSTO VENTA</b></h3><br>
 
+                <form method="post">
+                    Mes:<input type="number" name="mes" min="1" max="12" value="<?= round(date("m")) ?>"
+                               style="width: 50px;text-align: center;margin-right: 40px;"/>
 
+                    Año:<input type="number" name="ano" min="2000" max="2050"
+                               value="<?= date("Y") ?>"
+                               style="width: 60px;text-align: center;"/>
+
+                    <br><br>
+                    <input type="button" id="btnGenerar" class="btnAzul" name="btnGenerar" value="Generar"
+                           style="width:100px;"/>
+                    <input type="hidden" name="costoventa"></form>
+
+                <br><br>
+                <div class="total"></div>
             </center>
         </div>
     </div>
-
 </div>
-
 </body>
+
+<script>
+    $(document).ready(function () {
+        $('#btnGenerar').click(function () {
+
+            $.post('Actions.php', $('form').serialize(), function (data) {
+               $('div.total').html('<h3>'+data+'</h3>');
+            });
+        });
+    });
+</script>
 </html>

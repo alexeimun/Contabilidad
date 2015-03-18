@@ -16,13 +16,13 @@
         $options = '<option value ="0">-- Seleccione Una Cuenta --</option>';
 
         foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor)
-            $options .= '<option value="' . $valor['ID_CUENTA'] . '"  style="text-align=left;">'  . $valor['CODIGO'] ." - ".$valor['NOMBRE'] .'</option>';
+            $options .= '<option value="' . $valor['ID_CUENTA'] . '"  style="text-align=left;">' . $valor['CODIGO'] . " - " . $valor['NOMBRE'] . '</option>';
 
 
         if (isset($_POST['btnGuardar']) != '') {
             if ($_POST['txtCuenta'] != 0) {
-                $Parametros->InsertaConcepto( $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
-                    $_SESSION['login'][0]["ID_USUARIO"],1, $_SESSION['login'][0]["ID_EMPRESA"]);
+                $Parametros->InsertaConcepto($_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
+                    $_SESSION['login'][0]["ID_USUARIO"], 1, $_SESSION['login'][0]["ID_EMPRESA"]);
 
                 echo '<script > alert("Se creó el concepto correctamente.");self.location = "ConceptosInventario.php" </script>';
 
@@ -104,14 +104,16 @@
                         <tr>
                             <td><br>Decripción</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <br><textarea style="width: 290px;" name="txtDescripcion" maxlength="500" placeholder="Ingrese los comentarios"></textarea>
+                                <br><textarea style="width: 290px;" name="txtDescripcion" maxlength="500"
+                                              placeholder="Ingrese los comentarios"></textarea>
                                 <br> Máximo 500 caracteres
                             </td>
                         </tr>
                     </table>
                     <br>
 
-                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
+                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
+                                                value="GUARDAR" style="width:200px;"/>
                     </ul>
                 </center>
 

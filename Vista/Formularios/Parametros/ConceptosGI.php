@@ -21,10 +21,10 @@
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
     $cont = 0;
 
-    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"],0) as $llave => $valor) {
+    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"], 0) as $llave => $valor) {
         $cont ++;
         $tabla .= '<tr><td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
-        $tabla .= '<td style="text-align:left;">' . ($valor['CONCEPTO']==0?'Gastos':'Ingresos') . '</td>';
+        $tabla .= '<td style="text-align:left;">' . ($valor['CONCEPTO'] == 0 ? 'Gastos' : 'Ingresos') . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE_CUENTA'] . '</td>';
         $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
         $tabla .= '<td style="text-align:right;">

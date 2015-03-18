@@ -27,7 +27,7 @@
 
         if (isset($_POST['btnGuardar']) != '') {
 
-            $Parametros->InsertaFormaPago( $_POST['cmbCuenta'],$_POST['txtNombre'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
+            $Parametros->InsertaFormaPago($_POST['cmbCuenta'], $_POST['txtNombre'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
             echo '<script> alert("Se creó la forma de pago correctamente."); self.location = "FormasDePago.php"; </script>';
         }
@@ -89,7 +89,9 @@
 <div id="wrap">
     <div id="header">
         <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
+
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
+
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_USUARIO"] ?></span></h3>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
@@ -105,7 +107,8 @@
                         <tr>
                             <td>Nombre</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtNombre" name="txtNombre" placeholder="Ingrese un nombre" required>
+                                <input type="text" id="txtNombre" name="txtNombre" placeholder="Ingrese un nombre"
+                                       required>
                                 <br><br></td>
                         </tr>
                         <tr>
@@ -121,7 +124,8 @@
                             <td style="padding-left: 10px;text-align: center;">
                                 <input type="checkbox" id="chkRequiereEntidad" name="chkRequiereEntidad"
                                        onClick="check2();">
-                                <input type="hidden" value="0" id="txtRequiereEntidad" name="txtRequiereEntidad"><br><br>
+                                <input type="hidden" value="0" id="txtRequiereEntidad"
+                                       name="txtRequiereEntidad"><br><br>
                             </td>
                         </tr>
                         <tr>
@@ -134,7 +138,8 @@
                         </tr>
                     </table>
                     <br>
-                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
+                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
+                                                value="GUARDAR" style="width:200px;"/>
                     </ul>
                 </center>
             </form>

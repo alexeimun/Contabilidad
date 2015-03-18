@@ -1,4 +1,3 @@
-
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -181,17 +180,20 @@
                                            required>
                             </td>
                         </tr>
-                        <?= $cmbCta. $cmbConsumo. $cmbCxP; ?>
+                        <?= $cmbCta . $cmbConsumo . $cmbCxP; ?>
                         <tr>
                             <td><br>Leyenda</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <br><textarea id="txtComentarios" name="txtComentarios" cols="6" style="width: 300px;" placeholder="Ingrese la leyenda" title="Texto" maxlength="500" rows="8"style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
+                                <br><textarea id="txtComentarios" name="txtComentarios" cols="6" style="width: 300px;"
+                                              placeholder="Ingrese la leyenda" title="Texto" maxlength="500" rows="8"
+                                              style="width: 380px; height: 70px; font-size: 11px;"><?= $txtComentarios; ?></textarea>
                             </td>
                         </tr>
 
                     </table>
                     <br>
-                    <br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
+                    <br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"
+                               style="width:200px;"/>
                 </center>
             </form>
         </div>

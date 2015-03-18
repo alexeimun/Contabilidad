@@ -76,6 +76,7 @@
     <link rel="stylesheet" type="text/css" href="../../Css/menu.css"/>
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
+    <script type="text/javascript" language="javascript" src="../../Js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="../../Js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="../../Js/Excel/jquery.battatech.excelexport.js"></script>
 
@@ -151,7 +152,7 @@
 <script>
     $('input[value=Exportar]').on('click', function () {
         $("#temp").battatech_excelexport({
-            containerid: "Exp", datatype: 'table',worksheetName:'PUC'
+            containerid: "Exp", datatype: 'table',worksheetName:'PUC (<?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?>)'
         });
     });
 </script>

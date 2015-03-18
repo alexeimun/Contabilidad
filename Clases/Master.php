@@ -23,13 +23,12 @@
                     $menu .= '<li ><a href="../Documentos/ReciboCajaMenor.php">Recibo Caja Menor</a></li>';
                 if ($valor[3][1] == 1)
                     $menu .= '<li ><a href="../Documentos/Gastos.php">Gastos</a></li>';
-                if ($valor[4][1] == 1)
-                    $menu .= '<li ><a href="../Documentos/Egresos.php">Egresos</a></li>';
+//                if ($valor[4][1] == 1)
+//                    $menu .= '<li ><a href="../Documentos/Egresos.php">Egresos</a></li>';
                 if ($valor[5][1] == 1)
                     $menu .= '<li ><a href="../Documentos/NotaContable.php">Nota Contable</a></li>';
                 if ($valor[6][1] == 1)
                     $menu .= '<li ><a href="../Documentos/SaldosIniciales.php">Saldos Iniciales</a></li>';
-                    $menu .= '<li ><a href="../Documentos/ConceptosInv.php">Saldos</a></li>';
                 $menu .= ' <li ><a href="../Documentos/ReimpresionDocumentos.php?id=0">Reimpresión Documentos</a></li>
             </ul>
         </li>
@@ -73,6 +72,8 @@
                     $menu .= '<li ><a href="../Inventario/DevolucionesCompras.php">Devoluciones Compras</a></li>';
                 if ($valor[22][1] == 1)
                     $menu .= '<li ><a href="../Inventario/DescuentosCompras.php">Descuentos Compras</a></li>';
+                if ($valor[23][1] == 1)
+                    $menu .= '<li ><a href="../Inventario/CostoVenta.php">Costo Venta</a></li>';
                 $menu .= '
              </ul>
         </li>
@@ -81,7 +82,7 @@
                 if ($valor[24][1] == 1)
                     $menu .= '<li ><a href="../Reportes/CuadreCaja.php">Cuadre de Caja</a></li>';
                 if ($valor[25][1] == 1)
-                    $menu .= '<li ><a href="../Reportes/CajaMenor.php">Caja Menor</a></li>';
+                    $menu .= '<li ><a href="../Reportes/CajaDiaria.php">Libro Diario</a></li>';
                 if ($valor[26][1] == 1)
                     $menu .= '<li ><a href="../Reportes/CxC.php">CxC</a></li>';
                 if ($valor[27][1] == 1)
@@ -125,7 +126,6 @@
                 </li>
         <a style="font-family:Helvetica, Arial, sans-serif;color: #fff;font-weight:600;padding-left:35px;" href="../Otros/Logout.php">Salir</a> 
     </ul>
- 
 </div>';
             } else {
                 return '<div id="wrapper">

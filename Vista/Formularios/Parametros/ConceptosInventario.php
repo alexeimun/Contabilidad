@@ -71,9 +71,6 @@
 
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
 </head>
-<style type="text/css">
-
-</style>
 
 <script>
     $(document).ready(function () {
@@ -101,7 +98,6 @@
                     "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
                     "sSortDescending": ": Activar para ordenar la columna de manera descendente"
                 }
-
             }
         });
     });
@@ -109,7 +105,6 @@
     function EliminarConcepto(id) {
         if (confirm("Seguro que quieres eliminar este concepto ?"))
             window.location.href = 'EliminarConceptoInventario.php?id=' + id;
-
     }
 </script>
 

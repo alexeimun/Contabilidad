@@ -120,7 +120,7 @@
         {
             $query = "UPDATE `t_terceros` SET `ESTADO`=0 WHERE (`ID_TERCERO`=" . $id . ")";
 
-           return $this->_DB->Exec($query) > 0;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function EliminarFormaPago($id)
@@ -163,7 +163,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
        `NOMBRE_IMPRESO`='" . $NombreImpreso . "', `CONSECUTIVO`=" . $Consecutivo . ",`ID_CUENTA`=" . $cta . ", `LEYENDA`='" . $leyenda . "',`USR_REGISTRO`=" . $Usreg . ", `FECHA_REGISTRO`=now()
         WHERE (`ID_DOCUMENTO`=" . $id . ")";
 
-           return $this->_DB->Exec($query) > 0;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function ActualizaDocGastos($cta1, $cta2, $IdEmpresa)
@@ -194,7 +194,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
             return $this->_DB->Exec($query) > 0;
         }
 
-        public function InsertaFormaPago($cta,$Nombre, $RequiereEntidad, $RequiereNumero, $UsrReg, $IdEmpresa)
+        public function InsertaFormaPago($cta, $Nombre, $RequiereEntidad, $RequiereNumero, $UsrReg, $IdEmpresa)
         {
             $query = "INSERT INTO `t_formas_pago`
        (`ID_CUENTA`, `NOMBRE_F_PAGO`, `ESTADO`, `FECHA_REGISTRO`,
@@ -364,6 +364,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
             return $resulset->fetchAll();
         }
 
+
         public function ValidaCodigoProducto($Cod, $IdEmpresa)
         {
             $query = "SELECT CASE WHEN(SELECT CODIGO
@@ -515,7 +516,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
         }
 
 
-        public function TraeConceptos($IdEmpresa,$Tipo)
+        public function TraeConceptos($IdEmpresa, $Tipo)
         {
             $query = "SELECT
         t_conceptos.ESTADO,
@@ -525,7 +526,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
         t_conceptos.FECHA_REGISTRO,
         t_conceptos.CONCEPTO,
         t_cuentas.NOMBRE AS 'NOMBRE_CUENTA'
-        
+
         FROM
             t_conceptos
         INNER JOIN t_cuentas ON t_cuentas.ID_CUENTA=t_conceptos.ID_CUENTA
@@ -545,7 +546,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
         t_conceptos.CONCEPTO,
         t_cuentas.NOMBRE AS 'NOMBRE_CUENTA',
         t_conceptos.ID_CUENTA
-        
+
         FROM
             t_conceptos
         INNER JOIN t_cuentas ON t_cuentas.ID_CUENTA=t_conceptos.ID_CUENTA
@@ -555,7 +556,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
             return $resulset->fetchAll();
         }
 
-        public function InsertaConcepto($Concepto, $Descripcion, $Idcuenta, $UsrReg,$Tipo, $IdEmpresa)
+        public function InsertaConcepto($Concepto, $Descripcion, $Idcuenta, $UsrReg, $Tipo, $IdEmpresa)
         {
             $query = "INSERT INTO `t_conceptos`
         ( `CONCEPTO`,`DESCRIPCION`,`ID_CUENTA`, `ESTADO`, `USR_REGISTRO`, `TIPO_CONCEPTO`,`FECHA_REGISTRO`, `ID_EMPRESA`)
@@ -565,7 +566,7 @@ t_documentos WHERE t_documentos.ID_DOCUMENTO=" . $IdDoc;
             return $this->_DB->Exec($query) > 0;
         }
 
-        public function ActualizaConcepto( $Concepto, $Descripcion, $Idcuenta, $UsrReg, $Idconcepto)
+        public function ActualizaConcepto($Concepto, $Descripcion, $Idcuenta, $UsrReg, $Idconcepto)
         {
             $query = "UPDATE `t_conceptos` SET `CONCEPTO`=" . $Concepto . ",
        `DESCRIPCION`='" . $Descripcion . "', `ID_CUENTA`=" . $Idcuenta . ", `USR_REGISTRO`=" . $UsrReg . "

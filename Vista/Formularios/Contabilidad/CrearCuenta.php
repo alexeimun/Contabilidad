@@ -1,4 +1,3 @@
-
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -7,16 +6,20 @@
     session_start();
     if (isset($_SESSION['login']) != '') {
 
-
         $Master = new Master();
         $menu = $Master->Menu();
         $Contabilidad = new cls_Contabilidad();
 
+        $cxc = '<input type="checkbox" id="chkcxc" name="chkcxc" onClick="check3();">
+        <input type="hidden" value="0" id="txtcxc" name="txtcxc">';
+
+        $cxp = '<input type="checkbox" id="chkcxp" name="chkcxp" onClick="check4();">
+        <input type="hidden" value="0" id="txtcxp" name="txtcxp">';
 
         if (isset($_POST['btnGuardar']) != '') {
             $Contabilidad->InsertaCuenta($_POST['txtCodigo'], ucfirst($_POST['txtNombre']), $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'],
-                $_POST['rbNaturaleza'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
-            echo '<script >alert("Se creó la cuenta correctamente.");self.location = "CrearCuenta.php";</script>';
+                $_POST['rbNaturaleza'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['txtcxc'], $_POST['txtcxp']);
+            echo '<script >alert("Se creó la cuenta correctamente.");self.location = "PUC.php";</script>';
         }
 
     } else echo '<script >self.location = "/";</script>';
@@ -58,11 +61,6 @@
 
 <script>
 
-    function ValidaCodigo() {
-        $("#botones").load("../Parametros/Validaciones.php?action=insertarcuentacontable&txtCodigo=" + document.getElementById('txtCodigo').value);
-
-    }
-
     function check() {
         document.getElementById('txtManejaDocCruce').value = "0";
         if (document.getElementById('chkManejaDocCruce').checked) {
@@ -73,8 +71,29 @@
 
     function check2() {
         document.getElementById('txtManejaTercero').value = "0";
+
         if (document.getElementById('chkManejaTercero').checked) {
             document.getElementById('txtManejaTercero').value = "1";
+        }
+
+    }
+
+    function check3() {
+        document.getElementById('txtcxc').value = "0";
+        if (document.getElementById('chkcxc').checked) {
+            document.getElementById('txtcxc').value = "1";
+            document.getElementById('chkcxp').checked = false;
+            document.getElementById('txtcxp').value = "0";
+        }
+
+    }
+
+    function check4() {
+        document.getElementById('txtcxp').value = "0";
+        if (document.getElementById('chkcxp').checked) {
+            document.getElementById('txtcxp').value = "1";
+            document.getElementById('chkcxc').checked = false;
+            document.getElementById('txtcxc').value = "0";
         }
 
     }
@@ -139,7 +158,13 @@
                                 Débito&nbsp;&nbsp;<input type="radio" id="rbNaturaleza" name="rbNaturaleza" value="D">
                             </td>
                         </tr>
-
+                        <tr>
+                            <td><br><br>CTA</td>
+                            <td style="padding-left: 10px;text-align: center;">
+                                <br><br>
+                                CXC <?= $cxc; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CXP<?= $cxp; ?>
+                            </td>
+                        </tr>
                     </table>
                     <br>
 

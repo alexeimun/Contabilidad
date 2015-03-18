@@ -71,7 +71,7 @@
         $pdf->SetX(60);
         $pdf->Cell(45, 6, utf8_decode('EFECTIVO:'), 1, 0, 'L');
 
-        $pdf->Text(78, 31 + $h,'$ '. number_format($valor['VALOR'], 0, '', '.'));
+        $pdf->Text(78, 31 + $h, '$ ' . number_format($valor['VALOR'], 0, '', '.'));
 
         $pdf->SetXY(20, 33 + $h);
         $pdf->Cell(85, 6, 'BANCO: ' . $valor['NOMBRE_ENTIDAD'], 1, 0, 'L');

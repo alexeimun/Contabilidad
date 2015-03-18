@@ -1,4 +1,3 @@
-
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -172,7 +171,7 @@
                             <input type="button" class="btnAzul" name="exportarauto" value="Exportar">
                             <input type="button" class="btnAzul" name="imprimirauto" value="Imprimir">
                             <br><br>
-                            <table id="automatico" cellpadding="1" cellspacing="1">
+                            <table id="automatico" cellpadding="1" cellspacing="1" style="color: black;" >
                                 <thead>
                                 <tr>
                                     <th></th>
@@ -307,14 +306,14 @@
         $('input[name=exportarmanual]').on('click', function () {
             ArmarTabla('manual');
             $("#temp").battatech_excelexport({
-                containerid: "temp", datatype: 'table'
+                containerid: "temp", datatype: 'table',worksheetName:'Lbro Fiscal (<?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?>)'
             });
         });
 
         $('input[name=exportarauto]').on('click', function () {
             ArmarTabla('automatico');
             $("#temp").battatech_excelexport({
-                containerid: "temp", datatype: 'table'
+                containerid: "temp", datatype: 'table',worksheetName:'Lbro Fiscal (<?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?>)'
             });
         });
 

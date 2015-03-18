@@ -42,21 +42,21 @@
             return $resulset->fetchAll();
         }
 
-        public function InsertaCuenta($Codigo, $Nombre, $ManejaTer, $ManejaDocCruce, $Naturaleza, $UsrReg, $IdEmpresa)
+        public function InsertaCuenta($Codigo, $Nombre, $ManejaTer, $ManejaDocCruce, $Naturaleza, $UsrReg, $IdEmpresa, $cxc, $cxp)
         {
             $query = "INSERT INTO `t_cuentas`
-      (`CODIGO`, `NOMBRE`, `MANEJA_TERCERO`,`MANEJA_DOC_CRUCE`, `NATURALEZA`, `ESTADO`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`)
+      (`CODIGO`, `NOMBRE`, `MANEJA_TERCERO`,`MANEJA_DOC_CRUCE`, `NATURALEZA`, `ESTADO`, `USR_REGISTRO`, `FECHA_REGISTRO`, `ID_EMPRESA`,`CXC`,`CXP`)
        VALUES
-       ('" . $Codigo . "','" . $Nombre . "'," . $ManejaTer . "," . $ManejaDocCruce . ",'" . $Naturaleza . "',1," . $UsrReg . ",now()," . $IdEmpresa . ")";
+       ('" . $Codigo . "','" . $Nombre . "'," . $ManejaTer . "," . $ManejaDocCruce . ",'" . $Naturaleza . "',1," . $UsrReg . ",now()," . $IdEmpresa . "," . $cxc . "," . $cxp . ")";
 
-           return $this->_DB->Exec($query) > 0;
+            return $this->_DB->Exec($query) > 0;
         }
 
-        public function ActualizaCuenta($id, $Codigo, $Nombre, $ManejaTer, $ManejaDocCruce, $Naturaleza)
+        public function ActualizaCuenta($id, $Codigo, $Nombre, $ManejaTer, $ManejaDocCruce, $Naturaleza, $cxc, $cxp)
         {
             $query = "UPDATE `t_cuentas`
        SET `CODIGO`='" . $Codigo . "',`NOMBRE`='" . $Nombre . "', `MANEJA_TERCERO`= $ManejaTer,`MANEJA_DOC_CRUCE`= $ManejaDocCruce
-        ,`NATURALEZA`='" . $Naturaleza . "'  WHERE (`ID_CUENTA`= $id )";
+        ,`NATURALEZA`='" . $Naturaleza . "', `CXC`=" . $cxc . ", `CXP`=" . $cxp . "  WHERE (`ID_CUENTA`= $id )";
 
             return $this->_DB->Exec($query) > 0;
         }
@@ -73,16 +73,19 @@
             t_cuentas.ESTADO,
             t_cuentas.USR_REGISTRO,
             t_cuentas.FECHA_REGISTRO,
-            t_cuentas.ID_EMPRESA
+            t_cuentas.ID_EMPRESA,
+            t_cuentas.CXC,
+            t_cuentas.CXP
             FROM
             t_cuentas WHERE t_cuentas.ID_CUENTA=$id ";
 
             $resulset = $this->_DB->Query($query);
             return $resulset->fetchAll();
         }
+
         public function TraeCodigos()
         {
-            $resulset = $this->_DB->Query("SELECT t_cuentas.CODIGO from t_cuentas");
+            $resulset = $this->_DB->Query("SELECT t_cuentas.CODIGO FROM t_cuentas");
             return $resulset->fetchAll();
         }
 
