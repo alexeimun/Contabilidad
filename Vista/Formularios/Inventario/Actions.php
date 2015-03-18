@@ -57,7 +57,7 @@
     {
         try {
             for ($i = 0; $i < count($_POST['Valor']); $i ++)
-                $Inventario->InsertaMovimientoInventario($_POST['cmbConcepto'][$i], $_POST['Valor'][$i], 'F', 'C', $_POST['Fecha'][$i]);
+                $Inventario->InsertaMovimientoInventario($_POST['cmbConcepto'][$i], $_POST['Valor'][$i], 'F', 'D', $_POST['Fecha'][$i]);
             echo 'Se han agregado los campos correctamentos...';
         } catch (Exception $ex) {
             echo 'Ha ocurrido un error...';

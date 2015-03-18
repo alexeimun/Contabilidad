@@ -7,8 +7,6 @@
     include '../../../Clases/Componentes.php';
     session_start();
     if (isset($_SESSION['login']) != '') {
-
-
         $Master = new Master();
         $menu = $Master->Menu();
         $Contabilidad = new cls_Contabilidad();
@@ -89,9 +87,7 @@
 <div id="wrap">
     <div id="header">
         <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
-
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
-
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_USUARIO"] ?></span></h3>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
@@ -107,8 +103,7 @@
                         <tr>
                             <td>Nombre</td>
                             <td style="padding-left: 10px;text-align: right;">
-                                <input type="text" id="txtNombre" name="txtNombre" placeholder="Ingrese un nombre"
-                                       required>
+                                <input type="text" id="txtNombre" name="txtNombre" placeholder="Ingrese un nombre" required>
                                 <br><br></td>
                         </tr>
                         <tr>
@@ -138,8 +133,7 @@
                         </tr>
                     </table>
                     <br>
-                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
-                                                value="GUARDAR" style="width:200px;"/>
+                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
                     </ul>
                 </center>
             </form>

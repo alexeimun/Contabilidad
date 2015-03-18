@@ -6,6 +6,16 @@
     session_start();
     if (isset($_SESSION['login']) == '' || (new cls_Usuarios())->TienePermiso(__FILE__, $_SESSION['login'][0]['ID_USUARIO']))
         echo '<script > self.location = "/"</script>';
+    $table='<table id="table" class="table" style="width:90%;">
+        <thead><tr>
+            <th style="text-align:left;"></th>
+            <th style="text-align:left;"></th>
+            <th style="text-align:left;">DEBITO</th>
+            <th style="text-align:left;">CREDIRO</th></tr>
+        <tr>
+        <td colspan="2">Inventario Inicial</td><td>deb</td><td>cre</td>
+
+</tr>';
 
     $Master = new Master();
     $menu = $Master->Menu();

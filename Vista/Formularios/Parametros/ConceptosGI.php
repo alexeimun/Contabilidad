@@ -33,9 +33,9 @@
           <a onclick="EliminarConcepto(' . $valor['ID_CONCEPTO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
     }
-    if ($cont == 0) {
+    if ($cont == 0)
         $tabla .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearConceptoGI.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
-    }
+
 
     $tabla .= '</tbody></table>';
 
