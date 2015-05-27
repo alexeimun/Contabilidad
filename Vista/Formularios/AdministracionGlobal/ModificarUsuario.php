@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';

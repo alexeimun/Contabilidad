@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -28,10 +27,27 @@
         $ManejaDocCruce = '<br><input type="checkbox" id="chkManejaDocCruce" name="chkManejaDocCruce" onClick="check();">
                 <input type="hidden" value="0" id="txtManejaDocCruce" name="txtManejaDocCruce"><br><br>';
 
+        $cxc = '<input type="checkbox" id="chkcxc" name="chkcxc" onClick="check3();">
+        <input type="hidden" value="0" id="txtcxc" name="txtcxc">';
+
+        $cxp = '<input type="checkbox" id="chkcxp" name="chkcxp" onClick="check4();">
+        <input type="hidden" value="0" id="txtcxp" name="txtcxp">';
+
         foreach ($Contabilidad->TraeDatosCuenta($_GET['id']) as $llave => $valor) {
             $txtNombre = $valor['NOMBRE'];
             $txtCodigo = $valor['CODIGO'];
             $txtNaturaleza = $valor['NATURALEZA'];
+
+
+            if ($valor['CXC'] == 1) {
+                $cxc = '<input type="checkbox" id="chkcxc" name="chkcxc" onClick="check3();" checked>
+        <input type="hidden" value="0" id="txtcxc" name="txtcxc">';
+            }
+
+            if ($valor['CXP'] == 1) {
+                $cxp = '<input type="checkbox" id="chkcxp" name="chkcxp" onClick="check4();" checked>
+        <input type="hidden" value="0" id="txtcxp" name="txtcxp">';
+            }
 
             if ($valor['MANEJA_TERCERO'] == 1) {
                 $ManejaTercero = '<input type="checkbox" id="chkManejaTercero" name="chkManejaTercero" onClick="check2();" checked>
@@ -55,7 +71,7 @@
 
         if (isset($_POST['btnGuardar']) != '') {
 
-            $Contabilidad->ActualizaCuenta($_GET['id'], $_POST['txtCodigo'], ucfirst($_POST['txtNombre']), $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'], $_POST['rbNaturaleza']);
+            $Contabilidad->ActualizaCuenta($_GET['id'], $_POST['txtCodigo'], ucfirst($_POST['txtNombre']), $_POST['txtManejaTercero'], $_POST['txtManejaDocCruce'], $_POST['rbNaturaleza'], $_POST['txtcxc'], $_POST['txtcxp']);
 
             echo '<script >alert("Se modificó la cuenta correctamente.");self.location = "PUC.php";</script>';
         }
@@ -118,6 +134,26 @@
         }
 
     }
+
+    function check3() {
+        document.getElementById('txtcxc').value = "0";
+        if (document.getElementById('chkcxc').checked) {
+            document.getElementById('txtcxc').value = "1";
+            document.getElementById('chkcxp').checked = false;
+            document.getElementById('txtcxp').value = "0";
+        }
+
+    }
+
+    function check4() {
+        document.getElementById('txtcxp').value = "0";
+        if (document.getElementById('chkcxp').checked) {
+            document.getElementById('txtcxp').value = "1";
+            document.getElementById('chkcxc').checked = false;
+            document.getElementById('txtcxc').value = "0";
+        }
+
+    }
 </script>
 
 <body>
@@ -164,6 +200,7 @@
 
                             <td>Maneja Doc. Cruce</td>
                             <td style="padding-left: 10px;text-align: center;">
+
                                 <?= $ManejaDocCruce; ?>
                             </td>
                         </tr>
@@ -171,6 +208,14 @@
                             <td>Naturaleza</td>
                             <td style="padding-left: 10px;text-align: center;">
                                 <?= $Naturaleza; ?>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><br><br>CTA</td>
+                            <td style="padding-left: 10px;text-align: center;">
+                                <br><br>
+                                CXC <?= $cxc; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CXP<?= $cxp; ?>
                             </td>
                         </tr>
 

@@ -6,6 +6,7 @@
         public $_ConsecutivoEgresos;
         public $_IdCuentaEgresos;
         public $_IdCuentaConsumo;
+        public $_IdParam;
         public $_IdCuentaGastos;
         private $_DB;
 
@@ -22,11 +23,12 @@
 
         public function TraeConsecutivoGastos($idEmpresa)
         {
-            $query = "SELECT   CONSECUTIVO FROM t_documentos WHERE TIPO_INTERNO='GASTOS' AND ID_EMPRESA= $idEmpresa";
+            $query = "SELECT   CONSECUTIVO,ID_DOCUMENTO FROM t_documentos WHERE TIPO_INTERNO='GASTOS' AND ID_EMPRESA= $idEmpresa";
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
             $this->_ConsecutivoGastos = $Campos[0][0];
+            $this->_IdParam = $Campos[0][1];
         }
 
         public function TraeConsecutivoEgresos($idEmpresa)

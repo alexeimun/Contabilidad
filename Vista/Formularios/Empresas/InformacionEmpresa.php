@@ -16,7 +16,7 @@
     $txtTelefono = '';
     $txtEmail = '';
     $Logo = '';
-   $cmbRegimen='';
+    $cmbRegimen = '';
 
 
     foreach ($Empresa->TraeDatosEmpresa($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
@@ -29,7 +29,7 @@
         $Regimen = $valor['ID_REGIMEN'];
     }
     foreach ($Empresa->TraeRegimenes() as $llave => $valor) {
-        if($valor['ID_REGIMEN']==$Regimen)
+        if ($valor['ID_REGIMEN'] == $Regimen)
             $cmbRegimen .= '<option style="text-align:left;" value ="' . $valor['ID_REGIMEN'] . '" selected>' . $valor['NOMBRE'] . '</option>';
         else  $cmbRegimen .= '<option style="text-align:left;" value ="' . $valor['ID_REGIMEN'] . '">' . $valor['NOMBRE'] . '</option>';
     }
@@ -41,7 +41,7 @@
         if ($_FILES["file"]["name"] == '') {
             $img = $Logo;
         }
-        $Empresa->ActualizaEmpresa($_SESSION['login'][0]["ID_EMPRESA"], $_POST['txtNombre'], $_POST['txtNit'], $_POST['txtDireccion'], $_POST['txtTelefono'], $_POST['txtEmail'],$_POST['cmbRegimen'], $img);
+        $Empresa->ActualizaEmpresa($_SESSION['login'][0]["ID_EMPRESA"], $_POST['txtNombre'], $_POST['txtNit'], $_POST['txtDireccion'], $_POST['txtTelefono'], $_POST['txtEmail'], $_POST['cmbRegimen'], $img);
 
         move_uploaded_file($_FILES["file"]["tmp_name"], $img);
 
@@ -127,19 +127,21 @@
                         <tr>
                             <td><br>Telefono:</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <br><input type="text" id="txtTelefono" name="txtTelefono" value="<?= $txtTelefono; ?>" placeholder="Ingrese el telefono" required>
+                                <br><input type="text" id="txtTelefono" name="txtTelefono" value="<?= $txtTelefono; ?>"
+                                           placeholder="Ingrese el telefono" required>
                             </td>
                         </tr>
                         <tr>
                             <td><br>Correo:</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <br><input type="email" id="txtEmail" name="txtEmail" value="<?= $txtEmail; ?>"  placeholder="Ingrese el correo" required>
+                                <br><input type="email" id="txtEmail" name="txtEmail" value="<?= $txtEmail; ?>"
+                                           placeholder="Ingrese el correo" required>
                             </td>
                         </tr>
                         <tr>
                             <td><br>Tipo de Régimen:</td>
                             <td style="padding-left: 10px;text-align: center;">
-                                <br>      <select  class="chosen-select" name="cmbRegimen" >
+                                <br> <select class="chosen-select" name="cmbRegimen">
                                     <?= $cmbRegimen ?>
                                 </select>
                             </td>
@@ -153,7 +155,8 @@
                         </tr>
                     </table>
                     <br>
-                    <input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"  style="width:200px;"/>
+                    <input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR"
+                           style="width:200px;"/>
                 </center>
             </form>
         </div>

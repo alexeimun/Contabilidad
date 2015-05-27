@@ -43,9 +43,9 @@
                   <tr> <td  colspan="3" style="text-align: center;">
                  <br>  <select style="width: 220px;"  id="cmbfPago" class="chosen-select" name="cmbfPago" onchange="Change();" >
                       ' . $cmbfPago . '
-                 </select> <label style="color:#5E83A3;font-weight: bold;" >
+                 </select> <label style="color:#5E83A3;font-weight: bold;">
              </td>
-              <td colspan="2">  Fecha <input type="date" name="Fecha"  value="'. date("Y").'-'.date("m").'-'.date("d").'" required></td>
+              <td colspan="2">  Fecha <input type="date" name="Fecha"  value="' . date("Y") . '-' . date("m") . '-' . date("d") . '" required></td>
             </tr>
 
       </table>
@@ -80,7 +80,7 @@
             $tabla .= '<tr ><td style="text-align:left;">' . $valor['CONSECUTIVO_RECIBO'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE1'] . ' ' . $valor['NOMBRE2'] . ' ' . $valor['APELLIDO1'] . ' ' . $valor['APELLIDO2'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
-            $tabla .= '<td style="text-align:right;">' . number_format($valor['ABONADO'], 0, '', ',') . '</td>';
+            $tabla .= '<td style="text-align:right;">' . number_format($valor['VALOR'], 0, '', ',') . '</td>';
             $tabla .= '<td style="text-align:center;">';
 
             $tabla .= '<a href="Imprime.php?id=0&consecutivo=' . $valor['CONSECUTIVO_RECIBO'] . '&

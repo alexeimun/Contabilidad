@@ -23,8 +23,8 @@
                     $menu .= '<li ><a href="../Documentos/ReciboCajaMenor.php">Recibo Caja Menor</a></li>';
                 if ($valor[3][1] == 1)
                     $menu .= '<li ><a href="../Documentos/Gastos.php">Gastos</a></li>';
-                if ($valor[4][1] == 1)
-                    $menu .= '<li ><a href="../Documentos/Egresos.php">Egresos</a></li>';
+//                if ($valor[4][1] == 1)
+//                    $menu .= '<li ><a href="../Documentos/Egresos.php">Egresos</a></li>';
                 if ($valor[5][1] == 1)
                     $menu .= '<li ><a href="../Documentos/NotaContable.php">Nota Contable</a></li>';
                 if ($valor[6][1] == 1)
@@ -46,9 +46,6 @@
                     $menu .= '<li ><a href="../Contabilidad/EstadoResultado.php">Estado de Resultado</a></li>';
                 if ($valor[14][1] == 1)
                     $menu .= '<li ><a href="../Contabilidad/BalanceGeneral.php">Balance General</a></li>';
-                if ($valor[15][1] == 1)
-                    $menu .= '<li ><a href="../Contabilidad/LibroDiario.php">Libro Diario</a></li>';
-
                 $menu .= '
               <!--<li ><a href="#">Automatic Fails <span>2</span></a></li>--> 
             </ul>
@@ -65,7 +62,6 @@
         </li>
         <li class="item4"><a href="#">Inventario</a>
             <ul>';
-
                 if ($valor[18][1] == 1)
                     $menu .= '<li ><a href="../Inventario/InventarioInicial.php">Inventario Inicial</a></li>';
                 if ($valor[19][1] == 1)
@@ -77,7 +73,7 @@
                 if ($valor[22][1] == 1)
                     $menu .= '<li ><a href="../Inventario/DescuentosCompras.php">Descuentos Compras</a></li>';
                 if ($valor[23][1] == 1)
-                    $menu .= '<li ><a href="../Inventario/CostoVenta.php">Costo de Venta</a></li>';
+                    $menu .= '<li ><a href="../Inventario/CostoVenta.php">Costo Venta</a></li>';
                 $menu .= '
              </ul>
         </li>
@@ -86,7 +82,7 @@
                 if ($valor[24][1] == 1)
                     $menu .= '<li ><a href="../Reportes/CuadreCaja.php">Cuadre de Caja</a></li>';
                 if ($valor[25][1] == 1)
-                    $menu .= '<li ><a href="../Reportes/CajaMenor.php">Caja Menor</a></li>';
+                    $menu .= '<li ><a href="../Reportes/CajaDiaria.php">Libro Diario</a></li>';
                 if ($valor[26][1] == 1)
                     $menu .= '<li ><a href="../Reportes/CxC.php">CxC</a></li>';
                 if ($valor[27][1] == 1)
@@ -110,7 +106,8 @@
                     $menu .= '<li ><a href="../Parametros/ProductosServiciosGrupos.php?me=1">Poductos y Servicios</a></li>
                      <li ><a href="../Parametros/FormasDePago.php">Formas de Pago</a></li>';
                 $menu .= '<li ><a href="../Parametros/Entidades.php">Entidades</a></li>';
-                $menu .= '<li ><a href="../Parametros/Conceptos.php">Conceptos</a></li>';
+                $menu .= '<li ><a href="../Parametros/ConceptosGI.php">Conceptos Gastos/Ingresos</a></li>';
+                $menu .= '<li ><a href="../Parametros/ConceptosInventario.php">Conceptos Inventarios</a></li>';
                 $menu .= '
             </ul>
         </li>
@@ -129,7 +126,6 @@
                 </li>
         <a style="font-family:Helvetica, Arial, sans-serif;color: #fff;font-weight:600;padding-left:35px;" href="../Otros/Logout.php">Salir</a> 
     </ul>
- 
 </div>';
             } else {
                 return '<div id="wrapper">

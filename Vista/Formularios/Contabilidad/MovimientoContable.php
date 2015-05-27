@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -60,11 +59,13 @@
                         <tr>
                             <td style="text-align: right;">Desde:</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="date" name="desde"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
+                                <input type="date" name="desde"
+                                       value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>" required>
                             </td>
                             <td style="text-align: right;">Hasta:</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="date" name="hasta"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
+                                <input type="date" name="hasta"
+                                       value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>" required>
                             </td>
                             <td style="text-align: right;">Cuenta</td>
                             <td style="padding-left: 10px;text-align: left;">
@@ -127,7 +128,7 @@
                 success: function (data) {
                     $('#texp tbody').html(data);
                     $("#texp").battatech_excelexport({
-                        containerid: "texp", datatype: 'table', worksheetName: 'Movimiento Contable'
+                        containerid: "texp", datatype: 'table', worksheetName: 'Movimiento Contable (<?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?>)'
                     });
                 }
             });

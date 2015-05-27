@@ -4,60 +4,54 @@
     include '../../../Clases/Master.php';
     include '../../../Clases/cls_Parametros.php';
     session_start();
-    if (isset($_SESSION['login']) != '') {
 
-        $Master = new Master();
-        $menu = $Master->Menu();
-        $Parametros = new cls_Parametros();
+    if (isset($_SESSION['login']) == '')
+        echo '<script > self.location = "/"</script>';
 
-        $tabla = '<table id="table" class="table" style="width:90%;">
+    $Master = new Master();
+    $menu = $Master->Menu();
+    $Parametros = new cls_Parametros();
+
+    $tabla = '<table id="table" class="table" style="width:90%;">    
         <thead><tr>
-            <th style="text-align:left;">NOMBRE</th>
             <th style="text-align:left;">CÓDIGO</th>
+            <th style="text-align:left;">CONCEPTO</th>
             <th style="text-align:left;">CUENTA</th>
-            <th style="text-align:left;">REQUIERE ENTIDAD</th>
-            <th style="text-align:left;">REQUIERE NÚMERO</th>
+            <th style="text-align:left;">FECHA REGISTRO</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
+    $cont = 0;
 
-        $cont = 0;
-
-        $formas = $Parametros->TraeFormasPago($_SESSION['login'][0]["ID_EMPRESA"]);
-        foreach ($formas as $llave => $valor) {
-            $cont ++;
-            $tabla .= '<tr><td style="text-align:left;">' . $valor['NOMBRE_F_PAGO'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['REQUIERE_ENTIDAD'] . '</td>';
-            $tabla .= '<td style="text-align:left;">' . $valor['REQUIERE_NUMERO'] . '</td>';
-
-            $tabla .= '<td style="text-align:center;">
-           <a href="CrearFormaPago.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
-          <a href="ModificarFormaPago.php?id=' . $valor['ID_F_PAGO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
-          <a onclick="EliminarFormaPago(' . $valor['ID_F_PAGO'] . ');return false"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
+    foreach ($Parametros->TraeConceptos($_SESSION['login'][0]["ID_EMPRESA"], 0) as $llave => $valor) {
+        $cont ++;
+        $tabla .= '<tr><td style="text-align:left;">' . $valor['CODIGO'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . ($valor['CONCEPTO'] == 0 ? 'Gastos' : 'Ingresos') . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE_CUENTA'] . '</td>';
+        $tabla .= '<td style="text-align:left;">' . $valor['FECHA_REGISTRO'] . '</td>';
+        $tabla .= '<td style="text-align:right;">
+           <a href="CrearConceptoGI.php"><img src="../../Imagenes/add.png" title="Nuevo"></a>
+          <a href="ModificarConceptoCI.php?id=' . $valor['ID_CONCEPTO'] . '"><img src="../../Imagenes/edit.png" title="Editar"></a>
+          <a onclick="EliminarConcepto(' . $valor['ID_CONCEPTO'] . ');return false;"><img src="../../Imagenes/delete.png" title="Eliminar"></a>
                 </td></tr>';
-        }
+    }
+    if ($cont == 0)
+        $tabla .= '<tr><td colspan=6 style="text-align:center;"><a href="CrearConceptoGI.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
 
 
-        if ($cont == 0) {
-            $tabla .= '<tr><td colspan=7 style="text-align:center;"><a href="CrearFormaPago.php"><img src="../../Imagenes/add.png" title="Nuevo"></a> </td></tr>';
-        }
-
-        $tabla .= '</tbody></table>';
-
-
-    } else echo '<script >self.location = "/"</script>';
+    $tabla .= '</tbody></table>';
 
 ?>
 <html>
 <head>
-    <title>Formas de Pago</title>
+    <title>Conceptos Gastos/Ingresos</title>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../Css/menu.css"/>
     <link rel="stylesheet" type="text/css" href="../../Css/style.css"/>
     <script src="../../Js/menu.js"></script>
+    <script type="text/javascript" language="javascript" src="../../Js/jquery.js"></script>
     <script type="text/javascript" language="javascript" src="../../Js/jquery.dataTables.js"></script>
+
     <link rel="stylesheet" type="text/css" href="../../Css/stilos.css"/>
 </head>
 <style type="text/css">
@@ -65,7 +59,6 @@
 </style>
 
 <script>
-
     $(document).ready(function () {
         $('#table').dataTable({
             "language": {
@@ -95,13 +88,11 @@
         });
     });
 
-
-    function EliminarFormaPago(id) {
-        if (confirm("Seguro que quieres eliminar esta forma de pago?")) {
-            window.location.href = 'EliminarFormaPago.php?id=' + id;
+    function EliminarConcepto(id) {
+        if (confirm("Seguro que quieres eliminar este concepto ?")) {
+            window.location.href = 'EliminarConceptoGI.php?id=' + id;
         }
     }
-
 </script>
 
 <body>
@@ -120,14 +111,11 @@
 
         <div id="main">
             <center>
-                <h3><b>FORMAS DE PAGO</b></h3><br>
+                <h3><b>CONCEPTOS GASTOS/INGRESOS</b></h3><br>
                 <?= $tabla ?>
-
             </center>
         </div>
     </div>
-
 </div>
-
 </body>
 </html>

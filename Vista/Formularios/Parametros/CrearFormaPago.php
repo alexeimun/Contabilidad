@@ -7,8 +7,6 @@
     include '../../../Clases/Componentes.php';
     session_start();
     if (isset($_SESSION['login']) != '') {
-
-
         $Master = new Master();
         $menu = $Master->Menu();
         $Contabilidad = new cls_Contabilidad();
@@ -27,7 +25,7 @@
 
         if (isset($_POST['btnGuardar']) != '') {
 
-            $Parametros->InsertaFormaPago( $_POST['cmbCuenta'],$_POST['txtNombre'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
+            $Parametros->InsertaFormaPago($_POST['cmbCuenta'], $_POST['txtNombre'], $_POST['txtRequiereEntidad'], $_POST['txtRequiereNumero'], $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"]);
 
             echo '<script> alert("Se creó la forma de pago correctamente."); self.location = "FormasDePago.php"; </script>';
         }
@@ -121,7 +119,8 @@
                             <td style="padding-left: 10px;text-align: center;">
                                 <input type="checkbox" id="chkRequiereEntidad" name="chkRequiereEntidad"
                                        onClick="check2();">
-                                <input type="hidden" value="0" id="txtRequiereEntidad" name="txtRequiereEntidad"><br><br>
+                                <input type="hidden" value="0" id="txtRequiereEntidad"
+                                       name="txtRequiereEntidad"><br><br>
                             </td>
                         </tr>
                         <tr>

@@ -1,16 +1,13 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
     include '../../../Clases/Master.php';
-    include '../../../Clases/Utiles.php';
     session_start();
     if (isset($_SESSION['login']) != '') {
 
 
         $menu = (new Master())->Menu();
         $Usuarios = new cls_Usuarios();
-        $Utiles = new Utiles();
 
         $Usuarios->CantidadUsuarios($_SESSION['login'][0]["ID_EMPRESA"]);
         if ($Usuarios->_CantUsuarios >= $_SESSION['login'][0]["CANT_USUARIOS"])

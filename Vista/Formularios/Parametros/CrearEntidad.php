@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -54,7 +53,7 @@
 
     input[type='checkbox'] {
         width: 20px;
-        height: 20px
+        height: 20px;
     }
 </style>
 

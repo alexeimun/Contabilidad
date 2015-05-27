@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -124,7 +123,6 @@
             + '<div> <select id="cmbCuenta" name="cmbCuenta[]"  style="width:200px;" class="chosen-select" >'
             + ' <?=$Cuenta ?> '
             + ' </select></div>'
-
 
 
             + '<div> <select  name="cmbTercero[]" id="cmbTercero" class="chosen-select" style="width:200px;" >'

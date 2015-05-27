@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -9,7 +8,7 @@
     if (isset($_SESSION['login']) != '') {
 
         if ($_GET['id'] == "")
-            echo '<script >self.location = "Conceptos.php"  </script>';
+            echo '<script >self.location = "ConceptosInventario.php"  </script>';
 
         $Master = new Master();
         $menu = $Master->Menu();
@@ -22,28 +21,29 @@
             $cmbconcepto = '';
             $txtComentarios = $valor['DESCRIPCION'];
 
-            if ($valor['CONCEPTO'] == "0")
-                $cmbconcepto .= '<option value="0" selected>Gastos</option> <option value="1">Ingresos</option>';
-            else $cmbconcepto .= '<option value="0">Gastos</option> <option value="1" selected>Ingresos</option>';
+            $cmbconcepto .= ' <option value="2" ' . ($valor['CONCEPTO'] == 2 ? 'selected' : '') . '>Inventario Inicial</option>';
+            $cmbconcepto .= ' <option value="3" ' . ($valor['CONCEPTO'] == 3 ? 'selected' : '') . '>Inventario Final</option>';
+            $cmbconcepto .= ' <option value="4" ' . ($valor['CONCEPTO'] == 4 ? 'selected' : '') . '>Compras</option>';
+            $cmbconcepto .= ' <option value="5" ' . ($valor['CONCEPTO'] == 6 ? 'selected' : '') . '>Devoluciones Compras</option>';
+            $cmbconcepto .= ' <option value="6" ' . ($valor['CONCEPTO'] == 5 ? 'selected' : '') . '>Descuento Compras</option>';
 
             foreach ($Contabilidad->TraeCuentas($_SESSION['login'][0]["ID_EMPRESA"]) as $llave1 => $valor1) {
                 if ($valor['ID_CUENTA'] == $valor1['ID_CUENTA']) {
-                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['CODIGO'] ." - ".$valor1['NOMBRE'] .'</option>';
-                } else {
-                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '">' . $valor1['CODIGO']  ." - ".$valor1['NOMBRE'] . '</option>';
-                }
+                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '" selected>' . $valor1['CODIGO'] . " - " . $valor1['NOMBRE'] . '</option>';
+                } else
+                    $options .= '<option value ="' . $valor1['ID_CUENTA'] . '">' . $valor1['CODIGO'] . " - " . $valor1['NOMBRE'] . '</option>';
             }
         }
 
         if (isset($_POST['btnGuardar']) != '') {
             if ($_POST['txtCuenta'] != 0) {
 
-                $Parametros->ActualizaConcepto( $_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
+                $Parametros->ActualizaConcepto($_POST['txtConcepto'], $_POST['txtDescripcion'], $_POST['txtCuenta'],
                     $_SESSION['login'][0]["ID_USUARIO"], $_GET['id']);
 
-                echo '<script > alert("Se modificó el concepto correctamente.");self.location = "Conceptos.php" </script>';
+                echo '<script > alert("Se modificó el concepto correctamente.");self.location = "ConceptosInventario.php" </script>';
 
-            } else echo '<script >alert("Debe seleccionar una cuenta."); self.location = "ModificarConcepto.php" </script>';
+            } else echo '<script >alert("Debe seleccionar una cuenta."); self.location = "ModificarConceptoInventario.php" </script>';
         }
     } else echo '<script >self.location = "/" </script>';
 
@@ -51,7 +51,6 @@
 <html>
 <head>
     <title>Modificar Concepto</title>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width; initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../../Css/menu.css"/>
@@ -63,7 +62,6 @@
 <style type="text/css">
     select {
         width: 300px;
-
     }
 
     input[type='text'] {
@@ -79,12 +77,6 @@
     }
 </style>
 
-<script>
-    function Validar() {
-        $("#botones").load("CrearConcepto.php?action=validarcuenta");
-    }
-
-</script>
 
 <body>
 <div id="wrap">
@@ -104,7 +96,7 @@
             <form method="POST">
                 <center>
                     <h3><b>MODIFICAR CONCEPTO</b></h3><br>
-                    <table style="width: 35%;color: #33373d">
+                    <table style="width: 35%;color: #33373d;">
                         <tr>
                             <td><br>Concepto</td>
                             <td style="padding-left: 10px;text-align: right;">
@@ -131,10 +123,8 @@
                         </tr>
                     </table>
                     <br>
-
                     <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
-                                                value="GUARDAR" style="width:200px;"/>
-                    </ul>
+                                                value="GUARDAR" style="width:200px;"/></ul>
                 </center>
 
             </form>

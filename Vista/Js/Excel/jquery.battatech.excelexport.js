@@ -13,7 +13,7 @@
         dataset: null,
         columns: null,
         returnUri: false,
-        worksheetName: "Libro Fiscal",
+        worksheetName: "",
         encoding: "utf-8"
     };
 

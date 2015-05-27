@@ -152,7 +152,7 @@
 <script>
     $('input[value=Exportar]').on('click', function () {
         $("#temp").battatech_excelexport({
-            containerid: "Exp", datatype: 'table'
+            containerid: "Exp", datatype: 'table',worksheetName:'PUC (<?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?>)'
         });
     });
 </script>

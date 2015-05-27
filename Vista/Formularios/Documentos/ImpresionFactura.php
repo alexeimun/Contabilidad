@@ -155,9 +155,9 @@
         $pdf->SetFont('Arial', 'I', 7);
         $Datos [$llave][0] = $valor['DESCRIPCION'];
         $Datos [$llave][1] = number_format($valor['CANTIDAD'], 0, '', ',');
-        $Datos [$llave][2] = number_format($valor['VALOR'], 0, '', ',');
-        $Datos [$llave][3] = number_format(($valor['VALOR'] * $valor['CANTIDAD']), 0, '', ',');
-        $total += ($valor['VALOR'] * $valor['CANTIDAD']);
+        $Datos [$llave][2] = number_format(($valor['VALOR'] / $valor['CANTIDAD']), 0, '', ',');
+        $Datos [$llave][3] = number_format(($valor['VALOR']), 0, '', ',');
+        $total += ($valor['VALOR']);
         $descuento += $valor['DESCUENTO'];
     }
     $pdf->TablaFactura($Datos);

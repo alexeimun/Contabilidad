@@ -26,8 +26,8 @@
             <th style="text-align:right;">ABONADO</th>
             <th style="text-align:right;">VALOR</th>
             <th style="text-align:center;">ACCIÓN</th></tr></thead><tbody>';
-
-    foreach ($Documentos->TraeRecibos($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
+    $Documentos->_IdParam = $Factura->_IdParam;
+    foreach ($Documentos->TraeFacturasRecibos($_SESSION['login'][0]["ID_EMPRESA"]) as $llave => $valor) {
         if ($valor['ANULADO'] != 1) {
             $tabla .= '<tr ><td style="text-align:left;">' . $valor['CONSECUTIVO_FACTURA'] . '</td>';
             $tabla .= '<td style="text-align:left;">' . $valor['NOMBRE1'] . ' ' . $valor['NOMBRE2'] . ' ' . $valor['APELLIDO1'] . ' ' . $valor['APELLIDO2'] . '</td>';
@@ -50,12 +50,12 @@
         $Secuencia = 0;
         foreach ($Factura->TraePagoTemporal($_SESSION['login'][0]["ID_USUARIO"]) as $llave => $valor) {
             $Secuencia ++;
-            $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, $valor['ID_CUENTA'], 'R', $_POST['ConsecutivoFactura'], $valor['ID_F_PAGO'], $Secuencia, "ABONO FACT" . $ConsecutivoRecibo, 'D',
-                1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'Pa', 0, 0, '', $valor['ID_ENTIDAD'], $valor['NUMERO']);
+            $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, $valor['ID_CUENTA'], 'R', $ConsecutivoRecibo, $valor['ID_F_PAGO'], $Secuencia, "ABONO FACT " . $_POST['ConsecutivoFactura'], 'D',
+                1, $valor['VALOR'], 0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], 'Pa', 0, $_POST['ConsecutivoFactura'], '', $valor['ID_ENTIDAD'], $valor['NUMERO'], 0, 0, '', "F");
         }
 
-        $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'R', $ConsecutivoRecibo, $_POST['cmbfPago'], 0, 'C', '', 1, $_SESSION['valor'],
-            0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"],$_POST['Fecha'], 'R', 0, $_POST['ConsecutivoFactura'], '', 0, '', 0, $_SESSION['TOTAL2']);
+        $Documentos->InsertaMovimiento($_POST['txtTercero'], 0, 0, 'R', $ConsecutivoRecibo, $_POST['cmbfPago'], ++ $Secuencia, '', 'C', 1, $valor['VALOR'],
+            0, '', $_SESSION['login'][0]["ID_USUARIO"], $_SESSION['login'][0]["ID_EMPRESA"], $_POST['Fecha'], 'R', 0, $_POST['ConsecutivoFactura'], '', 0, '', 0, $_SESSION['TOTAL2'], '', "F");
 
         $_SESSION['ConsecutivoRECIBO'] = $ConsecutivoRecibo;
         $_SESSION['Pagos'] = $_POST['ConsecutivoFactura'];

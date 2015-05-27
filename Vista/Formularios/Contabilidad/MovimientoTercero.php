@@ -30,7 +30,9 @@
 <div id="wrap">
     <div id="header">
         <a href=""><img src="<?= $_SESSION['login'][0]["LOGO_EMPRESA"] ?>"></a>
+
         <h1 id="logo"><span class="gray"><?= $_SESSION['login'][0]["NOMBRE_EMPRESA"] ?></span></h1>
+
         <h3><span><?= $_SESSION['login'][0]["NOMBRE_USUARIO"] ?></span></h3>
         <img style="float: right;margin-top: 10px;" src="../../Imagenes/logo.png">
     </div>
@@ -46,11 +48,13 @@
                         <tr>
                             <td style="text-align: right;">Desde:</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="date" name="desde"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
+                                <input type="date" name="desde"
+                                       value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>" required>
                             </td>
                             <td style="text-align: right;">Hasta:</td>
                             <td style="padding-left: 10px;text-align: left;">
-                                <input type="date" name="hasta"  value="<?= date("Y").'-'.date("m").'-'.date("d") ?>" required>
+                                <input type="date" name="hasta"
+                                       value="<?= date("Y") . '-' . date("m") . '-' . date("d") ?>" required>
                             </td>
 
                             <input type="hidden" value="2" name="tercero"/>

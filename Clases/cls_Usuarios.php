@@ -64,7 +64,7 @@
 					t_usuarios.RAIZ,
 					t_empresas.NOMBRE AS NOMBRE_EMPRESA,
 					t_empresas.CANT_USUARIOS,
-					t_regimenes.NOMBRE as NOMBRE_REGIMEN,
+					t_regimenes.NOMBRE AS NOMBRE_REGIMEN,
 					concat('../../Formularios/Empresas/',t_empresas.LOGO) AS LOGO_EMPRESA,
 					t_empresas.ID_EMPRESA,
 					t_empresas.NIT,
@@ -434,7 +434,7 @@
             $query = "UPDATE  t_permisos SET  SI_O_NO=$per
            , FECHA_REGISTRO=now()  WHERE (ID_USUARIO='" . $usu . "' AND ID_MODULO='" . $mod . "')";
 
-         return $this->_DB->Exec($query) > 0;
+            return $this->_DB->Exec($query) > 0;
         }
 
         public function TienePermiso($nombre, $idUser)

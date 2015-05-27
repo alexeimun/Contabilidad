@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -8,7 +7,7 @@
     session_start();
     if (isset($_SESSION['login']) != '') {
 
-        if ($_GET['id'] == "")   echo '<script >self.location = "FormasDePago.php";</script>';
+        if ($_GET['id'] == "") echo '<script >self.location = "FormasDePago.php";</script>';
 
         $Master = new Master();
         $menu = $Master->Menu();
@@ -92,17 +91,11 @@
 
 <script>
 
-    function ValidaCodigo() {
-        $("#botones").load("Validaciones.php?action=editarformapago&txtCodigo=" + document.getElementById('txtCodigo').value + "&id=" +<?= $_GET['id'] ?>);
-    }
-
-
     function check() {
         document.getElementById('txtRequiereNumero').value = "0";
         if (document.getElementById('chkRequiereNumero').checked) {
             document.getElementById('txtRequiereNumero').value = "1";
         }
-
     }
 
     function check2() {
@@ -163,7 +156,8 @@
                         </tr>
                     </table>
                     <br>
-                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar" value="GUARDAR" style="width:200px;"/>
+                    <ul id="botones"><br><input type="submit" class="btnAzul" id="btnGuardar" name="btnGuardar"
+                                                value="GUARDAR" style="width:200px;"/>
                     </ul>
                 </center>
             </form>

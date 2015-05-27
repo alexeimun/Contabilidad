@@ -4,6 +4,8 @@
     {
         public $_ExisteProducto;
         public $_CantidadProductos;
+        public $_IdParam;
+
         public $_Consecutivo;
         public $_ConsecutivoRecibo;
         public $_PrecioProducto;
@@ -34,6 +36,16 @@
         public function set_Consecutivo($_Consecutivo)
         {
             $this->_Consecutivo = $_Consecutivo;
+        }
+
+        public function get_IdParam()
+        {
+            return $this->_IdParam;
+        }
+
+        public function set_IdParam($_IdParam)
+        {
+            $this->_IdParam = $_IdParam;
         }
 
         public function get_CantidadProductos()
@@ -100,7 +112,8 @@
             $query = "SELECT
         (SELECT Count(*) FROM t_factura_temporal
         WHERE t_factura_temporal.ID_USUARIO=" . $idUsuario . " AND t_factura_temporal.ID_EMPRESA=" . $idEmpresa . ") AS CANTIDAD_PRODUCTOS,
-        (SELECT CONSECUTIVO FROM t_documentos WHERE TIPO_INTERNO='FACTURA' AND ID_EMPRESA=" . $idEmpresa . ") AS CONSECUTIVO";
+        (SELECT CONSECUTIVO FROM t_documentos WHERE TIPO_INTERNO='FACTURA' AND ID_EMPRESA=" . $idEmpresa . ") AS CONSECUTIVO,
+                     (SELECT ID_DOCUMENTO FROM t_documentos WHERE TIPO_INTERNO='FACTURA' AND ID_EMPRESA=14) AS ID_PARAM";
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
@@ -108,6 +121,7 @@
             foreach ($Campos as $key => $datos) {
                 $this->_CantidadProductos = ($datos[0]);
                 $this->_Consecutivo = ($datos[1]);
+                $this->_IdParam = ($datos[2]);
             }
             // var_dump($datos);
             return $datos;
@@ -115,12 +129,13 @@
 
         public function TraeParametrosRecibo($idEmpresa)
         {
-            $query = "SELECT CONSECUTIVO FROM t_documentos WHERE TIPO_INTERNO='RECIBO' AND ID_EMPRESA=" . $idEmpresa;
+            $query = "SELECT CONSECUTIVO,ID_DOCUMENTO FROM t_documentos WHERE TIPO_INTERNO='RECIBO' AND ID_EMPRESA=" . $idEmpresa;
 
             $resulset = $this->_DB->Query($query);
             $Campos = $resulset->fetchAll();
 
             $this->_ConsecutivoRecibo = $Campos[0][0];
+            $this->_IdParam = $Campos[0][1];
         }
 
 

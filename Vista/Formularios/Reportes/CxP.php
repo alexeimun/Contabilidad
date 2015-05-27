@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     include '../../../Config/Conexion/config.php';
     include '../../../Generic/Database/DataBase.php';
@@ -11,6 +10,21 @@
     $Master = new Master();
     $menu = $Master->Menu();
 
+    $Desde = date("Y") . '-' . date("m") . '-' . date("d");
+    $Hasta = date("Y") . '-' . date("m") . '-' . date("d");
+
+    if (isset($_POST['btnGenerar']) != '') {
+
+        $_SESSION['DESDE_CUADRE_CAJA'] = $_POST['txtDesde'];
+        $_SESSION['HASTA_CUADRE_CAJA'] = $_POST['txtHasta'];
+
+        $Desde = $_POST['txtDesde'];
+        $Hasta = $_POST['txtHasta'];
+
+        echo '<script >window.open("ImpresionCxP.php"); </script>';
+
+
+    }
 ?>
 <html>
 <head>
@@ -39,11 +53,18 @@
         <?= $menu ?>
 
         <div id="main">
-            <center>
-                <h3><b>CxP </b></h3><br>
+            <form method="POST">
+                <center>
+                    <h3><b>CxP</b></h3><br>
 
-
-            </center>
+                    Desde <input type="date" id="txtDesde" name="txtDesde" value="<?= $Desde; ?>" required>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Hasta <input type="date" id="txtHasta" name="txtHasta" value="<?= $Hasta; ?>" required>
+                    <br><br><br>
+                    <input type="submit" id="btnGenerar" class="btnAzul" name="btnGenerar" value="Generar"
+                           style="width:100px;"/>
+                </center>
+            </form>
         </div>
     </div>
 
