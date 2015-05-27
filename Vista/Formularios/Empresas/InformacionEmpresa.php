@@ -37,7 +37,7 @@
 
     if (isset($_POST['btnGuardar']) != '') {
 
-        $img = 'z' . rand(1000000000, 999999999) . '_' . $_FILES["file"]["name"];
+        $img = 'z' . rand(10000000, 999999999) . '_' . $_FILES["file"]["name"];
         if ($_FILES["file"]["name"] == '') {
             $img = $Logo;
         }
@@ -148,7 +148,7 @@
                             <td>Logo:</td>
                             <td style="text-align: center;padding: 10px;">
                                 <img style="width: 140px;" src="../../Formularios/Empresas/<?= $Logo; ?>"><br>
-                                <input type="file" name="file" id="file" style="margin-right: 85px;">
+                                <input type="file" name="file" id="" style="margin-right: 85px;">
                             </td>
                         </tr>
                     </table>

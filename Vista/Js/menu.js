@@ -2309,9 +2309,9 @@ $(document).ready(function () {
     //Menu
     $('div ul.menu li ').click(function () {
         if (temp !== null) {
-            temp.slideUp();
+            temp.slideToggle();
         }
         temp = $(this).children('ul');
-        temp.slideDown();
+        temp.slideToggle();
     });
 });
